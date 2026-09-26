@@ -14,7 +14,8 @@ body{margin:0;font-family:Montserrat,'Segoe UI',Arial,sans-serif;background:var(
 header{background:#fff;border-bottom:1px solid var(--line);padding:10px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-top:4px solid var(--honey)}
 .brand{display:flex;align-items:center;gap:12px}
 .brand .znak{width:34px;height:auto;transform-origin:50% 50%;animation:znak-wejscie .7s cubic-bezier(.2,.8,.3,1.2) both,znak-obrot 1.2s ease-in-out 3s infinite}
-.brand .napis{height:20px;width:auto}
+.brand .napis{font-size:22px;font-weight:800;letter-spacing:.02em;color:var(--navy)}
+.brand .znak{color:var(--navy)}
 header #kto{font-size:13px;font-weight:600;color:var(--mut)}
 @keyframes znak-wejscie{from{opacity:0;transform:translateY(-14px) scale(.7)}to{opacity:1;transform:none}}
 @keyframes znak-obrot{0%{transform:rotate(0)}12%{transform:rotate(180deg)}100%{transform:rotate(180deg)}}
@@ -64,10 +65,36 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--honey);outline-
 .pill.o{background:#E7F2EA;color:var(--ok)}.pill.z{background:#FBEAEA;color:var(--red)}
 .hidden{display:none!important}
 @media (prefers-reduced-motion:reduce){.bar .f{transition:none}}
+
+textarea{width:100%;box-sizing:border-box;font:inherit;font-size:16px;padding:10px 12px;border:2px solid #D5DDE5;border-radius:10px;resize:vertical;background:#fff}
+textarea:focus{outline:none;border-color:#1F4460}
+h3{font-size:17px;color:#1F4460;margin:22px 0 8px}
+.grupy{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-top:12px}
+label.chk{display:flex;gap:10px;align-items:flex-start;font-weight:500;margin:8px 0;cursor:pointer}
+label.chk input{width:20px;height:20px;margin-top:2px;accent-color:#1F4460}
+.oceny{display:flex;gap:10px}.oceny .opt{width:70px;text-align:center}
+.suma{margin-top:16px;background:#FDF4DC;border-left:6px solid #E8B62C;border-radius:0 10px 10px 0;padding:10px 14px;font-size:17px}
+.cwl{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.cwb{text-align:left;background:#fff;color:#1B2733;border:2px solid #D5DDE5;display:flex;flex-direction:column;gap:4px;padding:12px 14px}
+.cwb:hover{background:#F5F7FA;border-color:#1F4460}
+.cwb small{font-weight:500;color:#5E6B78}
+.cwb.wyb{border-color:#1F4460;box-shadow:0 0 0 3px #E8EEF3}
+.cwb.akt{border-color:#E8B62C;background:#FDF4DC}
+.por{margin:10px 0 14px}.por>span{display:block;font-weight:600;margin-bottom:6px}
+.pp{display:grid;grid-template-columns:1fr 170px;gap:10px;align-items:center;margin:4px 0}
+.pp .tr{height:14px;background:#EEF1F4;border-radius:7px;overflow:hidden}
+.pp .f{height:100%;background:#1F4460}.pp .f.szary{background:#9AA8B5}
+.pp b{font-size:14px}
+.grk{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.gk{border:2px solid #D5DDE5;border-radius:12px;padding:12px 14px;background:#fff}
+.gk h3{margin-top:0}
+.gp{margin:8px 0}.gp span{display:block;font-size:13px;font-weight:700;color:#5E6B78}
+.wpisy{padding-left:18px;margin:6px 0}.wpisy li{margin:4px 0}
+.pill.z{background:#F2F2F2;color:#5E6B78}
 </style>
 </head>
 <body>
-<header><div class="brand"><img class="znak" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABVCAYAAADe3GMeAAAG3klEQVR42u2ceWxUVRSHv9ayCIoUC1aBVlQUEMuiERHFmFQNCgm4IEbQhqgkrsRgjBI3jBoVRI1BI9LGBRUFDVFTtcGKUZZGERtUFASKIFiBUhZZLNQ/7mlS67w39765ve+9mZ5k0unruduv59yzzmQVFpcQcyoAugOrgSOuF8+OKWg5QAnwHVADfAu8F9ZG4kZDgTeBAS2ejwXygB1tEuhN44CvEoDXdJYhbSqcmI4BHgIWAp19+E5qU+H/U19R2WEavPltEvhfuhlYpQkecge2SSBwAvAKMMFw3PFtAMLForKFAcZ2yWQVbgc8ClQGBC+jJbBIpK4oxXkyTgKzgfuAKgvgNd2dGSOBvYHXgUstzpmbKRI4Aai2DB5At3QH8FjgBeAdoGsrzN/FtVa5XOxs4F1gYCuukSVq/Fc6SWAWcA8q9TTQwXrd0kkCuwOlwGiHZ0obAK8QK+s6Q+IUwNZQ4fbATKA8BPBiL4EFwALgAkvzrRVAehiM6RFHCcwG7gbWWAKvXKx2f/m53WBsftwAPBX4Qvy7VIP5g8CtwJXAT/JsB/B5VAFMVYVLgBctZUHWA9ejEqgtqdZgnn5xkMB8VH2izBJ4ZaiC0CqPv+80mGsAqoYSWQAnAT8D11hYv17i4snAPh8+k8iik1wrkQOwPTAbeMNSHFuFqvEu0OCtNZy7b9QA7AcsB6ZaWPMo8AxwEbBBc0xkAdQxIiXAS/jXY3XpD+AmYInhOFMAz4yCBB4n6lpmCbzFwKAA4MVShc8DVorBSJX2AregeleC9q3sB/YY8BeGBWBX4GUBb4CF+StRtY55SfZwtfyz/Goam6MYDze/Ay8EFlny5A8A0+Sf0ZjkoG8Bo+T3X8QfPJCAtwb9fGIuKg/Z6EoChwEVlsDbJBZ2TpIDDEH19Y1q9uwsoNiDv8ZgD+3kDnemwqXigKbqnrwAnOMTUTS37N8AfTyATURbDPfTzZUKF1q472pQjUBLk/B1BOYCE314Tvd4vt1wT7mGUhsYwJ3AYYk0gtB84A4Jy5KFWOXAyCR8XgD+abivLq5UeB8wPWAcO1Fe9Rr88zTA8wPQtNLm9A6chVnObYXcVfM1+U9Dv1Ut3+PwdYZn6+wSwEbJiOzSGDMT1YK20WAd097lggTPdkcZQICtEjE0+vh2k1DNQA2G67Qz5M/zANDErzsxjEjkQ+DxBHzrgeHi9AahbRYAbMA/Z9iSzggrFn4EuA6Vr9sHvIbK2/2QwjpbDfm7ezzf7RjAjsD9qJzltES+slc6a6G8bNEWUb+sFCSwCcDemnP0THHPg8VINvnI48VOXN7cqXfVnXVQ00DZlMCg9eEsVOJ4RYIAoz/wEdDBNYCmh8+zcBV0CLDHXEmozPYZPxh4NgwA6y0AuMlgjmrD/Y1GNQaM0+C9ExjjGsA9FlRYF8BGD2/CK+QrFdU8xUDNS4GeOTGTwI2a4N0LfKrBO1wMRZ8A58kDZqWbCh8EbgSe11jjduDLgOA1UVFUJbCTqFZLta8B/vGIbLaiSgNVGmHiHOAqC2eqiKoEAvRK8OyQh0O/RJz9ZOCNFeNiA7zfgIej6sbg4zAvbHHfPYXqhq1NElE8B3yAnQ/jVKNSc/UuVXibBQkE1dVQjar9rpSXHw2SGN5Gg/th4GngCdEG4ghgIyqzXa6RAZoOPBggG5SIlgJTUJXDpLFwFAAsSGGtgSJ1gyzs+4hI3AwSfK2KSwA3GyYUgrgXTXHsk3LvpUobUSWLZV4MLo3I34axbC/D+XsAn4ixsAFemcS9y/yYXH9Wbp1hYK9LxahvLhplYY+14u5M1gk/XQO41oC3q4a654i6fgacbGF/X6PqN4t1B7gG8HsD3hz8a7u9JBR7wMI59gJ3AZegehiNNumSVhny53lEMMXA2z5ZGxP6EbjWUDtCk8A1EsvqUiKApooPaAO8ucD5QcELA8BDmHWbjmj2vlCs7GwLmlOHKpzdJt5BYArjOxN2oV/weUyscSGqqNPewvqVqEao320cJiwAdakzwfp2EtFRVJZ6hrwnrgDWhbDmWlQdY4ntibPTHMAGuQaKWgO8OKhwKrRFDMWK1lwkXSVwMXBua4OXjhJYh/q88SJXh0knI7IS1cS5yeVhstNAAo+g0uwjXYOXDhK4AZXwXE5IFIYE1lua530xFKGBFxaAu1McvwOVPRlvYa5YqnAqh/5YrOx2IkJhSOBhzDMg+1ElxTFRAi8sCWy6B3U/m1clhmIdEaSwvsFSR40bUNmTEVEFL2wJ9KNfgRswLwFkDIB+vuBSVJvaLmJAYanwao/nrwKXxQW8MAGsaPH7cgFuCmZFp4xV4UpUQWcoqmevgpjSv+1/VJom49qAAAAAAElFTkSuQmCC" alt=""><img class="napis" src="data:image/png;base64,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" alt="ZMIANOLOGICA"></div><span id="kto"></span></header>
+<header><div class="brand" role="img" aria-label="ZMIANOLOGICA"><svg class="znak" viewBox="0 0 80 85" aria-hidden="true"><path d="M76.75,44.38 L75.38,43.00 L73.75,42.25 L73.12,42.25 L71.50,43.00 L58.12,52.75 L51.50,57.12 L44.12,62.88 L42.12,64.12 L41.12,64.50 L40.38,64.50 L39.25,63.38 L39.00,62.62 L38.75,56.50 L38.00,52.25 L37.75,46.88 L37.12,41.88 L36.88,37.50 L35.88,32.50 L35.12,31.88 L33.62,31.62 L32.50,32.12 L29.25,34.88 L28.62,35.12 L26.12,37.62 L25.75,39.00 L25.75,41.25 L27.00,57.38 L28.00,61.88 L28.25,67.12 L28.88,72.62 L29.12,81.12 L30.12,84.00 L30.62,84.38 L31.62,84.50 L35.38,82.62 L38.38,80.00 L46.25,74.75 L56.88,67.00 L57.38,66.88 L69.38,58.12 L70.38,57.62 L75.50,53.88 L77.50,52.75 L78.88,51.38 L79.12,50.75 L79.88,50.38 L79.88,48.25 L79.50,48.25 L79.00,47.75ZM50.75,1.62 L50.00,1.00 L48.50,0.88 L47.38,1.12 L45.38,2.12 L42.25,4.75 L41.25,5.25 L35.38,9.62 L31.50,12.12 L19.62,20.88 L17.62,22.00 L15.25,23.88 L12.75,25.38 L5.50,30.88 L4.75,31.12 L2.50,32.75 L1.00,34.62 L1.00,36.62 L4.38,41.38 L6.75,42.88 L8.38,42.62 L14.25,38.00 L18.62,34.88 L20.62,33.75 L25.62,30.00 L26.50,29.62 L36.50,22.12 L38.62,20.88 L40.25,20.75 L41.00,21.38 L41.38,22.50 L42.12,32.00 L42.88,36.88 L43.12,44.50 L43.88,48.62 L44.00,51.00 L44.38,52.25 L45.75,53.25 L47.25,53.12 L48.25,52.62 L52.00,49.62 L53.62,48.12 L54.50,46.88 L54.88,46.00 L54.88,44.12 L54.12,39.25 L53.75,29.62 L53.00,26.25 L52.12,19.38 L51.50,6.75Z" fill="currentColor"/></svg><b class="napis">ZMIANOLOGICA</b></div><span id="kto"></span></header>
 <main id="app"><p>Łączenie z serwerem…</p></main>
 
 <script type="module">
@@ -84,45 +111,74 @@ const firebaseConfig = {
   appId: "1:518737570063:web:454c1dd4f574fc5c5d767a"
 };
 const PROWADZACY = "marcin.zoltak@zmianologi.ca";
-
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-/* ---------- ĆWICZENIE TESTOWE ---------- */
-const CW = {id:"test-wejsciowy", nazwa:"Test wiedzy wejściowej", pytania:[
- {id:"p1", t:"Czym różni się rekrutacja od selekcji?", o:[
-  ["a","Rekrutacja to pozyskanie odpowiedniej liczby kandydatów, a selekcja to wybór spośród nich na podstawie zbadania kandydatów."],
-  ["b","To dwie nazwy tego samego procesu."],
-  ["c","Rekrutacja dotyczy stanowisk kierowniczych, a selekcja stanowisk wykonawczych."]], d:"a"},
- {id:"p2", t:"Która z tych metod najtrafniej przewiduje późniejsze wyniki pracy kandydata?", o:[
-  ["a","Swobodna rozmowa, w której każdy kandydat słyszy inne pytania."],
-  ["b","Rozmowa według scenariusza, z tymi samymi pytaniami i opisami ocen dla wszystkich kandydatów."],
-  ["c","Analiza CV i listu motywacyjnego."]], d:"b"},
- {id:"p3", t:"Kiedy pracodawca musi przekazać kandydatowi informację o wynagrodzeniu?", o:[
-  ["a","Dopiero przy podpisywaniu umowy."],
-  ["b","Najpóźniej przed pierwszą rozmową, jeśli nie podał jej w ogłoszeniu."],
-  ["c","Tylko wtedy, gdy kandydat o nią zapyta."]], d:"b"}
-]};
+/* ================= ĆWICZENIA =================
+   tryb: "ind" (każdy osobno) albo "gr" (wspólny dokument grupy)
+   typy pól: wybor, liczba, tekst, dlugi, lista (pola wyboru), ocena (1–3)          */
+const PYT_TESTU=[
+ {id:"p1",typ:"wybor",t:"Czym różni się rekrutacja od selekcji?",o:["Rekrutacja to pozyskanie odpowiedniej liczby kandydatów, a selekcja to wybór spośród nich na podstawie zbadania kandydatów.","To dwie nazwy tego samego procesu.","Rekrutacja dotyczy stanowisk kierowniczych, a selekcja stanowisk wykonawczych."],d:0},
+ {id:"p2",typ:"wybor",t:"Która z tych metod najtrafniej przewiduje późniejsze wyniki pracy kandydata?",o:["Swobodna rozmowa, w której każdy kandydat słyszy inne pytania.","Rozmowa według scenariusza, z tymi samymi pytaniami i opisami ocen dla wszystkich kandydatów.","Analiza CV i listu motywacyjnego."],d:1},
+ {id:"p3",typ:"wybor",t:"Kiedy pracodawca musi przekazać kandydatowi informację o wynagrodzeniu?",o:["Dopiero przy podpisywaniu umowy.","Najpóźniej przed pierwszą rozmową, jeśli nie podał jej w ogłoszeniu.","Tylko wtedy, gdy kandydat o nią zapyta."],d:1}];
+const PODEJ=["Dokładna selekcja","Sprawna rekrutacja"];
+const CW=[
+ {id:"test-wejsciowy",nazwa:"Test na początek",tryb:"ind",quiz:true,pola:PYT_TESTU},
+ {id:"koszt",nazwa:"Koszt złego zatrudnienia",tryb:"gr",suma:true,pola:[
+  {id:"h",typ:"liczba",t:"Czas właściciela na ponowną rekrutację (godziny, 100 zł za godzinę)"},
+  {id:"ogl",typ:"liczba",t:"Koszt ponownego ogłoszenia (zł)"},
+  {id:"wyn",typ:"liczba",t:"Wynagrodzenie wypłacone za pracę bez efektu (zł)"},
+  {id:"wh",typ:"liczba",t:"Wdrożenie następcy: godziny doświadczonego pracownika"},
+  {id:"ws",typ:"liczba",t:"Wdrożenie następcy: koszt godziny pracy tego pracownika (zł)"},
+  {id:"pos",typ:"dlugi",t:"Koszty pośrednie, których nie da się łatwo policzyć"}]},
+ {id:"podejscie",nazwa:"Które podejście w twojej firmie",tryb:"ind",pola:[
+  {id:"s1",typ:"tekst",t:"Stanowisko 1"},{id:"w1",typ:"wybor",t:"Podejście do stanowiska 1",o:PODEJ},
+  {id:"s2",typ:"tekst",t:"Stanowisko 2"},{id:"w2",typ:"wybor",t:"Podejście do stanowiska 2",o:PODEJ},
+  {id:"s3",typ:"tekst",t:"Stanowisko 3"},{id:"w3",typ:"wybor",t:"Podejście do stanowiska 3",o:PODEJ},
+  {id:"uz",typ:"dlugi",t:"Przy jednym stanowisku: co przesądziło o wyborze?"}]},
+ {id:"przedzial",nazwa:"Przedział wynagrodzenia",tryb:"ind",pola:[
+  {id:"st",typ:"tekst",t:"Stanowisko"},{id:"od",typ:"liczba",t:"Od (zł brutto miesięcznie)"},{id:"do",typ:"liczba",t:"Do (zł brutto miesięcznie)"},
+  {id:"zr",typ:"wybor",t:"Źródło",o:["Badanie GUS","Ogólnopolskie Badanie Wynagrodzeń","Raport agencji rekrutacyjnej","Ogłoszenia z okolicy","Inne"]},
+  {id:"zd",typ:"dlugi",t:"Od czego zależy, czy zaproponujesz kwotę bliżej dolnej, czy górnej granicy?"}]},
+ {id:"ogloszenie",nazwa:"Popraw to ogłoszenie",tryb:"gr",pola:[
+  {id:"bl",typ:"dlugi",t:"Błędy, które znaleźliście"},{id:"nowe",typ:"dlugi",t:"Poprawione ogłoszenie",duzy:true}]},
+ {id:"obserwacja",nazwa:"Spotkanie w trójkach: lista obserwatora",tryb:"ind",pola:[
+  {id:"lk",typ:"lista",t:"Co prowadzący zrobił?",o:["Przywitał kandydata i zaproponował miejsce.","Przedstawił siebie i firmę.","Zapowiedział przebieg i czas spotkania.","W części czerwonej mówił więcej niż kandydat.","Zapytał o pytania przed przejściem dalej.","Zadał pytania bez zmiany ich treści.","Poprosił o konkretny przykład.","Zapisywał wypowiedzi, a nie oceny."]},
+  {id:"o1",typ:"ocena",t:"Ocena odpowiedzi kandydata: planowanie pracy"},
+  {id:"o2",typ:"ocena",t:"Ocena odpowiedzi kandydata: rozmowa z osobą zdenerwowaną"}]},
+ {id:"kandydatka",nazwa:"Co zobaczyła kandydatka",tryb:"gr",pola:[
+  {id:"plus",typ:"dlugi",t:"Co budowało zaufanie"},{id:"minus",typ:"dlugi",t:"Co zniechęcało"},
+  {id:"wn",typ:"dlugi",t:"Jaki wniosek o firmie mogła wyciągnąć kandydatka"},{id:"zm",typ:"dlugi",t:"Trzy zmiany bez kosztów"}]},
+ {id:"kucharze",nazwa:"Trzech kucharzy",tryb:"gr",kolejnosc:true,pola:[
+  {id:"m1",typ:"wybor",t:"Miejsce 1",o:["Anna","Bartek","Celina"]},{id:"m2",typ:"wybor",t:"Miejsce 2",o:["Anna","Bartek","Celina"]},{id:"m3",typ:"wybor",t:"Miejsce 3",o:["Anna","Bartek","Celina"]},
+  {id:"uz",typ:"dlugi",t:"Co przesądziło o waszym wyborze?"}]},
+ {id:"test-koncowy",nazwa:"Test na koniec",tryb:"ind",quiz:true,porownaj:"test-wejsciowy",pola:PYT_TESTU}];
+const GRUPY=["Grupa 1","Grupa 2","Grupa 3","Grupa 4","Grupa 5","Grupa 6","Grupa 7","Grupa 8"];
+const cwById = id => CW.find(c=>c.id===id);
 
-/* ---------- POMOCNICZE ---------- */
+/* ================= POMOCNICZE ================= */
 const $ = s => document.querySelector(s);
 const esc = t => String(t ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 const params = new URLSearchParams(location.search);
 const trybProwadzacego = params.has("prowadzacy");
-let odsluch = null;
-function stop(){ if(odsluch){ odsluch(); odsluch = null; } }
+let odsluchy = [];
+function stop(){ odsluchy.forEach(f=>f()); odsluchy=[]; }
 function blad(e){
   const k = e && e.code || "";
   if(k.includes("permission-denied")) return "Serwer odmówił zapisu. Sprawdź, czy sesja jest otwarta i czy kod jest poprawny.";
-  if(k.includes("unauthorized-domain")) return "Ten adres strony nie jest dopisany w Firebase do dozwolonych domen (Authentication, Settings, Authorized domains).";
+  if(k.includes("unauthorized-domain")) return "Ten adres strony nie jest dopisany w Firebase do dozwolonych domen.";
   if(k.includes("popup")) return "Okno logowania zostało zamknięte albo zablokowane. Zezwól przeglądarce na wyskakujące okna i spróbuj ponownie.";
-  if(k.includes("operation-not-supported") || k.includes("network")) return "Brak połączenia z serwerem albo strona jest otwarta bezpośrednio z dysku. Otwórz ją z adresu internetowego.";
+  if(k.includes("operation-not-supported") || k.includes("network")) return "Brak połączenia z serwerem albo strona jest otwarta bezpośrednio z dysku.";
   return "Wystąpił błąd: " + (e && e.message || e);
 }
+const liczba = v => { const n=parseFloat(String(v??"").replace(",",".").replace(/\s/g,"")); return isNaN(n)?0:n; };
+const zl = n => Math.round(n).toLocaleString("pl-PL")+" zł";
+function sumaKosztu(p){ p=p||{}; return liczba(p.h)*100+liczba(p.ogl)+liczba(p.wyn)+liczba(p.wh)*liczba(p.ws); }
 
-/* ---------- START ---------- */
+/* ================= START ================= */
 onAuthStateChanged(auth, async user => {
+  stop();
   if(trybProwadzacego){
     if(user && !user.isAnonymous && user.email === PROWADZACY){ $("#kto").textContent = "Prowadzący: " + user.email; widokProwadzacyStart(); }
     else widokLogowanie(user);
@@ -133,12 +189,12 @@ onAuthStateChanged(auth, async user => {
   }
 });
 
-/* ---------- UCZESTNIK ---------- */
+/* ================= UCZESTNIK ================= */
 function widokUczestnikStart(komunikat){
   stop();
   const kod = params.get("s") || localStorage.getItem("zml_kod") || "";
   const nick = localStorage.getItem("zml_nick") || "";
-  $("#app").innerHTML = `<h1>Dołącz do ćwiczenia</h1>
+  $("#app").innerHTML = `<h1>Dołącz do ćwiczeń</h1>
   <div class="card">
    <label for="kod">Kod sesji</label><input type="text" id="kod" value="${esc(kod)}" placeholder="podaje go prowadzący" autocomplete="off">
    <label for="nick">Pseudonim</label><input type="text" id="nick" value="${esc(nick)}" placeholder="na przykład Anna K." maxlength="30">
@@ -151,34 +207,95 @@ function widokUczestnikStart(komunikat){
     try{
       const s = await getDoc(doc(db,"sesje",k));
       if(!s.exists()){ widokUczestnikStart("Nie ma sesji o tym kodzie. Sprawdź kod u prowadzącego."); return; }
-      if(!s.data().otwarta){ widokUczestnikStart("Ta sesja jest zamknięta."); return; }
       localStorage.setItem("zml_kod",k); localStorage.setItem("zml_nick",n);
-      widokUczestnikTest(k,n);
+      widokUczestnikSesja(k,n);
     }catch(e){ widokUczestnikStart(blad(e)); }
   };
 }
-async function widokUczestnikTest(kod,nick){
-  const uid = auth.currentUser.uid, ref = doc(db,"sesje",kod,"odpowiedzi",CW.id+"_"+uid);
-  let odp = {};
-  try{ const d = await getDoc(ref); if(d.exists()) odp = d.data().odp || {}; }catch(e){}
-  let wyslane = false;
-  const rys = (zapisano) => {
-    $("#app").innerHTML = `<h1>${esc(CW.nazwa)}</h1><p class="hint">Sesja ${esc(kod)} · ${esc(nick)}</p>
-    <div class="card">${CW.pytania.map((p,i)=>`<div class="q"><div class="t">${i+1}. ${esc(p.t)}</div>
-     ${p.o.map(([v,l])=>`<button class="opt ${odp[p.id]===v?"on":""}" data-p="${p.id}" data-v="${v}">${esc(l)}</button>`).join("")}</div>`).join("")}
-     <div class="row"><button id="wyslij" class="${wyslane?"wyslane":""}" ${Object.keys(odp).length<CW.pytania.length||wyslane?"disabled":""}>${wyslane?"Twoje dane zostały wysłane":"Wyślij odpowiedzi"}</button></div>
-     <p class="hint">Odpowiedzi możesz zmieniać i wysyłać ponownie, dopóki prowadzący nie zamknie sesji.</p></div>`;
-    document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{ odp[b.dataset.p]=b.dataset.v; wyslane=false; rys(); });
-    $("#wyslij").onclick = async () => {
-      const b=$("#wyslij"); b.disabled=true; b.textContent="Wysyłanie…";
-      try{ await setDoc(ref,{uid, pseudonim:nick, cw:CW.id, odp, czas:serverTimestamp()}); wyslane=true; rys(); }
-      catch(e){ rys(); $("#app").insertAdjacentHTML("beforeend",`<div class="msg err">${esc(blad(e))}</div>`); }
+function widokUczestnikSesja(kod,nick){
+  stop();
+  let aktywne, otwarta=true;
+  const u = onSnapshot(doc(db,"sesje",kod), s=>{
+    const d=s.data(); if(!d){ widokUczestnikStart("Sesja została usunięta."); return; }
+    otwarta=!!d.otwarta;
+    if((d.aktywne||null)!==aktywne){ aktywne=d.aktywne||null; pokazCwiczenie(); }
+    const z=$("#zamk"); if(z) z.classList.toggle("hidden",otwarta);
+  });
+  odsluchy.push(u);
+  let wew=[];
+  function pokazCwiczenie(){
+    wew.forEach(f=>f()); wew=[];
+    const c=cwById(aktywne);
+    if(!c){ $("#app").innerHTML=`<h1>Czekamy na ćwiczenie</h1><div class="card"><p>Sesja ${esc(kod)} · ${esc(nick)}</p><p class="hint">Gdy prowadzący uruchomi ćwiczenie, pojawi się ono tutaj samo. Nie musisz odświeżać strony.</p></div>`; return; }
+    if(c.tryb==="gr"){
+      const g=localStorage.getItem("zml_grupa_"+kod);
+      if(!g){ wyborGrupy(c); return; }
+      cwGrupowe(c,g);
+    } else cwIndywidualne(c);
+  }
+  function naglowekCw(c,dod){ return `<h1>${esc(c.nazwa)}</h1><p class="hint">Sesja ${esc(kod)} · ${esc(nick)}${dod?" · "+esc(dod):""}</p><div id="zamk" class="msg err ${otwarta?"hidden":""}">Prowadzący zamknął sesję. Odpowiedzi nie są już zapisywane.</div>`; }
+  function wyborGrupy(c){
+    $("#app").innerHTML = naglowekCw(c)+`<div class="card"><p>To ćwiczenie wykonujecie w grupie. Wybierz swoją grupę, tę samą co pozostałe osoby z twojego pokoju.</p><div class="grupy">${GRUPY.map(g=>`<button class="sec" data-g="${esc(g)}">${esc(g)}</button>`).join("")}</div></div>`;
+    document.querySelectorAll("[data-g]").forEach(b=>b.onclick=()=>{ localStorage.setItem("zml_grupa_"+kod,b.dataset.g); cwGrupowe(c,b.dataset.g); });
+  }
+  function poleHTML(p,v,idx){
+    const nr = idx!==undefined?`${idx+1}. `:"";
+    if(p.typ==="wybor") return `<div class="q"><div class="t">${nr}${esc(p.t)}</div>${p.o.map((o,i)=>`<button class="opt ${v===i?"on":""}" data-p="${p.id}" data-v="${i}">${esc(o)}</button>`).join("")}</div>`;
+    if(p.typ==="ocena") return `<div class="q"><div class="t">${nr}${esc(p.t)}</div><div class="oceny">${[1,2,3].map(i=>`<button class="opt ${v===i?"on":""}" data-p="${p.id}" data-v="${i}">${i}</button>`).join("")}</div></div>`;
+    if(p.typ==="lista"){ const z=v||[]; return `<div class="q"><div class="t">${nr}${esc(p.t)}</div>${p.o.map((o,i)=>`<label class="chk"><input type="checkbox" data-l="${p.id}" data-v="${i}" ${z.includes(i)?"checked":""}> ${esc(o)}</label>`).join("")}</div>`; }
+    if(p.typ==="liczba") return `<label>${nr}${esc(p.t)}</label><input type="text" inputmode="decimal" data-i="${p.id}" value="${esc(v??"")}">`;
+    if(p.typ==="tekst") return `<label>${nr}${esc(p.t)}</label><input type="text" data-i="${p.id}" value="${esc(v??"")}">`;
+    return `<label>${nr}${esc(p.t)}</label><textarea data-i="${p.id}" rows="${p.duzy?10:4}">${esc(v??"")}</textarea>`;
+  }
+  function cwIndywidualne(c){
+    const uid=auth.currentUser.uid, ref=doc(db,"sesje",kod,"odpowiedzi",c.id+"_"+uid);
+    let odp={}, wyslane=false;
+    const rys=()=>{
+      const pelne = c.quiz ? c.pola.every(p=>odp[p.id]!==undefined) : true;
+      $("#app").innerHTML = naglowekCw(c)+`<div class="card">${c.pola.map((p,i)=>poleHTML(p,odp[p.id],c.quiz?i:undefined)).join("")}
+       <div class="row"><button id="wyslij" class="${wyslane?"wyslane":""}" ${!pelne||wyslane?"disabled":""}>${wyslane?"Twoje dane zostały wysłane":"Wyślij odpowiedzi"}</button></div>
+       <p class="hint">Odpowiedzi możesz zmieniać i wysyłać ponownie, dopóki prowadzący nie zamknie sesji.</p></div>`;
+      document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{ odp[b.dataset.p]=Number(b.dataset.v); wyslane=false; rys(); });
+      document.querySelectorAll("[data-l]").forEach(b=>b.onchange=()=>{ const a=new Set(odp[b.dataset.l]||[]); b.checked?a.add(Number(b.dataset.v)):a.delete(Number(b.dataset.v)); odp[b.dataset.l]=[...a].sort(); if(wyslane){wyslane=false;const w=$("#wyslij");w.className="";w.disabled=false;w.textContent="Wyślij odpowiedzi";} });
+      document.querySelectorAll("[data-i]").forEach(b=>b.oninput=()=>{ odp[b.dataset.i]=b.value; if(wyslane){wyslane=false;const w=$("#wyslij");w.className="";w.disabled=false;w.textContent="Wyślij odpowiedzi";} });
+      $("#wyslij").onclick=async()=>{ const b=$("#wyslij"); b.disabled=true; b.textContent="Wysyłanie…";
+        try{ await setDoc(ref,{uid,pseudonim:nick,cw:c.id,odp,czas:serverTimestamp()}); wyslane=true; rys(); }
+        catch(e){ b.disabled=false; b.textContent="Wyślij odpowiedzi"; $("#app").insertAdjacentHTML("beforeend",`<div class="msg err">${esc(blad(e))}</div>`); } };
     };
-  };
-  rys();
+    getDoc(ref).then(d=>{ if(d.exists()){ odp=d.data().odp||{}; } rys(); }).catch(()=>rys());
+  }
+  function cwGrupowe(c,g){
+    const ref=doc(db,"sesje",kod,"grupy",c.id+"_"+g.replace(/\s/g,""));
+    let pola={}, pierwszy=true, timery={};
+    $("#app").innerHTML = naglowekCw(c,g)+`<div class="card"><p class="hint">Wszystkie osoby z twojej grupy widzą i zmieniają ten sam formularz. Zmiany zapisują się same po chwili.</p>
+     <div id="formg"></div>${c.suma?`<div class="suma">Koszt policzalny razem: <b id="sumab">0 zł</b></div>`:""}
+     <div class="row"><span id="stan" class="hint"></span><button class="sec" id="zmg">Zmień grupę</button></div></div>`;
+    $("#zmg").onclick=()=>{ localStorage.removeItem("zml_grupa_"+kod); wew.forEach(f=>f()); wew=[]; wyborGrupy(c); };
+    const rys=()=>{ $("#formg").innerHTML=c.pola.map(p=>poleHTML(p,pola[p.id])).join(""); podepnij(); if(c.suma) $("#sumab").textContent=zl(sumaKosztu(pola)); };
+    const zapisz=(k,v)=>{ pola[k]=v; if(c.suma) $("#sumab").textContent=zl(sumaKosztu(pola)); $("#stan").textContent="Zapisywanie…";
+      clearTimeout(timery[k]); timery[k]=setTimeout(async()=>{ try{ await setDoc(ref,{cw:c.id,grupa:g,pola:{[k]:v},czas:serverTimestamp()},{merge:true}); $("#stan").textContent="Zapisano"; }catch(e){ $("#stan").textContent=blad(e); } }, v===undefined||typeof v==="number"?0:700); };
+    function podepnij(){
+      document.querySelectorAll("#formg .opt").forEach(b=>b.onclick=()=>{ zapisz(b.dataset.p,Number(b.dataset.v)); rys(); });
+      document.querySelectorAll("#formg [data-i]").forEach(b=>b.oninput=()=>zapisz(b.dataset.i,b.value));
+    }
+    const u=onSnapshot(ref,s=>{
+      const zdalne=(s.data()||{}).pola||{};
+      if(pierwszy){ pola={...zdalne}; pierwszy=false; rys(); return; }
+      const akt=document.activeElement;
+      Object.entries(zdalne).forEach(([k,v])=>{
+        if(akt && akt.dataset && akt.dataset.i===k) return;
+        pola[k]=v;
+        const el=document.querySelector(`#formg [data-i="${k}"]`);
+        if(el){ if(el.value!==v) el.value=v; }
+        else document.querySelectorAll(`#formg .opt[data-p="${k}"]`).forEach(b=>b.classList.toggle("on",Number(b.dataset.v)===v));
+      });
+      if(c.suma) $("#sumab").textContent=zl(sumaKosztu(pola));
+    });
+    wew.push(u); odsluchy.push(u);
+  }
 }
 
-/* ---------- PROWADZĄCY ---------- */
+/* ================= PROWADZĄCY ================= */
 function widokLogowanie(user){
   stop();
   const inny = user && !user.isAnonymous && user.email !== PROWADZACY;
@@ -194,16 +311,15 @@ function widokProwadzacyStart(komunikat){
   stop();
   $("#app").innerHTML = `<h1>Sesje szkoleniowe</h1>
   <div class="card"><h2 style="margin-top:0">Nowa sesja</h2>
-   <label for="nazwa">Nazwa sesji</label><input type="text" id="nazwa" placeholder="na przykład Rekrutacja i selekcja, 14 października">
+   <label for="nazwa">Nazwa sesji</label><input type="text" id="nazwa" placeholder="na przykład Rekrutacja i selekcja, grupa jesienna">
    <div class="row"><button id="utworz">Utwórz sesję</button></div></div>
   <div class="card"><h2 style="margin-top:0">Twoje sesje</h2><div id="lista"><p class="hint">Wczytywanie…</p></div></div>
   ${komunikat?`<div class="msg err">${esc(komunikat)}</div>`:""}
   <div class="row"><button class="sec" id="wyl">Wyloguj</button></div>`;
   $("#utworz").onclick = async () => {
     const k = nowyKod();
-    try{ await setDoc(doc(db,"sesje",k),{nazwa:$("#nazwa").value.trim()||"Sesja "+k, otwarta:true, utworzona:serverTimestamp()});
-      widokSesja(k);
-    }catch(e){ widokProwadzacyStart(blad(e)); }
+    try{ await setDoc(doc(db,"sesje",k),{nazwa:$("#nazwa").value.trim()||"Sesja "+k, otwarta:true, aktywne:null, utworzona:serverTimestamp()}); widokSesja(k); }
+    catch(e){ widokProwadzacyStart(blad(e)); }
   };
   $("#wyl").onclick = () => signOut(auth);
   wczytajListe();
@@ -212,10 +328,10 @@ async function wczytajListe(){
   try{
     const s = await getDocs(collection(db,"sesje"));
     const L = [];
-    for(const d of s.docs){ const o = await getDocs(collection(db,"sesje",d.id,"odpowiedzi")); L.push({kod:d.id, ...d.data(), n:o.size}); }
+    for(const d of s.docs){ const o = await getDocs(collection(db,"sesje",d.id,"odpowiedzi")); const g = await getDocs(collection(db,"sesje",d.id,"grupy")); L.push({kod:d.id, ...d.data(), n:o.size+g.size}); }
     L.sort((a,b)=>(b.utworzona?.seconds||0)-(a.utworzona?.seconds||0));
     const dt = t => t ? new Date(t.seconds*1000).toLocaleString("pl-PL",{day:"numeric",month:"long",hour:"2-digit",minute:"2-digit"}) : "";
-    $("#lista").innerHTML = L.length ? `<table class="slist"><tr><th>Kod</th><th>Nazwa</th><th>Utworzona</th><th>Odpowiedzi</th><th>Stan</th><th></th></tr>
+    $("#lista").innerHTML = L.length ? `<table class="slist"><tr><th>Kod</th><th>Nazwa</th><th>Utworzona</th><th>Wpisy</th><th>Stan</th><th></th></tr>
      ${L.map(x=>`<tr><td><b>${esc(x.kod)}</b></td><td>${esc(x.nazwa)}</td><td>${esc(dt(x.utworzona))}</td><td>${x.n}</td>
       <td><span class="pill ${x.otwarta?"o":"z"}">${x.otwarta?"otwarta":"zamknięta"}</span></td>
       <td style="white-space:nowrap"><button class="sec" data-o="${esc(x.kod)}">Otwórz</button> <button class="red" data-u="${esc(x.kod)}">Usuń</button></td></tr>`).join("")}</table>`
@@ -231,40 +347,71 @@ async function usunSesje(kod){
 }
 function widokSesja(kod){
   stop();
-  let sesja = null, wpisy = [], pokaz = false;
+  let sesja=null, ind=[], gr=[], wybrane=null, pokaz=false;
   const link = location.origin + location.pathname + "?s=" + kod;
-  const rys = () => {
-    const w = wpisy.filter(x=>x.cw===CW.id);
-    const tmax = Math.max(0,...w.map(x=>x.czas?.seconds||0));
-    const ost = tmax ? new Date(tmax*1000).toLocaleTimeString("pl-PL") : "";
-    $("#app").innerHTML = `<h1>${esc(sesja?.nazwa||"")}</h1>
+  const rys=()=>{
+    if(!sesja) return;
+    if(!wybrane) wybrane = sesja.aktywne || CW[0].id;
+    const c=cwById(wybrane);
+    const tmax=Math.max(0,...ind.concat(gr).map(x=>x.czas?.seconds||0));
+    $("#app").innerHTML = `<h1>${esc(sesja.nazwa||"")}</h1>
     <div class="card"><div class="row" style="justify-content:space-between;margin-top:0">
       <div><div class="hint">Kod sesji</div><div class="kod">${esc(kod)}</div></div>
-      <div><span class="pill ${sesja?.otwarta?"o":"z"}">${sesja?.otwarta?"sesja otwarta":"sesja zamknięta"}</span></div></div>
+      <div><span class="pill ${sesja.otwarta?"o":"z"}">${sesja.otwarta?"sesja otwarta":"sesja zamknięta"}</span></div></div>
      <p class="hint">Link dla uczestników: <b>${esc(link)}</b></p>
-     <div class="row"><button class="sec" id="kopiuj">Skopiuj link</button>
-      <button class="sec" id="przelacz">${sesja?.otwarta?"Zamknij sesję":"Otwórz sesję"}</button>
+     <div class="row"><button class="sec" id="kopiuj">Skopiuj link</button><button class="sec" id="przelacz">${sesja.otwarta?"Zamknij sesję":"Otwórz sesję"}</button>
       <button class="red" id="usun">Usuń dane sesji</button><button class="sec" id="wroc">Wróć</button></div></div>
-    <div class="card"><div class="row" style="justify-content:space-between;margin-top:0">
-      <h2 style="margin:0">${esc(CW.nazwa)}</h2><div><span class="big">${w.length}</span> <span class="hint">odpowiedzi</span></div></div>
-     <p style="margin:6px 0 0"><span class="live"><i></i>na żywo</span> <span class="hint">· wyniki odświeżają się same${ost?", ostatnia odpowiedź o "+ost:""}</span></p>
-     <div class="row"><button class="hon" id="pok">${pokaz?"Ukryj poprawne odpowiedzi":"Pokaż poprawne odpowiedzi"}</button></div>
-     ${CW.pytania.map((p,i)=>{ const n=w.length||1;
-       return `<h2>${i+1}. ${esc(p.t)}</h2>${p.o.map(([v,l])=>{ const c=w.filter(x=>x.odp&&x.odp[p.id]===v).length;
-        return `<div class="bar ${pokaz&&v===p.d?"dob":""}"><div><div class="l">${esc(l)}</div><div class="tr"><div class="f" style="width:${Math.round(c/n*100)}%"></div></div></div><div class="n">${c}</div></div>`}).join("")}`}).join("")}
-     ${w.length?`<p class="hint">Odpowiedzieli: ${w.map(x=>esc(x.pseudonim)).join(", ")}.</p>`:""}</div>`;
-    $("#kopiuj").onclick = () => navigator.clipboard.writeText(link);
-    $("#przelacz").onclick = () => updateDoc(doc(db,"sesje",kod),{otwarta:!sesja.otwarta});
-    $("#pok").onclick = () => { pokaz=!pokaz; rys(); };
-    $("#wroc").onclick = () => widokProwadzacyStart();
-    $("#usun").onclick = async () => {
-      stop();
-      try{ if(await usunSesje(kod)) widokProwadzacyStart(); else widokSesja(kod); }catch(e){ widokProwadzacyStart(blad(e)); }
-    };
+    <div class="card"><h2 style="margin-top:0">Ćwiczenia</h2><div class="cwl">${CW.map(x=>{ const n=(x.tryb==="gr"?gr:ind).filter(y=>y.cw===x.id).length;
+      return `<button class="cwb ${x.id===wybrane?"wyb":""} ${x.id===sesja.aktywne?"akt":""}" data-c="${x.id}"><span>${esc(x.nazwa)}</span><small>${x.tryb==="gr"?"grupy":"indywidualne"} · ${n}${x.id===sesja.aktywne?" · u uczestników":""}</small></button>`}).join("")}</div>
+     <div class="row">${sesja.aktywne===wybrane?`<button class="sec" id="zatrz">Zatrzymaj ćwiczenie u uczestników</button>`:`<button class="hon" id="uruch">Pokaż uczestnikom: ${esc(c.nazwa)}</button>`}</div></div>
+    <div class="card"><div class="row" style="justify-content:space-between;margin-top:0"><h2 style="margin:0">${esc(c.nazwa)}</h2>
+      <p style="margin:0"><span class="live"><i></i>na żywo</span> <span class="hint">${tmax?"· ostatni wpis o "+new Date(tmax*1000).toLocaleTimeString("pl-PL"):""}</span></p></div>
+     ${c.quiz?`<div class="row"><button class="hon" id="pok">${pokaz?"Ukryj poprawne odpowiedzi":"Pokaż poprawne odpowiedzi"}</button></div>`:""}
+     <div id="wyniki">${wyniki(c)}</div></div>`;
+    $("#kopiuj").onclick=()=>navigator.clipboard.writeText(link);
+    $("#przelacz").onclick=()=>updateDoc(doc(db,"sesje",kod),{otwarta:!sesja.otwarta});
+    $("#wroc").onclick=()=>widokProwadzacyStart();
+    $("#usun").onclick=async()=>{ stop(); try{ if(await usunSesje(kod)) widokProwadzacyStart(); else widokSesja(kod); }catch(e){ widokProwadzacyStart(blad(e)); } };
+    document.querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{ wybrane=b.dataset.c; pokaz=false; rys(); });
+    const ur=$("#uruch"); if(ur) ur.onclick=()=>updateDoc(doc(db,"sesje",kod),{aktywne:wybrane});
+    const za=$("#zatrz"); if(za) za.onclick=()=>updateDoc(doc(db,"sesje",kod),{aktywne:null});
+    const pk=$("#pok"); if(pk) pk.onclick=()=>{ pokaz=!pokaz; rys(); };
   };
-  const u1 = onSnapshot(doc(db,"sesje",kod), s => { sesja = s.data(); if(sesja) rys(); });
-  const u2 = onSnapshot(collection(db,"sesje",kod,"odpowiedzi"), s => { wpisy = s.docs.map(d=>d.data()); if(sesja) rys(); });
-  odsluch = () => { u1(); u2(); };
+  function pasek(l,c,n,dob){ return `<div class="bar ${dob?"dob":""}"><div><div class="l">${esc(l)}</div><div class="tr"><div class="f" style="width:${n?Math.round(c/n*100):0}%"></div></div></div><div class="n">${c}</div></div>`; }
+  function wyniki(c){
+    if(c.tryb==="ind"){
+      const w=ind.filter(x=>x.cw===c.id), n=w.length;
+      let h=`<p><span class="big">${n}</span> <span class="hint">odpowiedzi${n?": "+w.map(x=>esc(x.pseudonim)).join(", "):""}</span></p>`;
+      if(c.porownaj){ const w0=ind.filter(x=>x.cw===c.porownaj);
+        const proc=(ws,p)=>ws.length?Math.round(ws.filter(x=>x.odp&&x.odp[p.id]===p.d).length/ws.length*100):0;
+        h+=`<h3>Poprawne odpowiedzi na początku i na końcu</h3>${c.pola.map((p,i)=>`<div class="por"><span>${i+1}. ${esc(p.t)}</span><div class="pp"><div class="tr"><div class="f szary" style="width:${proc(w0,p)}%"></div></div><b>${proc(w0,p)}% na początku</b></div><div class="pp"><div class="tr"><div class="f" style="width:${proc(w,p)}%"></div></div><b>${proc(w,p)}% na końcu</b></div></div>`).join("")}`; }
+      c.pola.forEach((p,i)=>{ const v=w.map(x=>x.odp?x.odp[p.id]:undefined);
+        h+=`<h3>${c.quiz?(i+1)+". ":""}${esc(p.t)}</h3>`;
+        if(p.typ==="wybor") h+=p.o.map((o,k)=>pasek(o,v.filter(x=>x===k).length,n,pokaz&&p.d===k)).join("");
+        else if(p.typ==="ocena") h+=[1,2,3].map(k=>pasek("Ocena "+k,v.filter(x=>x===k).length,n)).join("");
+        else if(p.typ==="lista") h+=p.o.map((o,k)=>pasek(o,v.filter(x=>Array.isArray(x)&&x.includes(k)).length,n)).join("");
+        else if(p.typ==="liczba"){ const z=v.map(liczba).filter(x=>x>0).sort((a,b)=>a-b); h+=z.length?`<p>Najniższa: <b>${zl(z[0])}</b> · najwyższa: <b>${zl(z[z.length-1])}</b> · środkowa: <b>${zl(z[Math.floor(z.length/2)])}</b></p>`:`<p class="hint">Brak wpisów.</p>`; }
+        else h+=`<ul class="wpisy">${w.filter(x=>x.odp&&x.odp[p.id]).map(x=>`<li><b>${esc(x.pseudonim)}:</b> ${esc(x.odp[p.id])}</li>`).join("")||`<li class="hint">Brak wpisów.</li>`}</ul>`;
+      });
+      if(c.id==="przedzial"&&n){ h+=`<h3>Przedziały uczestników</h3><table class="slist"><tr><th>Uczestnik</th><th>Stanowisko</th><th>Od</th><th>Do</th><th>Źródło</th></tr>${w.map(x=>`<tr><td>${esc(x.pseudonim)}</td><td>${esc(x.odp.st)}</td><td>${zl(liczba(x.odp.od))}</td><td>${zl(liczba(x.odp.do))}</td><td>${esc(c.pola[3].o[x.odp.zr]??"")}</td></tr>`).join("")}</table>`; }
+      return h;
+    }
+    const w=gr.filter(x=>x.cw===c.id).sort((a,b)=>a.grupa.localeCompare(b.grupa,"pl",{numeric:true}));
+    if(!w.length) return `<p class="hint">Żadna grupa jeszcze nie zaczęła.</p>`;
+    if(c.kolejnosc){
+      const pierwsi={}; w.forEach(x=>{ const m=(x.pola||{}).m1; if(m!==undefined){ const k=c.pola[0].o[m]; pierwsi[k]=(pierwsi[k]||0)+1; } });
+      return `<table class="slist"><tr><th>Grupa</th><th>Miejsce 1</th><th>Miejsce 2</th><th>Miejsce 3</th><th>Uzasadnienie</th></tr>${w.map(x=>{const p=x.pola||{};const nm=k=>p[k]!==undefined?c.pola[0].o[p[k]]:"—";return `<tr><td><b>${esc(x.grupa)}</b></td><td>${nm("m1")}</td><td>${nm("m2")}</td><td>${nm("m3")}</td><td>${esc(p.uz||"")}</td></tr>`}).join("")}</table>
+       <p class="hint">Na pierwszym miejscu: ${Object.entries(pierwsi).map(([k,v])=>esc(k)+" "+v).join(", ")||"brak"}. Kolejność względem profilu: Anna, Celina, Bartek.</p>`;
+    }
+    return `<div class="grk">${w.map(x=>{ const p=x.pola||{};
+      return `<div class="gk"><h3>${esc(x.grupa)}</h3>${c.suma?`<div class="suma">Razem: <b>${zl(sumaKosztu(p))}</b></div>`:""}${c.pola.map(q=>{ const v=p[q.id];
+        if(v===undefined||v==="") return "";
+        const tekst = q.typ==="wybor"?q.o[v]:(q.typ==="liczba"?v:String(v));
+        return `<div class="gp"><span>${esc(q.t)}</span><div>${esc(tekst).replace(/\n/g,"<br>")}</div></div>`}).join("")}</div>`}).join("")}</div>`;
+  }
+  odsluchy.push(onSnapshot(doc(db,"sesje",kod), s=>{ sesja=s.data(); if(sesja) rys(); }));
+  odsluchy.push(onSnapshot(collection(db,"sesje",kod,"odpowiedzi"), s=>{ ind=s.docs.map(d=>d.data()); rys(); }));
+  odsluchy.push(onSnapshot(collection(db,"sesje",kod,"grupy"), s=>{ gr=s.docs.map(d=>d.data()); rys(); }));
 }
 </script>
 </body>
