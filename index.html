@@ -91,6 +91,9 @@ label.chk input{width:20px;height:20px;margin-top:2px;accent-color:#1F4460}
 .gp{margin:8px 0}.gp span{display:block;font-size:13px;font-weight:700;color:#5E6B78}
 .wpisy{padding-left:18px;margin:6px 0}.wpisy li{margin:4px 0}
 .pill.z{background:#F2F2F2;color:#5E6B78}
+.czl{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 8px}
+.chip{display:inline-flex;align-items:center;gap:6px;background:#E8EEF3;color:#1F4460;border-radius:999px;padding:3px 6px 3px 12px;font-size:14px;font-weight:600}
+.chip select{font:inherit;font-size:12px;border:1px solid #C9D5E1;border-radius:999px;padding:2px 4px;background:#fff;color:#1F4460}
 </style>
 </head>
 <body>
@@ -100,7 +103,7 @@ label.chk input{width:20px;height:20px;margin-top:2px;accent-color:#1F4460}
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, signInAnonymously, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc, updateDoc, deleteDoc, collection, onSnapshot, getDocs, serverTimestamp, writeBatch } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, doc, getDoc, setDoc, updateDoc, deleteDoc, collection, onSnapshot, getDocs, serverTimestamp, writeBatch, deleteField } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDUVBglR2h1r-MRoMQ6F-yi5be-NW9q7VA",
@@ -214,11 +217,16 @@ function widokUczestnikStart(komunikat){
 }
 function widokUczestnikSesja(kod,nick){
   stop();
-  let aktywne, otwarta=true;
+  let aktywne, otwarta=true, ostPrzydz;
+  const uid=auth.currentUser.uid;
   const u = onSnapshot(doc(db,"sesje",kod), s=>{
     const d=s.data(); if(!d){ widokUczestnikStart("Sesja została usunięta."); return; }
     otwarta=!!d.otwarta;
-    if((d.aktywne||null)!==aktywne){ aktywne=d.aktywne||null; pokazCwiczenie(); }
+    const moj=(d.przydzial||{})[uid];
+    let odnow=false;
+    if(moj && moj!==ostPrzydz){ ostPrzydz=moj; const stara=localStorage.getItem("zml_grupa_"+kod); if(stara!==moj){ const ca=cwById(d.aktywne); if(stara && ca && ca.tryb==="gr") setDoc(doc(db,"sesje",kod,"grupy",ca.id+"_"+stara.replace(/\s/g,"")),{czlonkowie:{[uid]:deleteField()}},{merge:true}).catch(()=>{}); localStorage.setItem("zml_grupa_"+kod,moj); odnow=true; } }
+    if((d.aktywne||null)!==aktywne){ aktywne=d.aktywne||null; odnow=true; }
+    if(odnow) pokazCwiczenie();
     const z=$("#zamk"); if(z) z.classList.toggle("hidden",otwarta);
   });
   odsluchy.push(u);
@@ -235,7 +243,7 @@ function widokUczestnikSesja(kod,nick){
   }
   function naglowekCw(c,dod){ return `<h1>${esc(c.nazwa)}</h1><p class="hint">Sesja ${esc(kod)} · ${esc(nick)}${dod?" · "+esc(dod):""}</p><div id="zamk" class="msg err ${otwarta?"hidden":""}">Prowadzący zamknął sesję. Odpowiedzi nie są już zapisywane.</div>`; }
   function wyborGrupy(c){
-    $("#app").innerHTML = naglowekCw(c)+`<div class="card"><p>To ćwiczenie wykonujecie w grupie. Wybierz swoją grupę, tę samą co pozostałe osoby z twojego pokoju.</p><div class="grupy">${GRUPY.map(g=>`<button class="sec" data-g="${esc(g)}">${esc(g)}</button>`).join("")}</div></div>`;
+    $("#app").innerHTML = naglowekCw(c)+`<div class="card"><p>To ćwiczenie wykonujecie w grupie. Wybierz grupę o tym samym numerze co twój pokój w Teams. Nazwę pokoju widzisz na górze okna Teams.</p><div class="grupy">${GRUPY.map(g=>`<button class="sec" data-g="${esc(g)}">${esc(g)}</button>`).join("")}</div></div>`;
     document.querySelectorAll("[data-g]").forEach(b=>b.onclick=()=>{ localStorage.setItem("zml_grupa_"+kod,b.dataset.g); cwGrupowe(c,b.dataset.g); });
   }
   function poleHTML(p,v,idx){
@@ -267,10 +275,11 @@ function widokUczestnikSesja(kod,nick){
   function cwGrupowe(c,g){
     const ref=doc(db,"sesje",kod,"grupy",c.id+"_"+g.replace(/\s/g,""));
     let pola={}, pierwszy=true, timery={};
-    $("#app").innerHTML = naglowekCw(c,g)+`<div class="card"><p class="hint">Wszystkie osoby z twojej grupy widzą i zmieniają ten sam formularz. Zmiany zapisują się same po chwili.</p>
+    $("#app").innerHTML = naglowekCw(c,g)+`<div class="card"><p class="hint">Wszystkie osoby z twojej grupy widzą i zmieniają ten sam formularz. Zmiany zapisują się same po chwili. Najwygodniej, gdy wpisuje jedna osoba, a pozostałe czytają i poprawiają.</p><p class="hint">Osoby w grupie: <b id="czl"></b></p>
      <div id="formg"></div>${c.suma?`<div class="suma">Koszt policzalny razem: <b id="sumab">0 zł</b></div>`:""}
      <div class="row"><span id="stan" class="hint"></span><button class="sec" id="zmg">Zmień grupę</button></div></div>`;
-    $("#zmg").onclick=()=>{ localStorage.removeItem("zml_grupa_"+kod); wew.forEach(f=>f()); wew=[]; wyborGrupy(c); };
+    setDoc(ref,{cw:c.id,grupa:g,czlonkowie:{[uid]:nick}},{merge:true}).catch(()=>{});
+    $("#zmg").onclick=()=>{ setDoc(ref,{czlonkowie:{[uid]:deleteField()}},{merge:true}).catch(()=>{}); localStorage.removeItem("zml_grupa_"+kod); wew.forEach(f=>f()); wew=[]; wyborGrupy(c); };
     const rys=()=>{ $("#formg").innerHTML=c.pola.map(p=>poleHTML(p,pola[p.id])).join(""); podepnij(); if(c.suma) $("#sumab").textContent=zl(sumaKosztu(pola)); };
     const zapisz=(k,v)=>{ pola[k]=v; if(c.suma) $("#sumab").textContent=zl(sumaKosztu(pola)); $("#stan").textContent="Zapisywanie…";
       clearTimeout(timery[k]); timery[k]=setTimeout(async()=>{ try{ await setDoc(ref,{cw:c.id,grupa:g,pola:{[k]:v},czas:serverTimestamp()},{merge:true}); $("#stan").textContent="Zapisano"; }catch(e){ $("#stan").textContent=blad(e); } }, v===undefined||typeof v==="number"?0:700); };
@@ -279,6 +288,7 @@ function widokUczestnikSesja(kod,nick){
       document.querySelectorAll("#formg [data-i]").forEach(b=>b.oninput=()=>zapisz(b.dataset.i,b.value));
     }
     const u=onSnapshot(ref,s=>{
+      const cz=$("#czl"); if(cz) cz.textContent=Object.values((s.data()||{}).czlonkowie||{}).join(", ");
       const zdalne=(s.data()||{}).pola||{};
       if(pierwszy){ pola={...zdalne}; pierwszy=false; rys(); return; }
       const akt=document.activeElement;
@@ -376,6 +386,13 @@ function widokSesja(kod){
     const ur=$("#uruch"); if(ur) ur.onclick=()=>updateDoc(doc(db,"sesje",kod),{aktywne:wybrane});
     const za=$("#zatrz"); if(za) za.onclick=()=>updateDoc(doc(db,"sesje",kod),{aktywne:null});
     const pk=$("#pok"); if(pk) pk.onclick=()=>{ pokaz=!pokaz; rys(); };
+    document.querySelectorAll("[data-mv]").forEach(sel=>sel.onchange=async()=>{
+      const nowa=sel.value, u=sel.dataset.mv, stara=sel.dataset.z; if(!nowa) return;
+      try{
+        await updateDoc(doc(db,"sesje",kod),{["przydzial."+u]:nowa});
+        await setDoc(doc(db,"sesje",kod,"grupy",wybrane+"_"+stara.replace(/\s/g,"")),{czlonkowie:{[u]:deleteField()}},{merge:true});
+      }catch(e){ alert(blad(e)); }
+    });
   };
   function pasek(l,c,n,dob){ return `<div class="bar ${dob?"dob":""}"><div><div class="l">${esc(l)}</div><div class="tr"><div class="f" style="width:${n?Math.round(c/n*100):0}%"></div></div></div><div class="n">${c}</div></div>`; }
   function wyniki(c){
@@ -404,7 +421,8 @@ function widokSesja(kod){
        <p class="hint">Na pierwszym miejscu: ${Object.entries(pierwsi).map(([k,v])=>esc(k)+" "+v).join(", ")||"brak"}. Kolejność względem profilu: Anna, Celina, Bartek.</p>`;
     }
     return `<div class="grk">${w.map(x=>{ const p=x.pola||{};
-      return `<div class="gk"><h3>${esc(x.grupa)}</h3>${c.suma?`<div class="suma">Razem: <b>${zl(sumaKosztu(p))}</b></div>`:""}${c.pola.map(q=>{ const v=p[q.id];
+      const czl=Object.entries(x.czlonkowie||{});
+      return `<div class="gk"><h3>${esc(x.grupa)} <small class="hint">· ${czl.length} os.</small></h3><div class="czl">${czl.map(([u,n])=>`<span class="chip">${esc(n)}<select data-mv="${esc(u)}" data-n="${esc(n)}" data-z="${esc(x.grupa)}" title="Przenieś do innej grupy"><option value="">przenieś</option>${GRUPY.filter(g=>g!==x.grupa).map(g=>`<option>${g}</option>`).join("")}</select></span>`).join("")||`<span class="hint">nikt nie jest teraz w tej grupie</span>`}</div>${c.suma?`<div class="suma">Razem: <b>${zl(sumaKosztu(p))}</b></div>`:""}${c.pola.map(q=>{ const v=p[q.id];
         if(v===undefined||v==="") return "";
         const tekst = q.typ==="wybor"?q.o[v]:(q.typ==="liczba"?v:String(v));
         return `<div class="gp"><span>${esc(q.t)}</span><div>${esc(tekst).replace(/\n/g,"<br>")}</div></div>`}).join("")}</div>`}).join("")}</div>`;
