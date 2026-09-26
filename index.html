@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZMIANOLOGICA · ćwiczenia na szkoleniu</title>
+<style>
+:root{--navy:#1F4460;--navy-h:#163450;--honey:#E8B62C;--on-honey:#5C4810;--red:#C8202E;--bg:#F5F5F7;--info:#F0F6FB;--ink:#24282D;--mut:#5E656D;--line:#D9DCE1;--ok:#2E6B45}
+*{box-sizing:border-box}
+body{margin:0;font-family:Montserrat,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.55}
+header{background:var(--navy);color:#fff;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+header b{font-size:16px;letter-spacing:.04em}
+header span{font-size:13px;color:#C9D5E1}
+main{max-width:860px;margin:0 auto;padding:20px}
+h1{font-size:24px;color:var(--navy);margin:14px 0 6px}
+h2{font-size:18px;color:var(--navy);margin:20px 0 8px}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:14px}
+label{display:block;font-weight:600;font-size:14px;color:var(--navy);margin:12px 0 5px}
+input[type=text]{width:100%;font:inherit;border:1.5px solid var(--line);border-radius:9px;padding:10px 12px}
+input:focus{outline:none;border-color:var(--navy)}
+button{font:inherit;font-weight:700;border:none;border-radius:10px;padding:11px 18px;cursor:pointer;background:var(--navy);color:#fff}
+button:hover{background:var(--navy-h)}
+button.sec{background:#fff;color:var(--navy);border:1.5px solid var(--navy)}
+button.hon{background:var(--honey);color:var(--on-honey)}
+button.red{background:#fff;color:var(--red);border:1.5px solid var(--red)}
+button:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,input:focus-visible{outline:3px solid var(--honey);outline-offset:2px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+.hint{font-size:13.5px;color:var(--mut);margin:6px 0 0}
+.msg{padding:10px 14px;border-radius:0 9px 9px 0;margin:12px 0;font-size:14.5px;border-left:4px solid var(--navy);background:var(--info)}
+.msg.err{border-color:var(--red);background:#FBEAEA}
+.msg.ok{border-color:var(--ok);background:#E7F2EA}
+.q{margin-bottom:18px}
+.q .t{font-weight:600;margin-bottom:8px}
+.opt{display:block;width:100%;text-align:left;background:#fff;color:var(--ink);border:1.5px solid var(--line);font-weight:500;margin-bottom:6px}
+.opt:hover{background:var(--info)}
+.opt.on{border-color:var(--navy);background:var(--info);font-weight:700}
+.kod{font-size:40px;font-weight:800;letter-spacing:.12em;color:var(--navy)}
+.big{font-size:28px;font-weight:800;color:var(--navy)}
+.bar{display:grid;grid-template-columns:1fr 60px;gap:10px;align-items:center;margin:6px 0}
+.bar .l{font-size:14px}
+.bar .tr{background:var(--bg);border-radius:6px;height:26px;position:relative;overflow:hidden;margin-top:3px}
+.bar .f{position:absolute;inset:0 auto 0 0;background:var(--navy);border-radius:6px;transition:width .4s}
+.bar.dob .f{background:var(--ok)}
+.bar .n{font-weight:700;text-align:right}
+.pill{display:inline-block;font-size:12px;font-weight:700;padding:2px 10px;border-radius:999px}
+.pill.o{background:#E7F2EA;color:var(--ok)}.pill.z{background:#FBEAEA;color:var(--red)}
+.hidden{display:none!important}
+@media (prefers-reduced-motion:reduce){.bar .f{transition:none}}
+</style>
+</head>
+<body>
+<header><b>ZMIANOLOGICA</b><span id="kto"></span></header>
+<main id="app"><p>Łączenie z serwerem…</p></main>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, signInAnonymously, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, updateDoc, deleteDoc, collection, onSnapshot, getDocs, serverTimestamp, writeBatch } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDUVBglR2h1r-MRoMQ6F-yi5be-NW9q7VA",
+  authDomain: "zmianologica-szkolenia.firebaseapp.com",
+  projectId: "zmianologica-szkolenia",
+  storageBucket: "zmianologica-szkolenia.firebasestorage.app",
+  messagingSenderId: "518737570063",
+  appId: "1:518737570063:web:454c1dd4f574fc5c5d767a"
+};
+const PROWADZACY = "marcin.zoltak@zmianologi.ca";
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+/* ---------- ĆWICZENIE TESTOWE ---------- */
+const CW = {id:"test-wejsciowy", nazwa:"Test wiedzy wejściowej", pytania:[
+ {id:"p1", t:"Czym różni się rekrutacja od selekcji?", o:[
+  ["a","Rekrutacja to pozyskanie odpowiedniej liczby kandydatów, a selekcja to wybór spośród nich na podstawie zbadania kandydatów."],
+  ["b","To dwie nazwy tego samego procesu."],
+  ["c","Rekrutacja dotyczy stanowisk kierowniczych, a selekcja stanowisk wykonawczych."]], d:"a"},
+ {id:"p2", t:"Która z tych metod najtrafniej przewiduje późniejsze wyniki pracy kandydata?", o:[
+  ["a","Swobodna rozmowa, w której każdy kandydat słyszy inne pytania."],
+  ["b","Rozmowa według scenariusza, z tymi samymi pytaniami i opisami ocen dla wszystkich kandydatów."],
+  ["c","Analiza CV i listu motywacyjnego."]], d:"b"},
+ {id:"p3", t:"Kiedy pracodawca musi przekazać kandydatowi informację o wynagrodzeniu?", o:[
+  ["a","Dopiero przy podpisywaniu umowy."],
+  ["b","Najpóźniej przed pierwszą rozmową, jeśli nie podał jej w ogłoszeniu."],
+  ["c","Tylko wtedy, gdy kandydat o nią zapyta."]], d:"b"}
+]};
+
+/* ---------- POMOCNICZE ---------- */
+const $ = s => document.querySelector(s);
+const esc = t => String(t ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+const params = new URLSearchParams(location.search);
+const trybProwadzacego = params.has("prowadzacy");
+let odsluch = null;
+function stop(){ if(odsluch){ odsluch(); odsluch = null; } }
+function blad(e){
+  const k = e && e.code || "";
+  if(k.includes("permission-denied")) return "Serwer odmówił zapisu. Sprawdź, czy sesja jest otwarta i czy kod jest poprawny.";
+  if(k.includes("unauthorized-domain")) return "Ten adres strony nie jest dopisany w Firebase do dozwolonych domen (Authentication, Settings, Authorized domains).";
+  if(k.includes("popup")) return "Okno logowania zostało zamknięte albo zablokowane. Zezwól przeglądarce na wyskakujące okna i spróbuj ponownie.";
+  if(k.includes("operation-not-supported") || k.includes("network")) return "Brak połączenia z serwerem albo strona jest otwarta bezpośrednio z dysku. Otwórz ją z adresu internetowego.";
+  return "Wystąpił błąd: " + (e && e.message || e);
+}
+
+/* ---------- START ---------- */
+onAuthStateChanged(auth, async user => {
+  if(trybProwadzacego){
+    if(user && !user.isAnonymous && user.email === PROWADZACY){ $("#kto").textContent = "Prowadzący: " + user.email; widokProwadzacyStart(); }
+    else widokLogowanie(user);
+  } else {
+    if(!user){ try{ await signInAnonymously(auth); }catch(e){ $("#app").innerHTML = `<div class="msg err">${esc(blad(e))}</div>`; } return; }
+    $("#kto").textContent = "Uczestnik";
+    widokUczestnikStart();
+  }
+});
+
+/* ---------- UCZESTNIK ---------- */
+function widokUczestnikStart(komunikat){
+  stop();
+  const kod = params.get("s") || localStorage.getItem("zml_kod") || "";
+  const nick = localStorage.getItem("zml_nick") || "";
+  $("#app").innerHTML = `<h1>Dołącz do ćwiczenia</h1>
+  <div class="card">
+   <label for="kod">Kod sesji</label><input type="text" id="kod" value="${esc(kod)}" placeholder="podaje go prowadzący" autocomplete="off">
+   <label for="nick">Pseudonim</label><input type="text" id="nick" value="${esc(nick)}" placeholder="na przykład Anna K." maxlength="30">
+   <p class="hint">Nie podawaj pełnego imienia i nazwiska. Pseudonim zobaczy tylko prowadzący.</p>
+   ${komunikat?`<div class="msg err">${esc(komunikat)}</div>`:""}
+   <div class="row"><button id="dolacz">Dołącz</button></div></div>`;
+  $("#dolacz").onclick = async () => {
+    const k = $("#kod").value.trim().toUpperCase(), n = $("#nick").value.trim();
+    if(!k || !n){ widokUczestnikStart("Wpisz kod sesji i pseudonim."); return; }
+    try{
+      const s = await getDoc(doc(db,"sesje",k));
+      if(!s.exists()){ widokUczestnikStart("Nie ma sesji o tym kodzie. Sprawdź kod u prowadzącego."); return; }
+      if(!s.data().otwarta){ widokUczestnikStart("Ta sesja jest zamknięta."); return; }
+      localStorage.setItem("zml_kod",k); localStorage.setItem("zml_nick",n);
+      widokUczestnikTest(k,n);
+    }catch(e){ widokUczestnikStart(blad(e)); }
+  };
+}
+async function widokUczestnikTest(kod,nick){
+  const uid = auth.currentUser.uid, ref = doc(db,"sesje",kod,"odpowiedzi",CW.id+"_"+uid);
+  let odp = {};
+  try{ const d = await getDoc(ref); if(d.exists()) odp = d.data().odp || {}; }catch(e){}
+  const rys = (zapisano) => {
+    $("#app").innerHTML = `<h1>${esc(CW.nazwa)}</h1><p class="hint">Sesja ${esc(kod)} · ${esc(nick)}</p>
+    <div class="card">${CW.pytania.map((p,i)=>`<div class="q"><div class="t">${i+1}. ${esc(p.t)}</div>
+     ${p.o.map(([v,l])=>`<button class="opt ${odp[p.id]===v?"on":""}" data-p="${p.id}" data-v="${v}">${esc(l)}</button>`).join("")}</div>`).join("")}
+     ${zapisano?`<div class="msg ok">${esc(zapisano)}</div>`:""}
+     <div class="row"><button id="wyslij" ${Object.keys(odp).length<CW.pytania.length?"disabled":""}>Wyślij odpowiedzi</button></div>
+     <p class="hint">Odpowiedzi możesz zmieniać i wysyłać ponownie, dopóki prowadzący nie zamknie sesji.</p></div>`;
+    document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{ odp[b.dataset.p]=b.dataset.v; rys(); });
+    $("#wyslij").onclick = async () => {
+      try{ await setDoc(ref,{uid, pseudonim:nick, cw:CW.id, odp, czas:serverTimestamp()}); rys("Odpowiedzi zapisane. Zobaczysz je na ekranie prowadzącego."); }
+      catch(e){ rys(); $("#app").insertAdjacentHTML("beforeend",`<div class="msg err">${esc(blad(e))}</div>`); }
+    };
+  };
+  rys();
+}
+
+/* ---------- PROWADZĄCY ---------- */
+function widokLogowanie(user){
+  stop();
+  const inny = user && !user.isAnonymous && user.email !== PROWADZACY;
+  $("#app").innerHTML = `<h1>Widok prowadzącego</h1><div class="card">
+   <p>Zaloguj się kontem Google prowadzącego.</p>
+   ${inny?`<div class="msg err">Zalogowano kontem ${esc(user.email)}, które nie ma uprawnień prowadzącego.</div>`:""}
+   <div class="row"><button id="log">Zaloguj się kontem Google</button>${inny?`<button class="sec" id="wyl">Wyloguj</button>`:""}</div><div id="e"></div></div>`;
+  $("#log").onclick = async () => { try{ await signInWithPopup(auth,new GoogleAuthProvider()); }catch(e){ $("#e").innerHTML = `<div class="msg err">${esc(blad(e))}</div>`; } };
+  if(inny) $("#wyl").onclick = () => signOut(auth);
+}
+function nowyKod(){ const z="ABCDEFGHJKMNPQRSTUVWXYZ23456789"; let k=""; for(let i=0;i<5;i++) k+=z[Math.floor(Math.random()*z.length)]; return k; }
+function widokProwadzacyStart(komunikat){
+  stop();
+  const ost = localStorage.getItem("zml_sesja_prow") || "";
+  $("#app").innerHTML = `<h1>Sesje szkoleniowe</h1>
+  <div class="card"><h2 style="margin-top:0">Nowa sesja</h2>
+   <label for="nazwa">Nazwa sesji</label><input type="text" id="nazwa" placeholder="na przykład Rekrutacja i selekcja, 14 października">
+   <div class="row"><button id="utworz">Utwórz sesję</button></div></div>
+  <div class="card"><h2 style="margin-top:0">Istniejąca sesja</h2>
+   <label for="kod">Kod sesji</label><input type="text" id="kod" value="${esc(ost)}">
+   <div class="row"><button class="sec" id="otworz">Otwórz</button></div></div>
+  ${komunikat?`<div class="msg err">${esc(komunikat)}</div>`:""}
+  <div class="row"><button class="sec" id="wyl">Wyloguj</button></div>`;
+  $("#utworz").onclick = async () => {
+    const k = nowyKod();
+    try{ await setDoc(doc(db,"sesje",k),{nazwa:$("#nazwa").value.trim()||"Sesja "+k, otwarta:true, utworzona:serverTimestamp()});
+      localStorage.setItem("zml_sesja_prow",k); widokSesja(k);
+    }catch(e){ widokProwadzacyStart(blad(e)); }
+  };
+  $("#otworz").onclick = async () => {
+    const k = $("#kod").value.trim().toUpperCase();
+    try{ const s = await getDoc(doc(db,"sesje",k)); if(!s.exists()){ widokProwadzacyStart("Nie ma sesji o tym kodzie."); return; }
+      localStorage.setItem("zml_sesja_prow",k); widokSesja(k);
+    }catch(e){ widokProwadzacyStart(blad(e)); }
+  };
+  $("#wyl").onclick = () => signOut(auth);
+}
+function widokSesja(kod){
+  stop();
+  let sesja = null, wpisy = [], pokaz = false;
+  const link = location.origin + location.pathname + "?s=" + kod;
+  const rys = () => {
+    const w = wpisy.filter(x=>x.cw===CW.id);
+    $("#app").innerHTML = `<h1>${esc(sesja?.nazwa||"")}</h1>
+    <div class="card"><div class="row" style="justify-content:space-between;margin-top:0">
+      <div><div class="hint">Kod sesji</div><div class="kod">${esc(kod)}</div></div>
+      <div><span class="pill ${sesja?.otwarta?"o":"z"}">${sesja?.otwarta?"sesja otwarta":"sesja zamknięta"}</span></div></div>
+     <p class="hint">Link dla uczestników: <b>${esc(link)}</b></p>
+     <div class="row"><button class="sec" id="kopiuj">Skopiuj link</button>
+      <button class="sec" id="przelacz">${sesja?.otwarta?"Zamknij sesję":"Otwórz sesję"}</button>
+      <button class="red" id="usun">Usuń dane sesji</button><button class="sec" id="wroc">Wróć</button></div></div>
+    <div class="card"><div class="row" style="justify-content:space-between;margin-top:0">
+      <h2 style="margin:0">${esc(CW.nazwa)}</h2><div><span class="big">${w.length}</span> <span class="hint">odpowiedzi</span></div></div>
+     <div class="row"><button class="hon" id="pok">${pokaz?"Ukryj poprawne odpowiedzi":"Pokaż poprawne odpowiedzi"}</button></div>
+     ${CW.pytania.map((p,i)=>{ const n=w.length||1;
+       return `<h2>${i+1}. ${esc(p.t)}</h2>${p.o.map(([v,l])=>{ const c=w.filter(x=>x.odp&&x.odp[p.id]===v).length;
+        return `<div class="bar ${pokaz&&v===p.d?"dob":""}"><div><div class="l">${esc(l)}</div><div class="tr"><div class="f" style="width:${Math.round(c/n*100)}%"></div></div></div><div class="n">${c}</div></div>`}).join("")}`}).join("")}
+     ${w.length?`<p class="hint">Odpowiedzieli: ${w.map(x=>esc(x.pseudonim)).join(", ")}.</p>`:""}</div>`;
+    $("#kopiuj").onclick = () => navigator.clipboard.writeText(link);
+    $("#przelacz").onclick = () => updateDoc(doc(db,"sesje",kod),{otwarta:!sesja.otwarta});
+    $("#pok").onclick = () => { pokaz=!pokaz; rys(); };
+    $("#wroc").onclick = () => widokProwadzacyStart();
+    $("#usun").onclick = async () => {
+      if(!confirm("Usunąć wszystkie odpowiedzi i samą sesję "+kod+"? Tej operacji nie da się cofnąć.")) return;
+      stop();
+      try{
+        for(const kol of ["odpowiedzi","grupy"]){ const s = await getDocs(collection(db,"sesje",kod,kol)); const b = writeBatch(db); s.forEach(d=>b.delete(d.ref)); await b.commit(); }
+        await deleteDoc(doc(db,"sesje",kod)); localStorage.removeItem("zml_sesja_prow");
+        widokProwadzacyStart();
+      }catch(e){ widokProwadzacyStart(blad(e)); }
+    };
+  };
+  const u1 = onSnapshot(doc(db,"sesje",kod), s => { sesja = s.data(); if(sesja) rys(); });
+  const u2 = onSnapshot(collection(db,"sesje",kod,"odpowiedzi"), s => { wpisy = s.docs.map(d=>d.data()); if(sesja) rys(); });
+  odsluch = () => { u1(); u2(); };
+}
+</script>
+</body>
+</html>
