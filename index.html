@@ -4,13 +4,29 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ZMIANOLOGICA · ćwiczenia na szkoleniu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--navy:#1F4460;--navy-h:#163450;--honey:#E8B62C;--on-honey:#5C4810;--red:#C8202E;--bg:#F5F5F7;--info:#F0F6FB;--ink:#24282D;--mut:#5E656D;--line:#D9DCE1;--ok:#2E6B45}
+:root{--navy:#1F4460;--navy-h:#163450;--honey:#E8B62C;--honey-d:#B68C20;--on-honey:#5C4810;--red:#C8202E;--bg:#F5F5F7;--info:#F0F6FB;--ink:#1B2733;--mut:#5E6B78;--line:#D5DDE5;--ok:#2E7D4F}
 *{box-sizing:border-box}
-body{margin:0;font-family:Montserrat,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.55}
-header{background:var(--navy);color:#fff;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-header b{font-size:16px;letter-spacing:.04em}
-header span{font-size:13px;color:#C9D5E1}
+body{margin:0;font-family:Montserrat,'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.55}
+header{background:#fff;border-bottom:1px solid var(--line);padding:10px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-top:4px solid var(--honey)}
+.brand{display:flex;align-items:center;gap:12px}
+.brand .znak{width:34px;height:auto;transform-origin:50% 50%;animation:znak-wejscie .7s cubic-bezier(.2,.8,.3,1.2) both,znak-obrot 1.2s ease-in-out 3s infinite}
+.brand .napis{height:20px;width:auto}
+header #kto{font-size:13px;font-weight:600;color:var(--mut)}
+@keyframes znak-wejscie{from{opacity:0;transform:translateY(-14px) scale(.7)}to{opacity:1;transform:none}}
+@keyframes znak-obrot{0%{transform:rotate(0)}12%{transform:rotate(180deg)}100%{transform:rotate(180deg)}}
+.brand .znak{animation-duration:.7s,9s}
+.live{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--ok)}
+.live i{width:9px;height:9px;border-radius:50%;background:var(--ok);animation:live 1.6s ease-in-out infinite}
+@keyframes live{0%,100%{opacity:1}50%{opacity:.25}}
+.slist{width:100%;border-collapse:collapse;font-size:14.5px}
+.slist td,.slist th{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+.slist th{font-size:12.5px;color:var(--mut);font-weight:600}
+.slist button{padding:7px 12px;font-size:13.5px}
+@media (prefers-reduced-motion:reduce){.brand .znak,.live i{animation:none}}
 main{max-width:860px;margin:0 auto;padding:20px}
 h1{font-size:24px;color:var(--navy);margin:14px 0 6px}
 h2{font-size:18px;color:var(--navy);margin:20px 0 8px}
@@ -51,7 +67,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--honey);outline-
 </style>
 </head>
 <body>
-<header><b>ZMIANOLOGICA</b><span id="kto"></span></header>
+<header><div class="brand"><img class="znak" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABVCAYAAADe3GMeAAAG3klEQVR42u2ceWxUVRSHv9ayCIoUC1aBVlQUEMuiERHFmFQNCgm4IEbQhqgkrsRgjBI3jBoVRI1BI9LGBRUFDVFTtcGKUZZGERtUFASKIFiBUhZZLNQ/7mlS67w39765ve+9mZ5k0unruduv59yzzmQVFpcQcyoAugOrgSOuF8+OKWg5QAnwHVADfAu8F9ZG4kZDgTeBAS2ejwXygB1tEuhN44CvEoDXdJYhbSqcmI4BHgIWAp19+E5qU+H/U19R2WEavPltEvhfuhlYpQkecge2SSBwAvAKMMFw3PFtAMLForKFAcZ2yWQVbgc8ClQGBC+jJbBIpK4oxXkyTgKzgfuAKgvgNd2dGSOBvYHXgUstzpmbKRI4Aai2DB5At3QH8FjgBeAdoGsrzN/FtVa5XOxs4F1gYCuukSVq/Fc6SWAWcA8q9TTQwXrd0kkCuwOlwGiHZ0obAK8QK+s6Q+IUwNZQ4fbATKA8BPBiL4EFwALgAkvzrRVAehiM6RFHCcwG7gbWWAKvXKx2f/m53WBsftwAPBX4Qvy7VIP5g8CtwJXAT/JsB/B5VAFMVYVLgBctZUHWA9ejEqgtqdZgnn5xkMB8VH2izBJ4ZaiC0CqPv+80mGsAqoYSWQAnAT8D11hYv17i4snAPh8+k8iik1wrkQOwPTAbeMNSHFuFqvEu0OCtNZy7b9QA7AcsB6ZaWPMo8AxwEbBBc0xkAdQxIiXAS/jXY3XpD+AmYInhOFMAz4yCBB4n6lpmCbzFwKAA4MVShc8DVorBSJX2AregeleC9q3sB/YY8BeGBWBX4GUBb4CF+StRtY55SfZwtfyz/Goam6MYDze/Ay8EFlny5A8A0+Sf0ZjkoG8Bo+T3X8QfPJCAtwb9fGIuKg/Z6EoChwEVlsDbJBZ2TpIDDEH19Y1q9uwsoNiDv8ZgD+3kDnemwqXigKbqnrwAnOMTUTS37N8AfTyATURbDPfTzZUKF1q472pQjUBLk/B1BOYCE314Tvd4vt1wT7mGUhsYwJ3AYYk0gtB84A4Jy5KFWOXAyCR8XgD+abivLq5UeB8wPWAcO1Fe9Rr88zTA8wPQtNLm9A6chVnObYXcVfM1+U9Dv1Ut3+PwdYZn6+wSwEbJiOzSGDMT1YK20WAd097lggTPdkcZQICtEjE0+vh2k1DNQA2G67Qz5M/zANDErzsxjEjkQ+DxBHzrgeHi9AahbRYAbMA/Z9iSzggrFn4EuA6Vr9sHvIbK2/2QwjpbDfm7ezzf7RjAjsD9qJzltES+slc6a6G8bNEWUb+sFCSwCcDemnP0THHPg8VINvnI48VOXN7cqXfVnXVQ00DZlMCg9eEsVOJ4RYIAoz/wEdDBNYCmh8+zcBV0CLDHXEmozPYZPxh4NgwA6y0AuMlgjmrD/Y1GNQaM0+C9ExjjGsA9FlRYF8BGD2/CK+QrFdU8xUDNS4GeOTGTwI2a4N0LfKrBO1wMRZ8A58kDZqWbCh8EbgSe11jjduDLgOA1UVFUJbCTqFZLta8B/vGIbLaiSgNVGmHiHOAqC2eqiKoEAvRK8OyQh0O/RJz9ZOCNFeNiA7zfgIej6sbg4zAvbHHfPYXqhq1NElE8B3yAnQ/jVKNSc/UuVXibBQkE1dVQjar9rpSXHw2SGN5Gg/th4GngCdEG4ghgIyqzXa6RAZoOPBggG5SIlgJTUJXDpLFwFAAsSGGtgSJ1gyzs+4hI3AwSfK2KSwA3GyYUgrgXTXHsk3LvpUobUSWLZV4MLo3I34axbC/D+XsAn4ixsAFemcS9y/yYXH9Wbp1hYK9LxahvLhplYY+14u5M1gk/XQO41oC3q4a654i6fgacbGF/X6PqN4t1B7gG8HsD3hz8a7u9JBR7wMI59gJ3AZegehiNNumSVhny53lEMMXA2z5ZGxP6EbjWUDtCk8A1EsvqUiKApooPaAO8ucD5QcELA8BDmHWbjmj2vlCs7GwLmlOHKpzdJt5BYArjOxN2oV/weUyscSGqqNPewvqVqEao320cJiwAdakzwfp2EtFRVJZ6hrwnrgDWhbDmWlQdY4ntibPTHMAGuQaKWgO8OKhwKrRFDMWK1lwkXSVwMXBua4OXjhJYh/q88SJXh0knI7IS1cS5yeVhstNAAo+g0uwjXYOXDhK4AZXwXE5IFIYE1lua530xFKGBFxaAu1McvwOVPRlvYa5YqnAqh/5YrOx2IkJhSOBhzDMg+1ElxTFRAi8sCWy6B3U/m1clhmIdEaSwvsFSR40bUNmTEVEFL2wJ9KNfgRswLwFkDIB+vuBSVJvaLmJAYanwao/nrwKXxQW8MAGsaPH7cgFuCmZFp4xV4UpUQWcoqmevgpjSv+1/VJom49qAAAAAAElFTkSuQmCC" alt=""><img class="napis" src="data:image/png;base64,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" alt="ZMIANOLOGICA"></div><span id="kto"></span></header>
 <main id="app"><p>Łączenie z serwerem…</p></main>
 
 <script type="module">
@@ -176,29 +192,42 @@ function widokLogowanie(user){
 function nowyKod(){ const z="ABCDEFGHJKMNPQRSTUVWXYZ23456789"; let k=""; for(let i=0;i<5;i++) k+=z[Math.floor(Math.random()*z.length)]; return k; }
 function widokProwadzacyStart(komunikat){
   stop();
-  const ost = localStorage.getItem("zml_sesja_prow") || "";
   $("#app").innerHTML = `<h1>Sesje szkoleniowe</h1>
   <div class="card"><h2 style="margin-top:0">Nowa sesja</h2>
    <label for="nazwa">Nazwa sesji</label><input type="text" id="nazwa" placeholder="na przykład Rekrutacja i selekcja, 14 października">
    <div class="row"><button id="utworz">Utwórz sesję</button></div></div>
-  <div class="card"><h2 style="margin-top:0">Istniejąca sesja</h2>
-   <label for="kod">Kod sesji</label><input type="text" id="kod" value="${esc(ost)}">
-   <div class="row"><button class="sec" id="otworz">Otwórz</button></div></div>
+  <div class="card"><h2 style="margin-top:0">Twoje sesje</h2><div id="lista"><p class="hint">Wczytywanie…</p></div></div>
   ${komunikat?`<div class="msg err">${esc(komunikat)}</div>`:""}
   <div class="row"><button class="sec" id="wyl">Wyloguj</button></div>`;
   $("#utworz").onclick = async () => {
     const k = nowyKod();
     try{ await setDoc(doc(db,"sesje",k),{nazwa:$("#nazwa").value.trim()||"Sesja "+k, otwarta:true, utworzona:serverTimestamp()});
-      localStorage.setItem("zml_sesja_prow",k); widokSesja(k);
-    }catch(e){ widokProwadzacyStart(blad(e)); }
-  };
-  $("#otworz").onclick = async () => {
-    const k = $("#kod").value.trim().toUpperCase();
-    try{ const s = await getDoc(doc(db,"sesje",k)); if(!s.exists()){ widokProwadzacyStart("Nie ma sesji o tym kodzie."); return; }
-      localStorage.setItem("zml_sesja_prow",k); widokSesja(k);
+      widokSesja(k);
     }catch(e){ widokProwadzacyStart(blad(e)); }
   };
   $("#wyl").onclick = () => signOut(auth);
+  wczytajListe();
+}
+async function wczytajListe(){
+  try{
+    const s = await getDocs(collection(db,"sesje"));
+    const L = [];
+    for(const d of s.docs){ const o = await getDocs(collection(db,"sesje",d.id,"odpowiedzi")); L.push({kod:d.id, ...d.data(), n:o.size}); }
+    L.sort((a,b)=>(b.utworzona?.seconds||0)-(a.utworzona?.seconds||0));
+    const dt = t => t ? new Date(t.seconds*1000).toLocaleString("pl-PL",{day:"numeric",month:"long",hour:"2-digit",minute:"2-digit"}) : "";
+    $("#lista").innerHTML = L.length ? `<table class="slist"><tr><th>Kod</th><th>Nazwa</th><th>Utworzona</th><th>Odpowiedzi</th><th>Stan</th><th></th></tr>
+     ${L.map(x=>`<tr><td><b>${esc(x.kod)}</b></td><td>${esc(x.nazwa)}</td><td>${esc(dt(x.utworzona))}</td><td>${x.n}</td>
+      <td><span class="pill ${x.otwarta?"o":"z"}">${x.otwarta?"otwarta":"zamknięta"}</span></td>
+      <td style="white-space:nowrap"><button class="sec" data-o="${esc(x.kod)}">Otwórz</button> <button class="red" data-u="${esc(x.kod)}">Usuń</button></td></tr>`).join("")}</table>`
+     : `<p class="hint">Nie masz jeszcze żadnej sesji.</p>`;
+    document.querySelectorAll("[data-o]").forEach(b=>b.onclick=()=>widokSesja(b.dataset.o));
+    document.querySelectorAll("[data-u]").forEach(b=>b.onclick=async()=>{ if(await usunSesje(b.dataset.u)) wczytajListe(); });
+  }catch(e){ $("#lista").innerHTML = `<div class="msg err">${esc(blad(e))}</div>`; }
+}
+async function usunSesje(kod){
+  if(!confirm("Usunąć wszystkie odpowiedzi i samą sesję "+kod+"? Tej operacji nie da się cofnąć.")) return false;
+  for(const kol of ["odpowiedzi","grupy"]){ const s = await getDocs(collection(db,"sesje",kod,kol)); const b = writeBatch(db); s.forEach(d=>b.delete(d.ref)); await b.commit(); }
+  await deleteDoc(doc(db,"sesje",kod)); return true;
 }
 function widokSesja(kod){
   stop();
@@ -206,6 +235,8 @@ function widokSesja(kod){
   const link = location.origin + location.pathname + "?s=" + kod;
   const rys = () => {
     const w = wpisy.filter(x=>x.cw===CW.id);
+    const tmax = Math.max(0,...w.map(x=>x.czas?.seconds||0));
+    const ost = tmax ? new Date(tmax*1000).toLocaleTimeString("pl-PL") : "";
     $("#app").innerHTML = `<h1>${esc(sesja?.nazwa||"")}</h1>
     <div class="card"><div class="row" style="justify-content:space-between;margin-top:0">
       <div><div class="hint">Kod sesji</div><div class="kod">${esc(kod)}</div></div>
@@ -216,6 +247,7 @@ function widokSesja(kod){
       <button class="red" id="usun">Usuń dane sesji</button><button class="sec" id="wroc">Wróć</button></div></div>
     <div class="card"><div class="row" style="justify-content:space-between;margin-top:0">
       <h2 style="margin:0">${esc(CW.nazwa)}</h2><div><span class="big">${w.length}</span> <span class="hint">odpowiedzi</span></div></div>
+     <p style="margin:6px 0 0"><span class="live"><i></i>na żywo</span> <span class="hint">· wyniki odświeżają się same${ost?", ostatnia odpowiedź o "+ost:""}</span></p>
      <div class="row"><button class="hon" id="pok">${pokaz?"Ukryj poprawne odpowiedzi":"Pokaż poprawne odpowiedzi"}</button></div>
      ${CW.pytania.map((p,i)=>{ const n=w.length||1;
        return `<h2>${i+1}. ${esc(p.t)}</h2>${p.o.map(([v,l])=>{ const c=w.filter(x=>x.odp&&x.odp[p.id]===v).length;
@@ -226,13 +258,8 @@ function widokSesja(kod){
     $("#pok").onclick = () => { pokaz=!pokaz; rys(); };
     $("#wroc").onclick = () => widokProwadzacyStart();
     $("#usun").onclick = async () => {
-      if(!confirm("Usunąć wszystkie odpowiedzi i samą sesję "+kod+"? Tej operacji nie da się cofnąć.")) return;
       stop();
-      try{
-        for(const kol of ["odpowiedzi","grupy"]){ const s = await getDocs(collection(db,"sesje",kod,kol)); const b = writeBatch(db); s.forEach(d=>b.delete(d.ref)); await b.commit(); }
-        await deleteDoc(doc(db,"sesje",kod)); localStorage.removeItem("zml_sesja_prow");
-        widokProwadzacyStart();
-      }catch(e){ widokProwadzacyStart(blad(e)); }
+      try{ if(await usunSesje(kod)) widokProwadzacyStart(); else widokSesja(kod); }catch(e){ widokProwadzacyStart(blad(e)); }
     };
   };
   const u1 = onSnapshot(doc(db,"sesje",kod), s => { sesja = s.data(); if(sesja) rys(); });
