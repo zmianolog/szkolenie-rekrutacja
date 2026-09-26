@@ -24,6 +24,7 @@ button.sec{background:#fff;color:var(--navy);border:1.5px solid var(--navy)}
 button.hon{background:var(--honey);color:var(--on-honey)}
 button.red{background:#fff;color:var(--red);border:1.5px solid var(--red)}
 button:disabled{opacity:.45;cursor:not-allowed}
+button.wyslane,button.wyslane:disabled{background:var(--ok);color:#fff;opacity:1;cursor:default}
 button:focus-visible,input:focus-visible{outline:3px solid var(--honey);outline-offset:2px}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
 .hint{font-size:13.5px;color:var(--mut);margin:6px 0 0}
@@ -144,16 +145,17 @@ async function widokUczestnikTest(kod,nick){
   const uid = auth.currentUser.uid, ref = doc(db,"sesje",kod,"odpowiedzi",CW.id+"_"+uid);
   let odp = {};
   try{ const d = await getDoc(ref); if(d.exists()) odp = d.data().odp || {}; }catch(e){}
+  let wyslane = false;
   const rys = (zapisano) => {
     $("#app").innerHTML = `<h1>${esc(CW.nazwa)}</h1><p class="hint">Sesja ${esc(kod)} · ${esc(nick)}</p>
     <div class="card">${CW.pytania.map((p,i)=>`<div class="q"><div class="t">${i+1}. ${esc(p.t)}</div>
      ${p.o.map(([v,l])=>`<button class="opt ${odp[p.id]===v?"on":""}" data-p="${p.id}" data-v="${v}">${esc(l)}</button>`).join("")}</div>`).join("")}
-     ${zapisano?`<div class="msg ok">${esc(zapisano)}</div>`:""}
-     <div class="row"><button id="wyslij" ${Object.keys(odp).length<CW.pytania.length?"disabled":""}>Wyślij odpowiedzi</button></div>
+     <div class="row"><button id="wyslij" class="${wyslane?"wyslane":""}" ${Object.keys(odp).length<CW.pytania.length||wyslane?"disabled":""}>${wyslane?"Twoje dane zostały wysłane":"Wyślij odpowiedzi"}</button></div>
      <p class="hint">Odpowiedzi możesz zmieniać i wysyłać ponownie, dopóki prowadzący nie zamknie sesji.</p></div>`;
-    document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{ odp[b.dataset.p]=b.dataset.v; rys(); });
+    document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{ odp[b.dataset.p]=b.dataset.v; wyslane=false; rys(); });
     $("#wyslij").onclick = async () => {
-      try{ await setDoc(ref,{uid, pseudonim:nick, cw:CW.id, odp, czas:serverTimestamp()}); rys("Odpowiedzi zapisane. Zobaczysz je na ekranie prowadzącego."); }
+      const b=$("#wyslij"); b.disabled=true; b.textContent="Wysyłanie…";
+      try{ await setDoc(ref,{uid, pseudonim:nick, cw:CW.id, odp, czas:serverTimestamp()}); wyslane=true; rys(); }
       catch(e){ rys(); $("#app").insertAdjacentHTML("beforeend",`<div class="msg err">${esc(blad(e))}</div>`); }
     };
   };
