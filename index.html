@@ -91,6 +91,8 @@ label.chk input{width:20px;height:20px;margin-top:2px;accent-color:#1F4460}
 .gp{margin:8px 0}.gp span{display:block;font-size:13px;font-weight:700;color:#5E6B78}
 .wpisy{padding-left:18px;margin:6px 0}.wpisy li{margin:4px 0}
 .pill.z{background:#F2F2F2;color:#5E6B78}
+.obec{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;background:#F5F7FA;border:1px solid #D5DDE5;border-radius:10px;padding:10px 14px;margin:6px 0 14px;font-size:15px}
+.chip.bez{background:#FBEAEA;color:#C8202E}
 .czl{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 8px}
 .chip{display:inline-flex;align-items:center;gap:6px;background:#E8EEF3;color:#1F4460;border-radius:999px;padding:3px 6px 3px 12px;font-size:14px;font-weight:600}
 .chip select{font:inherit;font-size:12px;border:1px solid #C9D5E1;border-radius:999px;padding:2px 4px;background:#fff;color:#1F4460}
@@ -219,6 +221,7 @@ function widokUczestnikSesja(kod,nick){
   stop();
   let aktywne, otwarta=true, ostPrzydz;
   const uid=auth.currentUser.uid;
+  setDoc(doc(db,"sesje",kod,"odpowiedzi","obecnosc_"+uid),{uid,pseudonim:nick,cw:"obecnosc",czas:serverTimestamp()}).catch(()=>{});
   const u = onSnapshot(doc(db,"sesje",kod), s=>{
     const d=s.data(); if(!d){ widokUczestnikStart("Sesja została usunięta."); return; }
     otwarta=!!d.otwarta;
@@ -338,10 +341,10 @@ async function wczytajListe(){
   try{
     const s = await getDocs(collection(db,"sesje"));
     const L = [];
-    for(const d of s.docs){ const o = await getDocs(collection(db,"sesje",d.id,"odpowiedzi")); const g = await getDocs(collection(db,"sesje",d.id,"grupy")); L.push({kod:d.id, ...d.data(), n:o.size+g.size}); }
+    for(const d of s.docs){ const o = await getDocs(collection(db,"sesje",d.id,"odpowiedzi")); const g = await getDocs(collection(db,"sesje",d.id,"grupy")); L.push({kod:d.id, ...d.data(), n:o.docs.filter(x=>x.id.startsWith("obecnosc_")).length}); }
     L.sort((a,b)=>(b.utworzona?.seconds||0)-(a.utworzona?.seconds||0));
     const dt = t => t ? new Date(t.seconds*1000).toLocaleString("pl-PL",{day:"numeric",month:"long",hour:"2-digit",minute:"2-digit"}) : "";
-    $("#lista").innerHTML = L.length ? `<table class="slist"><tr><th>Kod</th><th>Nazwa</th><th>Utworzona</th><th>Wpisy</th><th>Stan</th><th></th></tr>
+    $("#lista").innerHTML = L.length ? `<table class="slist"><tr><th>Kod</th><th>Nazwa</th><th>Utworzona</th><th>Uczestnicy</th><th>Stan</th><th></th></tr>
      ${L.map(x=>`<tr><td><b>${esc(x.kod)}</b></td><td>${esc(x.nazwa)}</td><td>${esc(dt(x.utworzona))}</td><td>${x.n}</td>
       <td><span class="pill ${x.otwarta?"o":"z"}">${x.otwarta?"otwarta":"zamknięta"}</span></td>
       <td style="white-space:nowrap"><button class="sec" data-o="${esc(x.kod)}">Otwórz</button> <button class="red" data-u="${esc(x.kod)}">Usuń</button></td></tr>`).join("")}</table>`
@@ -390,7 +393,7 @@ function widokSesja(kod){
       const nowa=sel.value, u=sel.dataset.mv, stara=sel.dataset.z; if(!nowa) return;
       try{
         await updateDoc(doc(db,"sesje",kod),{["przydzial."+u]:nowa});
-        await setDoc(doc(db,"sesje",kod,"grupy",wybrane+"_"+stara.replace(/\s/g,"")),{czlonkowie:{[u]:deleteField()}},{merge:true});
+        if(stara) await setDoc(doc(db,"sesje",kod,"grupy",wybrane+"_"+stara.replace(/\s/g,"")),{czlonkowie:{[u]:deleteField()}},{merge:true});
       }catch(e){ alert(blad(e)); }
     });
   };
@@ -414,13 +417,18 @@ function widokSesja(kod){
       return h;
     }
     const w=gr.filter(x=>x.cw===c.id).sort((a,b)=>a.grupa.localeCompare(b.grupa,"pl",{numeric:true}));
-    if(!w.length) return `<p class="hint">Żadna grupa jeszcze nie zaczęła.</p>`;
+    const obecni=ind.filter(x=>x.cw==="obecnosc");
+    const wGr=new Set(); w.forEach(x=>Object.keys(x.czlonkowie||{}).forEach(u=>wGr.add(u)));
+    const bez=obecni.filter(x=>!wGr.has(x.uid));
+    const lin=`<div class="obec"><span>Obecni w sesji: <b>${obecni.length}</b></span><span>w grupach: <b>${wGr.size}</b></span><span>bez grupy: <b>${bez.length}</b></span>
+      ${bez.map(x=>`<span class="chip bez">${esc(x.pseudonim)}<select data-mv="${esc(x.uid)}" data-z="" title="Przypisz do grupy"><option value="">przypisz</option>${GRUPY.map(g=>`<option>${g}</option>`).join("")}</select></span>`).join("")}</div>`;
+    if(!w.length) return lin+`<p class="hint">Żadna grupa jeszcze nie zaczęła.</p>`;
     if(c.kolejnosc){
       const pierwsi={}; w.forEach(x=>{ const m=(x.pola||{}).m1; if(m!==undefined){ const k=c.pola[0].o[m]; pierwsi[k]=(pierwsi[k]||0)+1; } });
-      return `<table class="slist"><tr><th>Grupa</th><th>Miejsce 1</th><th>Miejsce 2</th><th>Miejsce 3</th><th>Uzasadnienie</th></tr>${w.map(x=>{const p=x.pola||{};const nm=k=>p[k]!==undefined?c.pola[0].o[p[k]]:"—";return `<tr><td><b>${esc(x.grupa)}</b></td><td>${nm("m1")}</td><td>${nm("m2")}</td><td>${nm("m3")}</td><td>${esc(p.uz||"")}</td></tr>`}).join("")}</table>
+      return lin+`<table class="slist"><tr><th>Grupa</th><th>Miejsce 1</th><th>Miejsce 2</th><th>Miejsce 3</th><th>Uzasadnienie</th></tr>${w.map(x=>{const p=x.pola||{};const nm=k=>p[k]!==undefined?c.pola[0].o[p[k]]:"—";return `<tr><td><b>${esc(x.grupa)}</b></td><td>${nm("m1")}</td><td>${nm("m2")}</td><td>${nm("m3")}</td><td>${esc(p.uz||"")}</td></tr>`}).join("")}</table>
        <p class="hint">Na pierwszym miejscu: ${Object.entries(pierwsi).map(([k,v])=>esc(k)+" "+v).join(", ")||"brak"}. Kolejność względem profilu: Anna, Celina, Bartek.</p>`;
     }
-    return `<div class="grk">${w.map(x=>{ const p=x.pola||{};
+    return lin+`<div class="grk">${w.map(x=>{ const p=x.pola||{};
       const czl=Object.entries(x.czlonkowie||{});
       return `<div class="gk"><h3>${esc(x.grupa)} <small class="hint">· ${czl.length} os.</small></h3><div class="czl">${czl.map(([u,n])=>`<span class="chip">${esc(n)}<select data-mv="${esc(u)}" data-n="${esc(n)}" data-z="${esc(x.grupa)}" title="Przenieś do innej grupy"><option value="">przenieś</option>${GRUPY.filter(g=>g!==x.grupa).map(g=>`<option>${g}</option>`).join("")}</select></span>`).join("")||`<span class="hint">nikt nie jest teraz w tej grupie</span>`}</div>${c.suma?`<div class="suma">Razem: <b>${zl(sumaKosztu(p))}</b></div>`:""}${c.pola.map(q=>{ const v=p[q.id];
         if(v===undefined||v==="") return "";
