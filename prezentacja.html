@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rekrutacja i selekcja · ZMIANOLOGICA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--red:#C8202E;--ok:#2E7D4F;--navy:#1F4460;--navy-h:#163450;--honey:#E8B62C;--honey-l:#F3D98A;--honey-d:#B68C20;--on-honey:#5C4810;--bg:#F5F5F7;--ink:#1B2733;--mut:#5E6B78;--line:#D5DDE5;--cand:#7F98AE}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);font-family:Montserrat,'Segoe UI',Arial,sans-serif;color:var(--ink);overflow:hidden}
+/* scena 16:9 skalowana do ekranu */
+#scena{position:fixed;left:0;top:0;width:1600px;height:900px;transform-origin:0 0;background:var(--bg)}
+.slajd{position:absolute;inset:0;display:none}
+.slajd.on{display:block}
+
+/* ---------- ZNAK SZKOLENIA ---------- */
+.znak .pas1{fill:var(--honey-l)}.znak .pas2{fill:var(--honey)}.znak .pas3{fill:var(--honey-d)}
+.znak .kand,.znak .k{fill:var(--cand)}
+.znak .wyb{fill:var(--navy)}
+.znak.ruch .k{opacity:0;animation-duration:6.5s;animation-iteration-count:infinite;animation-timing-function:ease-in-out}
+.znak.ruch .k.r1{animation-name:r1}.znak.ruch .k.r2{animation-name:r2}.znak.ruch .k.r3{animation-name:r3}.znak.ruch .k.s{animation-name:sel}
+.znak.ruch .fala{opacity:0;transform-box:fill-box;transform-origin:center;animation:fala 6.5s ease-out infinite}
+@keyframes r1{0%{opacity:0;transform:translate(var(--x0),-24px)}6%{opacity:1;transform:translate(var(--x0),0)}22%{opacity:1;transform:translate(var(--x1),52px)}32%{opacity:0;transform:translate(var(--xo1),64px)}100%{opacity:0;transform:translate(var(--xo1),64px)}}
+@keyframes r2{0%{opacity:0;transform:translate(var(--x0),-24px)}6%{opacity:1;transform:translate(var(--x0),0)}22%{opacity:1;transform:translate(var(--x1),52px)}34%{opacity:1;transform:translate(var(--x2),94px)}44%{opacity:1;transform:translate(var(--x2),102px)}54%{opacity:0;transform:translate(var(--xo2),112px)}100%{opacity:0;transform:translate(var(--xo2),112px)}}
+@keyframes r3{0%{opacity:0;transform:translate(var(--x0),-24px)}6%{opacity:1;transform:translate(var(--x0),0)}22%{opacity:1;transform:translate(var(--x1),52px)}34%{opacity:1;transform:translate(var(--x2),94px)}50%{opacity:1;transform:translate(var(--x3),132px)}58%{opacity:1;transform:translate(var(--x3),140px)}68%{opacity:0;transform:translate(var(--xo3),148px)}100%{opacity:0;transform:translate(var(--xo3),148px)}}
+@keyframes sel{0%{opacity:0;transform:translate(var(--x0),-24px);fill:var(--cand)}6%{opacity:1;transform:translate(var(--x0),0)}22%{transform:translate(var(--x1),52px)}34%{transform:translate(var(--x2),94px)}50%{transform:translate(var(--x3),132px);fill:var(--cand)}64%{transform:translate(100px,172px)}72%{opacity:1;transform:translate(100px,192px);fill:var(--navy)}92%{opacity:1;transform:translate(100px,192px);fill:var(--navy)}100%{opacity:0;transform:translate(100px,192px);fill:var(--navy)}}
+@keyframes fala{0%,72%{opacity:0;transform:scale(.6)}76%{opacity:.8;transform:scale(1)}92%{opacity:0;transform:scale(2.4)}100%{opacity:0}}
+
+/* ---------- STRONA STARTOWA ---------- */
+.start{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:40px;text-align:center}
+.logo{display:flex;align-items:center;gap:40px}
+.logo svg{width:250px;height:auto}
+.logo .kreska{width:4px;height:190px;background:var(--navy);border-radius:2px;transform:scaleY(0);animation:kreska .5s ease-out 1.6s forwards}
+.logo .napis{text-align:left;color:var(--navy);line-height:1.02;opacity:0;transform:translateX(-18px);animation:wjazd .7s ease-out 2s forwards}
+.logo .napis .a{display:block;font-weight:500;font-size:92px;letter-spacing:-.01em}
+.logo .napis .b{display:block;font-weight:800;font-size:92px;letter-spacing:-.01em}
+.start p{max-width:980px;font-size:30px;line-height:1.45;margin:0;color:var(--ink)}
+.start .pozniej{opacity:0;animation:wjazd .7s ease-out forwards}
+.btn{font:inherit;font-weight:700;font-size:28px;border:none;border-radius:14px;padding:20px 56px;cursor:pointer;background:var(--navy);color:#fff}
+.btn:hover{background:var(--navy-h)}
+.btn:focus-visible{outline:4px solid var(--honey);outline-offset:4px}
+.zml img{height:58px;width:auto;display:block}
+.info{font-size:20px;color:var(--mut)}
+@keyframes kreska{to{transform:scaleY(1)}}
+@keyframes wjazd{to{opacity:1;transform:none}}
+
+/* ---------- SLAJDY ---------- */
+.naglowek{position:absolute;left:0;right:0;top:0;height:96px;display:flex;align-items:center;justify-content:space-between;padding:0 64px;border-bottom:2px solid var(--line);background:#fff}
+.naglowek .mini{display:flex;align-items:center;gap:18px;color:var(--navy);font-size:26px}
+.naglowek .mini svg{width:44px;height:auto}
+.naglowek .mini .kr{width:3px;height:40px;background:var(--navy)}
+.naglowek .mini b{font-weight:800}
+.naglowek .nr{font-size:20px;color:var(--mut);font-weight:600}
+.tresc{position:absolute;left:96px;right:96px;top:132px;bottom:70px}
+h1{font-size:56px;color:var(--navy);margin:0 0 26px;font-weight:800;letter-spacing:-.01em}
+.program{display:grid;grid-template-columns:repeat(5,1fr);gap:20px}
+.blok{background:#fff;border:2px solid var(--line);border-radius:16px;padding:24px 22px;min-height:470px}
+.blok .godz{font-size:22px;font-weight:700;color:var(--honey-d)}
+.blok h2{font-size:26px;color:var(--navy);margin:8px 0 14px;line-height:1.25}
+.blok ul{margin:0;padding-left:22px;font-size:20px;line-height:1.5}
+.przerwy{margin-top:22px;font-size:20px;color:var(--mut)}
+.stopka{position:absolute;left:0;right:0;bottom:0;height:52px;display:flex;align-items:center;justify-content:flex-end;padding:0 64px;font-size:17px;color:var(--mut)}
+
+.stopka{justify-content:space-between}
+.stopka .blokinfo{font-weight:600;color:var(--honey-d)}
+.zmlbig{display:flex;align-items:center;gap:14px;color:var(--navy);text-align:left}
+.zmlbig .zmlz{height:62px;width:auto}
+.zmlbig b{display:block;font-size:40px;font-weight:800;letter-spacing:.02em;line-height:1}
+.zmlbig small{display:block;font-size:17px;font-weight:500;margin-top:4px;letter-spacing:.01em}
+.naglowek .zmlmini{color:var(--navy)}
+.naglowek .zmlmini .zmlz{height:40px;width:auto}
+.naglowek .zmlmini b{font-size:27px;font-weight:800;letter-spacing:.02em}
+
+.naglowek .zmlmini{display:flex;align-items:center;gap:10px}
+.naglowek .zmlmini .zz{height:40px;width:auto}
+.naglowek .zmlmini .zw{height:26px;width:auto}
+.stopka .prawa{display:flex;align-items:center;gap:14px}
+.stopka .nr{font-size:18px;font-weight:600;color:var(--mut);min-width:70px;text-align:right}
+.nawbtn{width:44px;height:36px;border-radius:10px;border:2px solid var(--line);background:#fff;color:var(--navy);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+.nawbtn:hover{border-color:var(--navy)}
+.nawbtn svg{width:24px;height:24px}
+.nawbtn:disabled{opacity:.35;cursor:default}
+.stopka.ciemna .nr{color:#C9D5E1}
+.stopka.ciemna .nawbtn{background:transparent;border-color:rgba(255,255,255,.35);color:#fff}
+.stopka.ciemna .nawbtn:hover{border-color:#fff}
+
+.nawbtn:focus-visible{outline:3px solid var(--honey);outline-offset:2px}
+.ic{display:inline-flex;vertical-align:-0.14em}
+.ic svg{width:1em;height:1em}
+h1 .ic.t{color:var(--honey-d);margin-right:18px}
+.karta h2 .ic{color:var(--honey-d);margin-right:12px}
+.karta.granat h2 .ic{color:var(--navy)}
+.cw-typ .ic,.cw-czas .ic{margin-right:8px}
+.eg{display:flex;align-items:center;justify-content:space-between}
+.eg .ic{font-size:30px;opacity:.85}
+.mapa-wrap{display:grid;grid-template-columns:1fr 230px;gap:0 10px;align-items:stretch}
+.mapa{border:2px solid var(--line);border-radius:20px;padding:16px;background:#fff}
+.nastepny{display:flex;align-items:center;gap:6px}
+.nastepny .strz{font-size:42px;color:var(--mut)}
+.etap.n{background:#fff;color:var(--mut);border:2px solid var(--mut);flex:1;min-height:130px}
+.etap.n small{display:block;font-size:17px;font-weight:600;margin-top:6px;color:var(--honey-d)}
+.tab th{text-transform:uppercase;text-align:center;font-size:19px;letter-spacing:.03em}
+.tab.szer1 td:first-child,.tab.szer1 th:first-child{width:320px}
+.tab.kalk{margin-top:6px;font-size:19px}.tab.kalk td{padding:8px 16px}
+.tab.kalk td:first-child{width:300px}
+.sytuacja.mniej{font-size:22px;margin-bottom:6px}
+.lista.zbita{font-size:22px}.lista.zbita li{margin-bottom:4px}
+.siatka2.wyr{align-items:start}.wyr .karta{font-size:22px;padding:22px 28px}.wyr .adres.duzy{font-size:27px;margin:6px 0 14px}
+
+.lista{margin:0;padding-left:34px;font-size:30px;line-height:1.45}
+.lista li{margin-bottom:16px}
+
+.lancuch{display:grid;grid-template-columns:1fr 50px 1fr 50px 1fr 50px 1fr;align-items:stretch}
+.ogniwo{background:#fff;border:2px solid var(--line);border-radius:18px;padding:22px 20px;display:flex;flex-direction:column;gap:10px}
+.ogniwo .og-ic{font-size:40px;color:var(--honey-d)}
+.ogniwo b{font-size:28px;color:var(--navy)}
+.ogniwo span{font-size:22px;line-height:1.4}
+.lancuch .strz{display:flex;align-items:center;justify-content:center;font-size:36px;color:var(--mut)}
+.ciasna{gap:20px}.ciasna .karta{font-size:21px;padding:18px 24px}.ciasna .karta h2{font-size:25px;margin-bottom:8px}
+
+.podsum{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:18px}
+.podsum li{display:grid;grid-template-columns:48px 1fr;gap:14px;align-items:start;background:#fff;border:2px solid var(--line);border-radius:16px;padding:18px 24px;font-size:25px;line-height:1.4}
+.podsum li .ic{color:var(--ok,#2E7D4F);font-size:34px;margin-top:2px}
+.przerwa{background:var(--navy)}
+.prw{position:absolute;inset:0 0 60px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center}
+.prw-ic{font-size:90px;color:var(--honey)}
+.prw h1{color:#fff;font-size:80px;margin:14px 0 0}
+.prw-dl{font-size:30px;color:#C9D5E1;margin-top:6px}
+.prw-licz{font-size:150px;font-weight:800;color:var(--honey);letter-spacing:.04em;line-height:1.1;margin-top:26px;font-variant-numeric:tabular-nums}
+.prw-wr{font-size:32px;font-weight:600;margin-top:4px}
+.prw-nast{margin-top:44px;border-top:2px solid rgba(255,255,255,.25);padding-top:24px;display:flex;flex-direction:column;gap:6px}
+.prw-nast span{font-size:22px;color:#C9D5E1}
+.prw-nast b{font-size:34px}
+.dwie{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:start}
+.zle-ogl{background:#fff;border:2px dashed var(--mut);border-radius:16px;padding:22px 26px;font-size:22px;line-height:1.45}
+.zle-ogl p{margin:0 0 12px}
+.zo-t{font-size:30px;font-weight:800;color:var(--navy);margin-bottom:12px}
+
+.wstep{font-size:21px;line-height:1.4;margin:-8px 0 12px;color:var(--ink)}
+.tab.traf td{vertical-align:middle}
+.tab.traf td:first-child{width:520px}.tab.traf td{padding:6px 18px}.tab.traf{font-size:20px}.tab.traf th{padding:10px 18px}.tab.traf + .wniosek{margin-top:14px;font-size:22px}
+.tab.traf .lb{display:flex;align-items:center;gap:16px}
+.tab.traf .pas{flex:1;height:18px;background:var(--bg);border-radius:6px;overflow:hidden}
+.tab.traf .pas i{display:block;height:100%;background:var(--navy);border-radius:6px}
+.tab.traf b{font-size:24px;color:var(--navy);min-width:52px;text-align:right}
+.psy{display:inline-block;font-size:15px;font-weight:700;color:var(--on-honey);background:#FDF4DC;border-radius:999px;padding:2px 10px;margin-left:8px;vertical-align:2px}
+.zrodlo{font-size:16px;color:var(--mut);margin-top:6px}
+.kat{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.kg{background:#fff;border:2px solid var(--line);border-radius:16px;padding:18px 18px}
+.kg h3{font-size:22px;color:var(--navy);margin:0 0 10px;display:flex;align-items:center;gap:8px}
+.kg h3 .ic{color:var(--honey-d)}
+.kg p{margin:0 0 8px;font-size:20px;line-height:1.3}
+.kg.psyk{border-style:dashed;background:transparent}.kg.psyk h3 .ic{color:var(--mut)}
+.plan{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.pl{background:#fff;border:2px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:8px;position:relative}
+.pl-n{font-size:28px;font-weight:800;color:var(--honey-d)}
+.pl-ic{position:absolute;top:16px;right:16px;font-size:28px;color:var(--navy)}
+.pl b{font-size:21px;color:var(--navy);line-height:1.25}
+.pl span{font-size:18px;line-height:1.35}
+.lista.dwukol{columns:2;column-gap:48px}.lista.dwukol li{break-inside:avoid}
+.wniosek .ic{color:var(--red);margin-right:8px}
+.karta.czer{border-color:var(--red);border-top-width:10px}.karta.czer h2 .ic{color:var(--red)}
+.karta.ziel{border-color:#2E7D4F;border-top-width:10px;box-shadow:inset 0 10px 0 -0px transparent}
+.karta.ziel{border-image:none}.karta.ziel h2 .ic{color:#2E7D4F}
+.lista.chk{list-style:none;padding-left:0}.lista.chk li::before{content:"☐ ";color:var(--navy);font-weight:700}
+
+.kat2{display:grid;grid-template-columns:1fr 2fr 1fr 1fr;gap:16px}
+.kg.szeroka .pod2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.kg h4{font-size:18px;color:var(--honey-d);margin:0 0 8px;text-transform:uppercase;letter-spacing:.04em}
+.plan.p5{grid-template-columns:repeat(5,1fr)}
+.pl-bar{margin-top:auto;height:30px;background:var(--bg);border-radius:8px;position:relative;overflow:hidden}
+.pl-bar i{position:absolute;inset:0 auto 0 0;background:var(--honey);border-radius:8px}
+.pl-bar em{position:relative;font-style:normal;font-weight:700;font-size:17px;color:var(--on-honey);line-height:30px;padding-left:10px}
+.pl-leg{font-size:17px;color:var(--mut);margin:10px 0 0}
+.z-wyk{display:grid;grid-template-columns:1.15fr 1fr;gap:34px;align-items:center}
+.wyk-box{background:#fff;border:2px solid var(--line);border-radius:18px;padding:16px}
+.odwu{width:100%;height:auto;display:block;font-family:Montserrat,'Segoe UI',Arial,sans-serif}
+.os{margin-top:22px;background:#fff;border:2px solid var(--line);border-radius:16px;padding:14px 20px;display:flex;flex-direction:column;gap:10px}
+.os-r{display:grid;grid-template-columns:230px 1fr;align-items:center;gap:14px}
+.os-et{font-size:19px;font-weight:700;color:var(--navy)}
+.os-pas{display:grid;grid-template-columns:1fr 1.7fr;border-radius:10px;overflow:hidden;min-height:38px;position:relative}
+.os-cz{background:#FBEAEA;color:var(--red);font-weight:700;font-size:18px;display:flex;align-items:center;padding:0 14px;border-left:8px solid var(--red)}
+.os-zb{background:#E8F2EC;color:#2E7D4F;font-weight:700;font-size:18px;display:flex;align-items:center;padding:0 14px;border-left:8px solid #2E7D4F}
+.os-m1,.os-m2{font-size:18px;font-weight:600;display:flex;align-items:center;gap:8px;padding:0 14px;background:var(--bg)}
+.os-m1{border-right:2px solid #fff}
+.os-nap{display:block;height:50px;background:var(--bg)}
+.os-nap svg{width:100%;height:100%;display:block}
+.os-opis{position:absolute;top:2px;font-size:15px;color:var(--mut);transform:translateX(-50%)}
+.przyk{margin-top:18px;background:#fff;border:2px dashed var(--honey);border-radius:16px;padding:14px 20px}
+.pk-t{font-size:18px;font-weight:700;color:var(--honey-d)}
+.pk-l{display:flex;align-items:center;gap:12px;margin-top:8px;font-size:20px}
+.pk-l div{flex:1;background:var(--bg);border-radius:10px;padding:8px 12px;font-weight:600;color:var(--navy);line-height:1.3}
+.pk-l .ic{color:var(--mut);font-size:26px}
+.pyt3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.pyt3 .karta{font-size:25px;line-height:1.45;padding:28px}
+.p3-ic{font-size:48px;color:var(--honey-d);margin-bottom:12px}
+.z-mock{display:grid;grid-template-columns:1.35fr 1fr;gap:28px;align-items:start}
+.mock{display:flex;flex-direction:column;align-items:center;gap:10px}
+.mock-ekran{width:340px;background:#fff;border:10px solid #1B2733;border-radius:34px;padding:18px 18px 22px;box-shadow:0 10px 30px rgba(31,68,96,.15)}
+.mock-nag{font-size:12px;color:var(--mut);display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:12px}
+.mock-t{font-size:20px;font-weight:800;color:var(--navy);margin-bottom:10px}
+.mock-l{font-size:14px;font-weight:700;color:var(--navy);margin:10px 0 4px}
+.mock-in{border:2px solid var(--line);border-radius:8px;padding:7px 10px;font-size:16px}
+.mock-in.zazn{border-color:var(--honey);box-shadow:0 0 0 4px #FDF4DC}
+.mock-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mock-op{border:2px solid var(--line);border-radius:8px;padding:6px 10px;font-size:15px;margin-bottom:6px}
+.mock-op.on{border-color:var(--navy);background:#E8EEF3;font-weight:700}
+.mock-btn{margin-top:14px;background:var(--navy);color:#fff;border-radius:9px;text-align:center;padding:9px;font-weight:700;font-size:16px}
+.mock-pod{font-size:16px;color:var(--mut)}
+.lejpas{display:grid;grid-template-columns:3fr 2fr 1fr;gap:6px;margin-top:16px;height:46px}
+.lejpas div{display:flex;align-items:center;gap:8px;padding:0 16px;font-size:19px;font-weight:700;border-radius:10px}
+.lp-r{background:#FDF4DC;color:var(--on-honey)}.lp-s{background:#E8EEF3;color:var(--navy)}.lp-w{background:var(--navy);color:#fff;justify-content:center}
+.lejpas + .wniosek{margin-top:14px}
+
+.z-mock.kuch{grid-template-columns:1.75fr 1fr;gap:22px}.kuch .tab.porown{font-size:17px}.kuch .tab.porown td,.kuch .tab.porown th{padding:7px 10px}.kuch .tab.porown th{font-size:15px}.kuch .tab.porown tr.uwagi td{font-size:15px}.kuch .cwiczenie{padding:18px 22px}.kuch .lista.mini{font-size:19px}
+.bledy{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.bledy .karta{font-size:22px;padding:24px}
+.bledy .karta h2{margin-bottom:10px}
+.tab.porown{font-size:19px}
+.tab.porown td.c,.tab.porown th{text-align:center}
+.tab.porown td:first-child{width:auto;text-align:left}
+.tab.porown tr.uwagi td{font-size:16px;color:var(--mut);font-style:italic;vertical-align:top}
+.tab.porown.wyn td.brak{background:#FBEAEA;color:var(--red);font-weight:800}
+.tab.porown.wyn td.ok{background:#E8F2EC;color:#2E7D4F;font-weight:700}
+.tab.porown tr.suma td{font-weight:700;color:var(--navy);background:#F5F7FA}
+.kroki4 .pl span{font-size:18px}
+.list-wz{background:#fff;border:2px solid var(--navy);border-radius:16px;padding:20px 24px;font-size:19px;line-height:1.45;box-shadow:0 8px 24px rgba(31,68,96,.12)}
+.list-wz p{margin:0 0 10px}
+.lw-t{font-size:18px;font-weight:700;color:var(--honey-d);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.prz.koniec{text-align:center}
+.prz.koniec h1{font-size:110px}
+.prz.koniec p{margin:0 auto}
+.kontakt{margin-top:56px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.kontakt .zmlmini{color:#fff;display:flex;align-items:center;gap:12px}
+.kontakt .zmlmini .zmlz{height:52px;width:auto}
+.kontakt .zmlmini b{font-size:36px;font-weight:800;letter-spacing:.02em}
+.kontakt p{font-size:24px;color:#C9D5E1}
+.siatka3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.karta.prz3{font-size:21px}
+.karta.prz3 h2{font-size:25px;line-height:1.25}
+.lista.mini{font-size:21px;padding-left:26px;line-height:1.4}.lista.mini li{margin-bottom:6px}
+.lista.mala{font-size:25px}.lista.mala li{margin-bottom:10px}
+.siatka2{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.karta{background:#fff;border:2px solid var(--line);border-radius:18px;padding:26px 30px;font-size:24px;line-height:1.45}
+.karta h2{font-size:30px;color:var(--navy);margin:0 0 12px}
+.karta p{margin:0 0 12px}
+.karta.miod{border-color:var(--honey);border-top-width:10px}
+.karta.granat{border-color:var(--navy);border-top-width:10px}
+.wniosek{margin-top:28px;font-size:25px;line-height:1.45;border-left:8px solid var(--honey);background:#fff;padding:16px 24px;border-radius:0 14px 14px 0}
+.cwiczenie{background:#fff;border:3px solid var(--honey);border-radius:20px;padding:22px 32px}
+.cw-g{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.cw-typ{font-size:22px;font-weight:700;color:var(--on-honey);background:#FDF4DC;padding:6px 16px;border-radius:999px}
+.cw-czas{font-size:26px;font-weight:800;color:var(--navy)}
+.sytuacja{font-size:23px;line-height:1.4;margin:0 0 12px}
+.uwaga{font-size:21px;color:var(--mut);margin:16px 0 0}
+.adres{color:var(--navy);font-weight:800}
+.adres.duzy{font-size:30px;line-height:1.35;margin:10px 0 20px}
+.tab{width:100%;border-collapse:separate;border-spacing:0;font-size:20px;line-height:1.4;background:#fff;border:2px solid var(--line);border-radius:16px;overflow:hidden}
+.tab th{background:var(--navy);color:#fff;text-align:left;padding:14px 18px;font-size:22px}
+.tab td{padding:9px 18px;border-top:1px solid var(--line);vertical-align:top}
+.tab td:first-child{font-weight:700;color:var(--navy);width:220px}
+.tab + .wniosek{font-size:21px;margin-top:18px}
+.mapa{display:grid;grid-template-columns:repeat(5,1fr);gap:14px 12px}
+.etap{border-radius:14px;padding:14px 14px;font-size:21px;font-weight:700;line-height:1.25;min-height:118px;display:flex;flex-direction:column;gap:6px}
+.etap span{font-size:30px;font-weight:800}
+.etap.r{background:#FDF4DC;color:var(--on-honey);border:2px solid var(--honey)}
+.etap.s{background:#E8EEF3;color:var(--navy);border:2px solid var(--navy)}
+.etap.z{background:#fff;color:var(--mut);border:2px dashed var(--mut)}
+.legenda{display:flex;gap:28px;margin-top:18px;font-size:20px;font-weight:600}
+.legenda span::before{content:"";display:inline-block;width:18px;height:18px;border-radius:5px;margin-right:8px;vertical-align:-3px}
+.legenda .lr::before{background:#FDF4DC;border:2px solid var(--honey)}.legenda .ls::before{background:#E8EEF3;border:2px solid var(--navy)}.legenda .lz::before{border:2px dashed var(--mut)}
+.odsl{transition:opacity .35s ease,transform .35s ease}
+.odsl.ukryty{opacity:0;transform:translateY(10px)}
+.przerywnik{background:var(--navy)}
+.prz{position:absolute;left:140px;right:140px;top:50%;transform:translateY(-50%);color:#fff}
+.prz-godz{font-size:28px;font-weight:700;color:var(--honey)}
+.prz-nr{font-size:34px;font-weight:600;margin-top:10px;color:#C9D5E1}
+.prz h1{color:#fff;font-size:84px;margin:10px 0 30px}
+.prz p{font-size:30px;line-height:1.5;max-width:1150px;color:#E4EBF1;margin:0}
+@media (prefers-reduced-motion:reduce){.odsl{transition:none}}
+
+@media (prefers-reduced-motion:reduce){
+ .znak.ruch .k,.znak.ruch .fala{animation:none}
+ .znak.ruch .k.s{opacity:1;transform:translate(100px,192px);fill:var(--navy)}
+ .logo .kreska{animation:none;transform:none}.logo .napis,.start .pozniej{animation:none;opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<div id="scena">
+
+ <!-- EKRAN STARTOWY -->
+ <section class="slajd on" id="s0">
+  <div class="start">
+   <div class="logo" role="img" aria-label="Rekrutacja i selekcja">
+    <svg class="znak ruch" id="znakDuzy" viewBox="0 0 200 215" aria-hidden="true"></svg>
+    <div class="kreska"></div>
+    <div class="napis"><span class="a">Rekrutacja</span><span class="b">i selekcja</span></div>
+   </div>
+   <p class="pozniej" style="animation-delay:2.8s">Jak pozyskać odpowiednich kandydatów i wybrać spośród nich osobę, która sprawdzi się na stanowisku w twojej firmie.</p>
+   <button class="btn pozniej" id="start" style="animation-delay:3.3s">Rozpocznij</button>
+   <div class="zml pozniej" style="animation-delay:3.8s" role="img" aria-label="ZMIANOLOGICA — transformujące zmiany organizacyjne"><div class="zmlbig"><svg class="zmlz" viewBox="0 0 80 85" aria-hidden="true"><path d="M76.75,44.38 L75.38,43.00 L73.75,42.25 L73.12,42.25 L71.50,43.00 L58.12,52.75 L51.50,57.12 L44.12,62.88 L42.12,64.12 L41.12,64.50 L40.38,64.50 L39.25,63.38 L39.00,62.62 L38.75,56.50 L38.00,52.25 L37.75,46.88 L37.12,41.88 L36.88,37.50 L35.88,32.50 L35.12,31.88 L33.62,31.62 L32.50,32.12 L29.25,34.88 L28.62,35.12 L26.12,37.62 L25.75,39.00 L25.75,41.25 L27.00,57.38 L28.00,61.88 L28.25,67.12 L28.88,72.62 L29.12,81.12 L30.12,84.00 L30.62,84.38 L31.62,84.50 L35.38,82.62 L38.38,80.00 L46.25,74.75 L56.88,67.00 L57.38,66.88 L69.38,58.12 L70.38,57.62 L75.50,53.88 L77.50,52.75 L78.88,51.38 L79.12,50.75 L79.88,50.38 L79.88,48.25 L79.50,48.25 L79.00,47.75ZM50.75,1.62 L50.00,1.00 L48.50,0.88 L47.38,1.12 L45.38,2.12 L42.25,4.75 L41.25,5.25 L35.38,9.62 L31.50,12.12 L19.62,20.88 L17.62,22.00 L15.25,23.88 L12.75,25.38 L5.50,30.88 L4.75,31.12 L2.50,32.75 L1.00,34.62 L1.00,36.62 L4.38,41.38 L6.75,42.88 L8.38,42.62 L14.25,38.00 L18.62,34.88 L20.62,33.75 L25.62,30.00 L26.50,29.62 L36.50,22.12 L38.62,20.88 L40.25,20.75 L41.00,21.38 L41.38,22.50 L42.12,32.00 L42.88,36.88 L43.12,44.50 L43.88,48.62 L44.00,51.00 L44.38,52.25 L45.75,53.25 L47.25,53.12 L48.25,52.62 L52.00,49.62 L53.62,48.12 L54.50,46.88 L54.88,46.00 L54.88,44.12 L54.12,39.25 L53.75,29.62 L53.00,26.25 L52.12,19.38 L51.50,6.75Z" fill="currentColor"/></svg><div><b>ZMIANOLOGICA</b><small>transformujące zmiany organizacyjne</small></div></div></div>
+  </div>
+ </section>
+
+ <!-- SLAJD 1: PROGRAM DNIA -->
+ <section class="slajd" id="s1">
+  <div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc">
+   <h1>Program dnia</h1>
+   <div class="program">
+    <div class="blok"><div class="godz">Blok 1</div><h2>Po co i jak dobierać ludzi</h2><ul><li>Rekrutacja a selekcja</li><li>Konsekwencje złego doboru</li><li>Dwa podejścia do doboru</li><li>Mapa procesu</li><li>Kreator profilu stanowiska</li></ul></div>
+    <div class="blok"><div class="godz">Blok 2</div><h2>Od stanowiska do profilu</h2><ul><li>Profil stanowiska</li><li>Wynagradzanie i jawność płac</li></ul></div>
+    <div class="blok"><div class="godz">Blok 3</div><h2>Dotarcie do kandydatów</h2><ul><li>Ogłoszenie i kanały</li><li>Poprawianie ogłoszenia</li></ul></div>
+    <div class="blok"><div class="godz">Blok 4</div><h2>Narzędzia i spotkanie</h2><ul><li>Narzędzia i plan selekcji</li><li>Przebieg spotkania z kandydatem</li></ul></div>
+    <div class="blok"><div class="godz">Blok 5</div><h2>Kandydat, porównanie, decyzja</h2><ul><li>Firma w oczach kandydata</li><li>Porównanie z profilem</li><li>Oferta i kandydat rezerwowy</li><li>Kontakt z odrzuconymi</li></ul></div>
+   </div>
+   
+  </div>
+  <div class="stopka"><span class="blokinfo"></span><span></span></div>
+ </section>
+
+<section class="slajd przerywnik"><div class="prz"><div class="prz-nr">Blok 1</div><h1>Po co i jak dobierać ludzi</h1>
+<p>Czym różni się rekrutacja od selekcji, ile kosztuje zły wybór, kiedy warto inwestować w dokładne badanie kandydatów i jak wygląda cały proces od stanowiska do zatrudnienia.</p></div><div class="stopka ciemna"><span class="blokinfo"></span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div><div class="tresc"><h1><i class="ic t" data-ic="target"></i>Co będziesz umieć po szkoleniu</h1>
+<ol class="lista">
+<li class="odsl">Rozróżnisz rekrutację od selekcji i dobierzesz do stanowiska podejście, które opłaca się w twojej firmie.</li>
+<li class="odsl">Opiszesz stanowisko tak, że z opisu wynikną wymagania wobec kandydata i sposób ich sprawdzenia.</li>
+<li class="odsl">Ustalisz wynagrodzenie na podstawie danych z rynku i przygotujesz ogłoszenie zgodne z obowiązującymi przepisami.</li>
+<li class="odsl">Poprowadzisz spotkanie z kandydatem według scenariusza i ocenisz odpowiedzi według tych samych opisów u każdego kandydata.</li>
+<li class="odsl">Porównasz kandydatów z wymaganiami stanowiska, a nie ze sobą nawzajem, i zamkniesz proces także wobec osób, których nie wybrałeś.</li>
+</ol></div><div class="stopka"><span class="blokinfo">Blok 1 · Po co i jak dobierać ludzi</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div><div class="tresc"><h1>Jak pracujemy dziś online</h1>
+<div class="siatka2">
+<div class="karta"><h2><i class="ic " data-ic="monitor"></i>Materiały</h2><p>Wszystkie materiały i ćwiczenia otwierasz w przeglądarce. Nie musisz niczego instalować ani pobierać.</p></div>
+<div class="karta"><h2><i class="ic " data-ic="users"></i>Ćwiczenia</h2><p>Część ćwiczeń wykonujesz sam, część w pokojach Teams w grupach po trzy lub cztery osoby. Wyniki wszystkich widzimy od razu na wspólnym ekranie.</p></div>
+<div class="karta"><h2><i class="ic " data-ic="venetian-mask"></i>Pseudonim</h2><p>W ćwiczeniach podpisujesz się pseudonimem, a nie imieniem i nazwiskiem. Twoje odpowiedzi widzi tylko prowadzący.</p></div>
+<div class="karta"><h2><i class="ic " data-ic="message-circle"></i>Pytania</h2><p>Pytania zadawaj na czacie albo głosem w dowolnym momencie. Na pytania, które wymagają dłuższej odpowiedzi, wrócimy na końcu części, której dotyczą.</p></div>
+</div></div><div class="stopka"><span class="blokinfo">Blok 1 · Po co i jak dobierać ludzi</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div><div class="tresc"><h1><i class="ic t" data-ic="clipboard-check"></i>Test na początek</h1>
+<div class="z-mock"><div class="cwiczenie"><div class="cw-g"><span class="cw-typ"><i class="ic " data-ic="user"></i>Ćwiczenie indywidualne</span><span class="cw-czas"><i class="ic " data-ic="clock"></i>3 minuty</span></div>
+<ol class="lista mala">
+<li>Otwórz w przeglądarce stronę ćwiczeń: <b class="adres">zmianolog.github.io/szkolenie-rekrutacja</b></li>
+<li>Wpisz kod sesji, który podam na czacie, oraz swój pseudonim.</li>
+<li>Odpowiedz na trzy pytania i kliknij „Wyślij odpowiedzi”.</li>
+</ol>
+<p class="uwaga">Test nie jest oceną. Pokazuje, co grupa już wie, a na koniec szkolenia porównamy jego wyniki z testem końcowym.</p></div><div class="mock"><div class="mock-ekran"><div class="mock-nag"><i data-ic="smartphone" class="ic"></i> zmianolog.github.io/szkolenie-rekrutacja</div><div class="mock-t">Dołącz do ćwiczenia</div><div class="mock-l">Kod sesji</div><div class="mock-in">RYV7J</div><div class="mock-l">Pseudonim</div><div class="mock-in zazn">Anna K.</div><div class="mock-btn">Dołącz</div></div><div class="mock-pod">Tak wygląda strona ćwiczeń</div></div></div></div><div class="stopka"><span class="blokinfo">Blok 1 · Po co i jak dobierać ludzi</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div><div class="tresc"><h1>Rekrutacja a selekcja</h1>
+<div class="siatka2">
+<div class="karta miod odsl"><h2><i class="ic " data-ic="megaphone"></i>Rekrutacja</h2><p><b>Cel:</b> pozyskać odpowiednią liczbę kandydatów, którzy spełniają podstawowe wymagania stanowiska.</p><p><b>Działania:</b> ogłoszenie, wybór kanałów, polecenia pracowników, kontakt ze szkołami i urzędem pracy.</p><p><b>Po czym poznać, że się udała:</b> po liczbie i jakości zgłoszeń.</p></div>
+<div class="karta granat odsl"><h2><i class="ic " data-ic="filter"></i>Selekcja</h2><p><b>Cel:</b> wybrać spośród kandydatów osobę najlepiej dopasowaną do wymagań stanowiska.</p><p><b>Działania:</b> analiza dokumentów, rozmowa według scenariusza, zadania próbne, rozmowa z poprzednim pracodawcą.</p><p><b>Po czym poznać, że się udała:</b> po tym, jak zatrudniona osoba pracuje po kilku miesiącach.</p></div>
+</div>
+<div class="lejpas odsl"><div class="lp-r"><i class="ic " data-ic="users"></i> wielu kandydatów</div><div class="lp-s"><i class="ic " data-ic="filter"></i> kilku zbadanych</div><div class="lp-w"><i class="ic " data-ic="user-check"></i> 1</div></div><p class="wniosek odsl">Selekcja wybiera tylko spośród osób, które przyciągnęła rekrutacja. Jeśli wśród kandydatów nie ma nikogo odpowiedniego, nawet dobre narzędzia wskażą jedynie najlepszą osobę spośród nieodpowiednich.</p></div><div class="stopka"><span class="blokinfo">Blok 1 · Po co i jak dobierać ludzi</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div><div class="tresc"><h1>Ile kosztuje zły wybór</h1>
+<div class="siatka2">
+<div class="karta odsl"><h2><i class="ic " data-ic="wallet"></i>Koszty bezpośrednie</h2><ul class="lista mala"><li>Ponowne ogłoszenie i czas poświęcony na nową rekrutację.</li><li>Wynagrodzenie osoby, która nie wykonywała pracy tak, jak trzeba.</li><li>Ponowne wdrożenie kolejnej osoby.</li><li>Koszty rozwiązania umowy, jeśli do niego dochodzi.</li></ul></div>
+<div class="karta odsl"><h2><i class="ic " data-ic="trending-down"></i>Koszty pośrednie</h2><ul class="lista mala"><li>Błędy w pracy, reklamacje i utraceni klienci.</li><li>Dodatkowa praca pozostałych osób, które poprawiają błędy albo przejmują zadania.</li><li>Czas właściciela poświęcony na kontrolę i rozmowy z pracownikiem.</li><li>Gorsza atmosfera w zespole i ryzyko odejścia dobrych pracowników.</li></ul></div>
+</div>
+<p class="wniosek odsl">W małej firmie koszty pośrednie bywają wyższe niż bezpośrednie, bo jedna osoba wykonuje dużą część pracy całej firmy, a jej błędy trafiają bezpośrednio do klientów.</p></div><div class="stopka"><span class="blokinfo">Blok 1 · Po co i jak dobierać ludzi</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div><div class="tresc"><h1><i class="ic t" data-ic="calculator"></i>Ćwiczenie: koszt złego zatrudnienia</h1>
+<div class="cwiczenie"><div class="cw-g"><span class="cw-typ"><i class="ic " data-ic="users"></i>Ćwiczenie w grupach, w pokojach Teams</span><span class="cw-czas"><i class="ic " data-ic="clock"></i>10 minut</span></div>
+<p class="sytuacja"><b>Sytuacja:</b> restauracja na 40 miejsc zatrudniła kucharza z wynagrodzeniem 6500 zł brutto miesięcznie, co z kosztami pracodawcy daje około 7830 zł. Po trzech miesiącach umowa została rozwiązana, bo kucharz nie radził sobie w czasie wydawania dań.</p>
+<p class="sytuacja mniej">Wpiszcie na stronie ćwiczeń liczby przy każdej pozycji, wybierając grupę o tym samym numerze co wasz pokój w Teams. Strona sama zsumuje koszt.</p>
+<table class="tab kalk"><tr><th>Pozycja</th><th>Co oszacować</th></tr>
+<tr><td>Czas właściciela</td><td>Ile godzin zajmie ponowna rekrutacja. Przyjmijcie 100 zł za godzinę pracy właściciela.</td></tr>
+<tr><td>Ogłoszenie</td><td>Koszt ponownego ogłoszenia na portalu z ofertami pracy.</td></tr>
+<tr><td>Wynagrodzenie bez efektu</td><td>Jaka część z trzech miesięcy wynagrodzenia została wypłacona za pracę, która nie przyniosła oczekiwanego efektu.</td></tr>
+<tr><td>Wdrożenie nowej osoby</td><td>Ile godzin doświadczony pracownik poświęci na wdrożenie następcy i ile kosztuje jego godzina pracy.</td></tr></table></div></div><div class="stopka"><span class="blokinfo">Blok 1 · Po co i jak dobierać ludzi</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div><div class="tresc"><h1>Dwa podejścia do doboru</h1>
+<table class="tab"><tr><th></th><th>Stanowisko wymagające wysokich kompetencji</th><th>Stanowisko, na którym łatwo wymienić pracownika</th></tr>
+<tr class="odsl"><td>Na czym się skupiasz</td><td>Na selekcji, czyli na dokładnym zbadaniu kandydatów.</td><td>Na rekrutacji, czyli na pozyskaniu wystarczającej liczby kandydatów.</td></tr>
+<tr class="odsl"><td>Narzędzia</td><td>Rozmowa według scenariusza, zadanie próbne, rozmowa z poprzednim pracodawcą.</td><td>Analiza dokumentów, krótka rozmowa, okres próbny.</td></tr>
+<tr class="odsl"><td>Czas wdrożenia</td><td>Tygodnie lub miesiące.</td><td>Dni.</td></tr>
+<tr class="odsl"><td>Koszt błędu</td><td>Wysoki: błąd ujawnia się późno i trudno go naprawić.</td><td>Niski: błąd ujawnia się szybko, a zastępstwo znajduje się łatwo.</td></tr>
+<tr class="odsl"><td>Przykłady</td><td>Kierownik, programista, kucharz odpowiedzialny za kuchnię.</td><td>Pracownik sezonowy, pomocnik na magazynie, osoba do prostych prac porządkowych.</td></tr></table>
+<p class="wniosek odsl">Szybką wymianę ograniczają przepisy. Umowę na okres próbny zawiera się najwyżej na trzy miesiące, a krócej, gdy planowana umowa na czas określony ma trwać krócej niż rok.</p></div><div class="stopka"><span class="blokinfo">Blok 1 · Po co i jak dobierać ludzi</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div><div class="tresc"><h1>Ćwiczenie: które podejście w twojej firmie</h1>
+<div class="z-mock"><div class="cwiczenie"><div class="cw-g"><span class="cw-typ"><i class="ic " data-ic="user"></i>Ćwiczenie indywidualne</span><span class="cw-czas"><i class="ic " data-ic="clock"></i>5 minut</span></div>
+<ol class="lista mala">
+<li>Wybierz trzy stanowiska ze swojej firmy. Jeśli dopiero zakładasz firmę, wybierz stanowiska, które planujesz obsadzić jako pierwsze.</li>
+<li>Przy każdym stanowisku zaznacz na stronie ćwiczeń, które podejście do doboru jest dla niego właściwe.</li>
+<li>Przy jednym stanowisku zapisz w jednym zdaniu, co przesądziło o wyborze.</li>
+</ol>
+<p class="uwaga">Jeśli zakładasz firmę, pamiętaj, że przy pierwszym zatrudnieniu nie ma jeszcze zespołu, który przejąłby pracę po nietrafionym wyborze. Koszt błędu jest wtedy wyższy, niż wynikałoby z samego stanowiska.</p></div><div class="mock"><div class="mock-ekran"><div class="mock-nag"><i data-ic="smartphone" class="ic"></i> zmianolog.github.io/szkolenie-rekrutacja</div><div class="mock-t">Które podejście?</div><div class="mock-l">Stanowisko 1: magazynier</div><div class="mock-op">Dokładna selekcja</div><div class="mock-op on">Sprawna rekrutacja</div><div class="mock-l">Stanowisko 2: kierownik zmiany</div><div class="mock-op on">Dokładna selekcja</div><div class="mock-op">Sprawna rekrutacja</div><div class="mock-btn">Wyślij odpowiedzi</div></div><div class="mock-pod">Tak wygląda strona ćwiczeń</div></div></div></div><div class="stopka"><span class="blokinfo">Blok 1 · Po co i jak dobierać ludzi</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div><div class="tresc"><h1>Proces od stanowiska do zatrudnienia</h1>
+<div class="mapa-wrap"><div class="mapa"><div class="etap r odsl"><div class="eg"><span>1</span><i class="ic " data-ic="file-text"></i></div>Opis celu i zadań stanowiska</div><div class="etap r odsl"><div class="eg"><span>2</span><i class="ic " data-ic="id-card"></i></div>Profil stanowiska</div><div class="etap r odsl"><div class="eg"><span>3</span><i class="ic " data-ic="banknote"></i></div>Wynagrodzenie</div><div class="etap r odsl"><div class="eg"><span>4</span><i class="ic " data-ic="megaphone"></i></div>Ogłoszenie i kanały</div><div class="etap r odsl"><div class="eg"><span>5</span><i class="ic " data-ic="search"></i></div>Poszukiwanie kandydatów</div><div class="etap s odsl"><div class="eg"><span>6</span><i class="ic " data-ic="list-checks"></i></div>Narzędzia i plan selekcji</div><div class="etap s odsl"><div class="eg"><span>7</span><i class="ic " data-ic="messages-square"></i></div>Spotkania z kandydatami</div><div class="etap s odsl"><div class="eg"><span>8</span><i class="ic " data-ic="scale"></i></div>Porównanie z profilem</div><div class="etap s odsl"><div class="eg"><span>9</span><i class="ic " data-ic="handshake"></i></div>Decyzja i oferta</div><div class="etap z odsl"><div class="eg"><span>10</span><i class="ic " data-ic="mail"></i></div>Kontakt z odrzuconymi</div></div>
+<div class="nastepny odsl"><i class="ic strz" data-ic="arrow-right"></i><div class="etap n"><div class="eg"><i class="ic " data-ic="log-in"></i></div>Wdrożenie i okres próbny<small>następny proces</small></div></div></div>
+<div class="legenda"><span class="lr">rekrutacja</span><span class="ls">selekcja</span><span class="lz">zamknięcie procesu</span></div>
+<p class="wniosek odsl">Opis celu i zadań jest pierwszy, bo wynika z niego profil stanowiska, a z profilu wynagrodzenie, treść ogłoszenia, wybór narzędzi i kryteria porównania kandydatów.</p></div><div class="stopka"><span class="blokinfo">Blok 1 · Po co i jak dobierać ludzi</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div><div class="tresc"><h1><i class="ic t" data-ic="sparkles"></i>Kreator profilu stanowiska</h1>
+<div class="siatka2 wyr">
+<div class="karta"><h2>Co robi kreator</h2><ol class="lista mala zbita">
+<li>Na podstawie twoich odpowiedzi o pracy na stanowisku ustala typ stanowiska.</li>
+<li>Wybiera najważniejsze wymagania wobec kandydata.</li>
+<li>Dobiera narzędzia, którymi sprawdzisz każde wymaganie w twoich warunkach.</li>
+<li>Pomaga przygotować zadania próbne i opisy ocen.</li>
+<li>Układa kolejność postępowania i drukuje scenariusz rozmowy.</li>
+<li>Porównuje kandydatów z wymaganiami stanowiska.</li></ol></div>
+<div class="karta miod"><h2><i class="ic " data-ic="external-link"></i>Otwórz kreator</h2><p class="adres duzy">zmianolog.github.io/<br>szkolenie-rekrutacja/kreator.html</p>
+<p>Teraz pokażę działanie kreatora na jednym stanowisku. W kolejnej części zbudujesz w nim profil stanowiska ze swojej firmy albo jednego z trzech przygotowanych przykładów.</p>
+<p class="uwaga">Do pracy w kreatorze użyj laptopa, bo odpowiadasz w nim na kilkadziesiąt pytań.</p></div>
+</div></div><div class="stopka"><span class="blokinfo">Blok 1 · Po co i jak dobierać ludzi</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1><i class="ic t" data-ic="circle-check"></i>Podsumowanie bloku 1</h1><ul class="podsum"><li class="odsl"><i class="ic " data-ic="check"></i><span>Rekrutacja pozyskuje kandydatów, a selekcja wybiera spośród nich. Selekcja nie naprawi błędu rekrutacji, bo wybiera tylko spośród tych, którzy się zgłosili.</span></li><li class="odsl"><i class="ic " data-ic="check"></i><span>Zły wybór kosztuje więcej niż wypłacone wynagrodzenie: czas właściciela, ponowną rekrutację i wdrożenie, błędy w pracy oraz obciążenie zespołu.</span></li><li class="odsl"><i class="ic " data-ic="check"></i><span>Na stanowiskach wymagających wysokich kompetencji opłaca się dokładna selekcja, a na stanowiskach, na których łatwo wymienić pracownika, sprawna rekrutacja.</span></li><li class="odsl"><i class="ic " data-ic="check"></i><span>Proces zaczyna się od opisu celu i zadań stanowiska, bo wynika z niego wszystko, co dzieje się dalej.</span></li></ul></div><div class="stopka"><span class="blokinfo">Blok 1 · Po co i jak dobierać ludzi</span><span></span></div></section>
+<section class="slajd przerywnik"><div class="prz"><div class="prz-nr">Blok 2</div><h1>Od stanowiska do profilu</h1>
+<p>Jak opisać stanowisko, żeby wynikały z tego wymagania wobec kandydata, i jak ustalić wynagrodzenie, które przyciągnie odpowiednie osoby.</p></div><div class="stopka ciemna"><span class="blokinfo"></span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1><i class="ic t" data-ic="id-card"></i>Z czego składa się profil stanowiska</h1>
+<div class="lancuch">
+<div class="ogniwo odsl"><div class="og-ic"><i class="ic " data-ic="file-text"></i></div><b>Cel i zadania</b><span>Po co stanowisko istnieje i co osoba na nim robi.</span></div>
+<div class="strz odsl"><i class="ic " data-ic="arrow-right"></i></div>
+<div class="ogniwo odsl"><div class="og-ic"><i class="ic " data-ic="layers"></i></div><b>Typ stanowiska</b><span>Operator, specjalista, ekspert albo kierownik, ustalony z opisu pracy.</span></div>
+<div class="strz odsl"><i class="ic " data-ic="arrow-right"></i></div>
+<div class="ogniwo odsl"><div class="og-ic"><i class="ic " data-ic="list-checks"></i></div><b>Wymagania</b><span>Warunki formalne, kryteria zachowań i umiejętności wynikające z zadań.</span></div>
+<div class="strz odsl"><i class="ic " data-ic="arrow-right"></i></div>
+<div class="ogniwo odsl"><div class="og-ic"><i class="ic " data-ic="search"></i></div><b>Narzędzia</b><span>Czym sprawdzisz każde wymaganie u kandydata.</span></div>
+</div>
+<div class="przyk odsl"><span class="pk-t">Przykład: kierownik sklepu</span>
+<div class="pk-l"><div>Obsługa reklamacji trudnych klientów</div><i class="ic " data-ic="arrow-right"></i><div>Kierownik lider</div><i class="ic " data-ic="arrow-right"></i><div>Negocjowanie i deeskalacja, wymagana ocena 3</div><i class="ic " data-ic="arrow-right"></i><div>Zadanie z rozmową: zdenerwowany klient</div></div></div><p class="wniosek odsl">Profil opisuje wymagania stanowiska, a nie wyobrażenie idealnego kandydata. Ponieważ kandydatów porównuje się z profilem, profil trzeba ustalić, zanim zobaczy się pierwsze zgłoszenie.</p></div><div class="stopka"><span class="blokinfo">Blok 2 · Od stanowiska do profilu</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1>Trzy przykłady do wyboru</h1><div class="siatka3"><div class="karta prz3"><h2><i class="ic " data-ic="package"></i>Magazynier w hurtowni materiałów budowlanych</h2><p><b>Cel:</b> przyjmowanie, składowanie i wydawanie towaru bez pomyłek i w terminie.</p><ul class="lista mini"><li>Przyjmowanie dostaw i sprawdzanie ich zgodności z dokumentami.</li><li>Kompletowanie zamówień klientów.</li><li>Obsługa wózka widłowego.</li><li>Prowadzenie ewidencji w systemie magazynowym.</li></ul></div><div class="karta prz3"><h2><i class="ic " data-ic="chef-hat"></i>Kucharz w restauracji włoskiej</h2><p><b>Cel:</b> samodzielne przygotowywanie dań z karty w standardzie restauracji i w czasie wydawania.</p><ul class="lista mini"><li>Przygotowanie dań z karty.</li><li>Przygotowanie półproduktów przed otwarciem.</li><li>Przestrzeganie zasad HACCP.</li><li>Kontrola stanów i zamawianie składników.</li></ul></div><div class="karta prz3"><h2><i class="ic " data-ic="store"></i>Kierownik sklepu z artykułami sportowymi</h2><p><b>Cel:</b> prowadzenie sześcioosobowego sklepu tak, żeby osiągał plan sprzedaży przy utrzymaniu standardu obsługi.</p><ul class="lista mini"><li>Układanie grafiku i rozdzielanie pracy.</li><li>Szkolenie i ocena sprzedawców.</li><li>Realizacja planu sprzedaży.</li><li>Obsługa reklamacji trudnych klientów.</li></ul></div></div></div><div class="stopka"><span class="blokinfo">Blok 2 · Od stanowiska do profilu</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1><i class="ic t" data-ic="sparkles"></i>Ćwiczenie: profil w kreatorze</h1>
+<div class="cwiczenie"><div class="cw-g"><span class="cw-typ"><i class="ic " data-ic="user"></i>Ćwiczenie indywidualne, na laptopie</span><span class="cw-czas"><i class="ic " data-ic="clock"></i>45 minut</span></div>
+<ol class="lista mala">
+<li>Otwórz kreator: <b class="adres">zmianolog.github.io/szkolenie-rekrutacja/kreator.html</b></li>
+<li>Wybierz stanowisko ze swojej firmy, stanowisko, które planujesz obsadzić jako pierwsze, albo jeden z trzech przykładów.</li>
+<li>Przejdź pierwsze cztery kroki: stanowisko, pracę, ludzi i warunki oraz profil. Narzędziami zajmiemy się w dalszej części szkolenia.</li>
+<li>Na koniec kliknij „Zapisz” w prawym górnym rogu kreatora, żeby mieć profil w pliku na dalsze ćwiczenia.</li>
+<li>Napisz na czacie, jaki typ stanowiska wskazał kreator.</li>
+</ol></div></div><div class="stopka"><span class="blokinfo">Blok 2 · Od stanowiska do profilu</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1><i class="ic t" data-ic="messages-square"></i>Omówienie profili</h1>
+<div class="pyt3">
+<div class="karta odsl"><div class="p3-ic"><i class="ic " data-ic="layers"></i></div><p>Czy typ stanowiska wskazany przez kreator zgadza się z twoim wyobrażeniem o tym stanowisku? Jeśli nie, która odpowiedź przesądziła o wyniku?</p></div>
+<div class="karta odsl"><div class="p3-ic"><i class="ic " data-ic="list-checks"></i></div><p>Które kryterium zachowań w profilu cię zaskoczyło i dlaczego kreator je wybrał?</p></div>
+<div class="karta odsl"><div class="p3-ic"><i class="ic " data-ic="search"></i></div><p>Które zadanie stanowiska najtrudniej będzie sprawdzić u kandydata przed zatrudnieniem?</p></div>
+</div></div><div class="stopka"><span class="blokinfo">Blok 2 · Od stanowiska do profilu</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1><i class="ic t" data-ic="banknote"></i>Wynagrodzenie a sposób rozliczania</h1>
+<table class="tab szer1"><tr><th>Z czego rozliczasz stanowisko</th><th>Co to oznacza dla wynagrodzenia</th></tr>
+<tr class="odsl"><td>Z osiągniętego wyniku</td><td>Większa część zmienna, na przykład premia za wykonanie planu sprzedaży albo za terminowe zakończenie zlecenia.</td></tr>
+<tr class="odsl"><td>Z trzymania się zasad</td><td>Przewaga części stałej. Premia za wynik mogłaby skłaniać do omijania procedur, żeby szybciej osiągnąć efekt.</td></tr>
+<tr class="odsl"><td>Z jakości wykonania</td><td>Część stała z premią za jakość, na przykład za brak reklamacji albo za liczbę wyrobów bez wad.</td></tr></table>
+<p class="wniosek odsl">Premia ma sens tylko wtedy, gdy pracownik ma realny wpływ na to, z czego jest rozliczany. Premia za wynik, na który pracownik nie ma wpływu, zwykle nie zmienia jego sposobu pracy, a bywa odbierana jako niesprawiedliwa.</p></div><div class="stopka"><span class="blokinfo">Blok 2 · Od stanowiska do profilu</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1><i class="ic t" data-ic="search"></i>Gdzie sprawdzić, ile płacą inni</h1>
+<div class="siatka2 ciasna">
+<div class="karta odsl"><h2><i class="ic " data-ic="bar-chart-3"></i>Badanie GUS</h2><p>„Struktura wynagrodzeń według zawodów”, publikowane co dwa lata. Podaje przeciętne wynagrodzenia w poszczególnych zawodach.</p></div>
+<div class="karta odsl"><h2><i class="ic " data-ic="globe"></i>Ogólnopolskie Badanie Wynagrodzeń</h2><p>Strona wynagrodzenia.pl. Pozwala sprawdzić wynagrodzenia na stanowisku z podziałem na województwa i wielkość firmy.</p></div>
+<div class="karta odsl"><h2><i class="ic " data-ic="file-text"></i>Raporty płacowe agencji</h2><p>Coroczne raporty agencji rekrutacyjnych, na przykład Hays, Michael Page albo Randstad. Dotyczą głównie specjalistów i kadry kierowniczej.</p></div>
+<div class="karta odsl"><h2><i class="ic " data-ic="megaphone"></i>Ogłoszenia konkurencji</h2><p>Coraz więcej ogłoszeń podaje przedział wynagrodzenia, bo pracodawca musi przekazać tę informację kandydatowi.</p></div>
+</div>
+<p class="wniosek odsl">Źródła ogólnopolskie podają przeciętne dla zawodu. Ogłoszenia firm z twojej okolicy lepiej pokazują, ile trzeba zaoferować w twoim mieście.</p></div><div class="stopka"><span class="blokinfo">Blok 2 · Od stanowiska do profilu</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1><i class="ic t" data-ic="scale"></i>Jawność wynagrodzeń</h1>
+<div class="siatka2 ciasna">
+<div class="karta granat odsl"><h2><i class="ic " data-ic="check"></i>Obowiązuje od 24 grudnia 2025</h2><ul class="lista mini">
+<li>Informację o wynagrodzeniu początkowym albo jego przedziale kandydat musi otrzymać w ogłoszeniu albo najpóźniej przed pierwszą rozmową.</li>
+<li>Nazwa stanowiska i treść ogłoszenia muszą być neutralne pod względem płci.</li>
+<li>Nie wolno pytać kandydata, ile zarabia albo zarabiał u obecnego i poprzednich pracodawców.</li></ul></div>
+<div class="karta miod odsl"><h2><i class="ic " data-ic="clock"></i>Drugi etap w przygotowaniu</h2><ul class="lista mini">
+<li>Projekt ustawy o jednakowym wynagrodzeniu kobiet i mężczyzn za jednakową pracę albo pracę o jednakowej wartości.</li>
+<li>Pracownik będzie mógł zapytać o średnie wynagrodzenie w swojej grupie stanowisk.</li>
+<li>Raport o luce płacowej obejmie firmy zatrudniające co najmniej 100 osób.</li>
+<li>Ustawa ma wejść w życie sześć miesięcy po ogłoszeniu.</li></ul></div>
+</div>
+<p class="wniosek odsl">Dla małej firmy wynika z tego jedno: przedział wynagrodzenia trzeba ustalić przed ogłoszeniem, bo kandydat dowie się o nim, zanim przyjdzie na rozmowę.</p></div><div class="stopka"><span class="blokinfo">Blok 2 · Od stanowiska do profilu</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1><i class="ic t" data-ic="banknote"></i>Ćwiczenie: przedział wynagrodzenia</h1>
+<div class="z-mock"><div class="cwiczenie"><div class="cw-g"><span class="cw-typ"><i class="ic " data-ic="user"></i>Ćwiczenie indywidualne</span><span class="cw-czas"><i class="ic " data-ic="clock"></i>10 minut</span></div>
+<ol class="lista mala">
+<li>Weź stanowisko z profilu, który przygotowałeś w kreatorze.</li>
+<li>Sprawdź wynagrodzenie na tym stanowisku w jednym ze źródeł z poprzedniego slajdu.</li>
+<li>Wpisz na stronie ćwiczeń przedział wynagrodzenia brutto, od najniższej do najwyższej kwoty, oraz źródło, z którego korzystałeś.</li>
+<li>Zapisz jednym zdaniem, od czego zależy, czy zaproponujesz kwotę bliżej dolnej, czy górnej granicy.</li>
+</ol>
+<p class="uwaga">Przedziały wszystkich uczestników dla podobnych stanowisk zobaczymy obok siebie na wspólnym ekranie.</p></div><div class="mock"><div class="mock-ekran"><div class="mock-nag"><i data-ic="smartphone" class="ic"></i> zmianolog.github.io/szkolenie-rekrutacja</div><div class="mock-t">Przedział wynagrodzenia</div><div class="mock-l">Stanowisko</div><div class="mock-in">Kucharz</div><div class="mock-2"><div class="mock-l">Od (brutto)</div><div class="mock-in">6000 zł</div><div class="mock-l">Do (brutto)</div><div class="mock-in zazn">7500 zł</div></div><div class="mock-l">Źródło</div><div class="mock-in">Ogłoszenia z okolicy</div><div class="mock-btn">Wyślij odpowiedzi</div></div><div class="mock-pod">Tak wygląda strona ćwiczeń</div></div></div></div><div class="stopka"><span class="blokinfo">Blok 2 · Od stanowiska do profilu</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1><i class="ic t" data-ic="circle-check"></i>Podsumowanie bloku 2</h1><ul class="podsum"><li class="odsl"><i class="ic " data-ic="check"></i><span>Profil opisuje wymagania stanowiska, a nie wyobrażenie idealnego kandydata, i powstaje przed pierwszym zgłoszeniem.</span></li><li class="odsl"><i class="ic " data-ic="check"></i><span>Typ stanowiska wynika z tego, jak wygląda praca, i przesądza o tym, czego wymagasz od kandydata.</span></li><li class="odsl"><i class="ic " data-ic="check"></i><span>Sposób wynagradzania warto dopasować do tego, z czego rozliczasz stanowisko: z wyniku, z trzymania się zasad albo z jakości wykonania.</span></li><li class="odsl"><i class="ic " data-ic="check"></i><span>Przedział wynagrodzenia ustalasz na podstawie danych z rynku przed ogłoszeniem, bo kandydat musi go poznać najpóźniej przed pierwszą rozmową.</span></li></ul></div><div class="stopka"><span class="blokinfo">Blok 2 · Od stanowiska do profilu</span><span></span></div></section>
+<section class="slajd przerywnik"><div class="prz"><div class="prz-nr">Blok 3</div><h1>Dotarcie do kandydatów</h1>
+<p>Jak napisać ogłoszenie, które przyciągnie odpowiednie osoby, i gdzie je opublikować, żeby dotarło do właściwych kandydatów.</p></div><div class="stopka ciemna"><span class="blokinfo"></span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1><i class="ic t" data-ic="newspaper"></i>Co powinno być w ogłoszeniu</h1>
+<div class="siatka2 ciasna">
+<div class="karta granat odsl"><h2><i class="ic " data-ic="check"></i>Musi się znaleźć</h2><ul class="lista mini">
+<li>Nazwa stanowiska neutralna pod względem płci, na przykład „Kucharz / Kucharka”.</li>
+<li>Cel stanowiska i konkretne zadania, przepisane z profilu.</li>
+<li>Wymagania, z oddzieleniem wymaganych od mile widzianych.</li>
+<li>Przedział wynagrodzenia, forma umowy, miejsce i godziny pracy.</li>
+<li>Sposób i termin zgłaszania się oraz informacja o przetwarzaniu danych kandydata.</li></ul></div>
+<div class="karta miod odsl"><h2><i class="ic " data-ic="ban"></i>Czego unikać</h2><ul class="lista mini">
+<li>Listy przymiotników w rodzaju „dynamiczny, kreatywny, odporny na stres” zamiast opisu pracy.</li>
+<li>Wymagań bez związku z pracą, na przykład prawa jazdy na stanowisku, na którym nikt nie jeździ.</li>
+<li>Wskazywania wieku, płci albo sytuacji rodzinnej kandydata.</li>
+<li>Prośby o zdjęcie i dane, których pracodawca nie może żądać na etapie rekrutacji.</li>
+<li>Ogólników w rodzaju „atrakcyjne wynagrodzenie” zamiast przedziału kwot.</li></ul></div>
+</div></div><div class="stopka"><span class="blokinfo">Blok 3 · Dotarcie do kandydatów</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1><i class="ic t" data-ic="share-2"></i>Gdzie szukać kandydatów</h1>
+<table class="tab szer1"><tr><th>Kanał</th><th>Kiedy się sprawdza</th></tr>
+<tr class="odsl"><td><i class="ic " data-ic="globe"></i> Portale z ofertami pracy</td><td>Stanowiska specjalistyczne i biurowe, gdy kandydaci szukają pracy aktywnie.</td></tr>
+<tr class="odsl"><td><i class="ic " data-ic="users"></i> Polecenia pracowników</td><td>Każde stanowisko, szczególnie gdy zespół jest zadowolony z pracy i zna ludzi z branży.</td></tr>
+<tr class="odsl"><td><i class="ic " data-ic="building-2"></i> Urząd pracy</td><td>Stanowiska wykonawcze. Ogłoszenie jest bezpłatne, a urząd informuje o programach wsparcia zatrudnienia.</td></tr>
+<tr class="odsl"><td><i class="ic " data-ic="school"></i> Szkoły i uczelnie</td><td>Praktyki, staże i pierwsza praca w zawodzie.</td></tr>
+<tr class="odsl"><td><i class="ic " data-ic="map-pin"></i> Lokalne grupy i witryna</td><td>Handel, gastronomia i praca sezonowa, gdy kandydaci mieszkają w okolicy.</td></tr></table>
+<p class="wniosek odsl">Przy stanowiskach, na których łatwo wymienić pracownika, publikujesz ogłoszenie w wielu kanałach naraz. Przy stanowiskach wymagających wysokich kompetencji wybierasz mniej kanałów, ale takie, w których są odpowiedni kandydaci.</p></div><div class="stopka"><span class="blokinfo">Blok 3 · Dotarcie do kandydatów</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1><i class="ic t" data-ic="pencil"></i>Ćwiczenie: popraw to ogłoszenie</h1>
+<div class="dwie">
+<div class="zle-ogl"><div class="zo-t">KUCHARZ – PILNIE!</div>
+<p>Poszukujemy młodego, dynamicznego kucharza do zgranego zespołu.</p>
+<p><b>Wymagania:</b> doświadczenie, dyspozycyjność 24/7, odporność na stres, wiek do 35 lat, prawo jazdy kat. B.</p>
+<p><b>Oferujemy:</b> atrakcyjne wynagrodzenie, pracę w młodym zespole, możliwość rozwoju.</p>
+<p>CV ze zdjęciem prosimy przesyłać na adres praca@restauracja.pl</p></div>
+<div class="cwiczenie"><div class="cw-g"><span class="cw-typ"><i class="ic " data-ic="users"></i>W grupach</span><span class="cw-czas"><i class="ic " data-ic="clock"></i>15 minut</span></div>
+<ol class="lista mini">
+<li>Znajdźcie w ogłoszeniu wszystkie błędy.</li>
+<li>Napiszcie poprawioną wersję we wspólnym polu na stronie ćwiczeń, wybierając grupę o tym samym numerze co wasz pokój w Teams.</li>
+<li>Uzupełnijcie brakujące informacje, korzystając z przykładu kucharza z bloku 2.</li>
+</ol><p class="uwaga">Poprawione wersje wszystkich grup zobaczymy obok siebie.</p></div>
+</div></div><div class="stopka"><span class="blokinfo">Blok 3 · Dotarcie do kandydatów</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1><i class="ic t" data-ic="pencil"></i>Ćwiczenie: twoje ogłoszenie</h1>
+<div class="z-mock"><div class="cwiczenie"><div class="cw-g"><span class="cw-typ"><i class="ic " data-ic="user"></i>Ćwiczenie indywidualne</span><span class="cw-czas"><i class="ic " data-ic="clock"></i>15 minut</span></div>
+<ol class="lista mala">
+<li>Weź profil stanowiska z kreatora i przedział wynagrodzenia z ćwiczenia w bloku 2.</li>
+<li>Napisz ogłoszenie, w którym znajdą się wszystkie elementy z listy „Musi się znaleźć”.</li>
+<li>Sprawdź ogłoszenie według listy „Czego unikać” i popraw to, co się na niej pojawia.</li>
+<li>Wybierz dwa kanały, w których opublikujesz ogłoszenie, i zapisz, dlaczego właśnie te.</li>
+</ol>
+<p class="uwaga">Ogłoszenie zapisz u siebie. Wrócisz do niego, gdy będziesz szukać pracownika.</p></div><div class="karta granat"><h2><i class="ic " data-ic="list-checks"></i>Lista kontrolna</h2><ul class="lista mini chk">
+<li>Neutralna nazwa stanowiska.</li><li>Cel i konkretne zadania.</li><li>Wymagania wymagane i mile widziane osobno.</li><li>Przedział wynagrodzenia.</li><li>Forma umowy, miejsce i godziny pracy.</li><li>Sposób i termin zgłaszania się.</li><li>Informacja o przetwarzaniu danych.</li><li>Bez wieku, płci i sytuacji rodzinnej.</li></ul></div></div></div><div class="stopka"><span class="blokinfo">Blok 3 · Dotarcie do kandydatów</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1><i class="ic t" data-ic="circle-check"></i>Podsumowanie bloku 3</h1><ul class="podsum"><li class="odsl"><i class="ic " data-ic="check"></i><span>Ogłoszenie powstaje z profilu stanowiska: zawiera cel, zadania, wymagania i przedział wynagrodzenia, a nie listę przymiotników.</span></li><li class="odsl"><i class="ic " data-ic="check"></i><span>Treść ogłoszenia nie może różnicować kandydatów ze względu na płeć, wiek ani sytuację rodzinną.</span></li><li class="odsl"><i class="ic " data-ic="check"></i><span>Kanały dobierasz do stanowiska: przy łatwej wymianie pracownika szeroko, przy wysokich kompetencjach tam, gdzie są odpowiedni kandydaci.</span></li></ul></div><div class="stopka"><span class="blokinfo">Blok 3 · Dotarcie do kandydatów</span><span></span></div></section>
+<section class="slajd przerywnik"><div class="prz"><div class="prz-nr">Blok 4</div><h1>Narzędzia i spotkanie z kandydatem</h1>
+<p>Czym sprawdzić wymagania z profilu, w jakiej kolejności używać narzędzi i jak poprowadzić spotkanie, żeby zobaczyć, jak kandydat pracuje, a nie jak reaguje na stres.</p></div><div class="stopka ciemna"><span class="blokinfo"></span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1><i class="ic t" data-ic="award"></i>Trafność narzędzi selekcji</h1>
+<p class="wstep">Liczba pokazuje siłę związku między wynikiem kandydata w danym narzędziu a późniejszą oceną jego pracy. Wartość 0 oznacza brak związku, a wartość 1 związek pełny.</p>
+<table class="tab traf"><tr><th>Narzędzie</th><th>Siła związku z wynikami pracy</th></tr><tr class="odsl"><td>Rozmowa według scenariusza</td><td class="lb"><div class="pas"><i style="width:84%"></i></div><b>0,42</b></td></tr><tr class="odsl"><td>Test wiedzy z dziedziny</td><td class="lb"><div class="pas"><i style="width:80%"></i></div><b>0,40</b></td></tr><tr class="odsl"><td>Próbka pracy</td><td class="lb"><div class="pas"><i style="width:66%"></i></div><b>0,33</b></td></tr><tr class="odsl"><td>Test zdolności poznawczych <span class='psy'>wymaga psychologa</span></td><td class="lb"><div class="pas"><i style="width:62%"></i></div><b>0,31</b></td></tr><tr class="odsl"><td>Swobodna rozmowa</td><td class="lb"><div class="pas"><i style="width:38%"></i></div><b>0,19</b></td></tr></table>
+<p class="wniosek odsl">Trzy najtrafniejsze narzędzia są dostępne bez psychologa. Swobodna rozmowa przewiduje wyniki pracy ponad dwa razy słabiej niż rozmowa według scenariusza. Liczby są średnimi z wielu badań i w poszczególnych firmach wychodzą wyżej albo niżej, zależnie od jakości narzędzia i sposobu jego użycia.</p>
+<p class="zrodlo">Źródło: przegląd metaanaliz trafności metod selekcji, Sackett, Zhang, Berry i Lievens, 2022.</p></div><div class="stopka"><span class="blokinfo">Blok 4 · Narzędzia i spotkanie z kandydatem</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1><i class="ic t" data-ic="briefcase"></i>Narzędzia dostępne w małej firmie</h1>
+<div class="kat2">
+<div class="kg odsl"><h3><i class="ic " data-ic="file-text"></i>Przed spotkaniem</h3><p>Analiza dokumentów</p><p>Rozmowa telefoniczna wstępna</p></div>
+<div class="kg szeroka odsl"><h3><i class="ic " data-ic="messages-square"></i>Na spotkaniu</h3><div class="pod2"><div><h4>Rozmowa</h4><p>Rozmowa według scenariusza</p><p>Pytania sytuacyjne</p><p>Przegląd wcześniejszych prac</p></div><div><h4>Zadania</h4><p>Próbka pracy</p><p>Studium przypadku</p><p>Test wiedzy</p><p>Zadanie z rozmową</p><p>Odtworzenie czynności</p></div></div></div>
+<div class="kg odsl"><h3><i class="ic " data-ic="user-check"></i>Na końcu</h3><p>Rozmowa z poprzednim pracodawcą</p><p>Płatny dzień próbny</p></div>
+<div class="kg psyk odsl"><h3><i class="ic " data-ic="brain"></i>Tylko przez psychologa</h3><p>Testy zdolności poznawczych</p><p>Badania psychotechniczne</p><p>Kwestionariusze osobowości</p></div>
+</div>
+<p class="wniosek odsl">Na stanowiskach dla osób bez doświadczenia, na których umiejętności zdobywa się dopiero w pracy, próbka pracy i test wiedzy zwykle nie mają zastosowania. Wtedy więcej mówią rozmowa według scenariusza i pytania sytuacyjne.</p></div><div class="stopka"><span class="blokinfo">Blok 4 · Narzędzia i spotkanie z kandydatem</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1><i class="ic t" data-ic="route"></i>Plan selekcji: od najtańszego etapu</h1>
+<div class="plan p5"><div class="pl odsl"><div class="pl-n">1</div><div class="pl-ic"><i class="ic " data-ic="file-text"></i></div><b>Analiza dokumentów</b><span>Wiesz, kto spełnia warunki wymagane.</span><div class="pl-bar"><i style="width:100%"></i><em>30 osób</em></div></div><div class="pl odsl"><div class="pl-n">2</div><div class="pl-ic"><i class="ic " data-ic="phone"></i></div><b>Rozmowa telefoniczna</b><span>Wiesz, kto może pracować w wymaganym trybie i miejscu.</span><div class="pl-bar"><i style="width:40%"></i><em>12 osób</em></div></div><div class="pl odsl"><div class="pl-n">3</div><div class="pl-ic"><i class="ic " data-ic="messages-square"></i></div><b>Spotkanie: rozmowa i zadania</b><span>Masz ocenę kryteriów zachowań i umiejętności z zadań stanowiska.</span><div class="pl-bar"><i style="width:20%"></i><em>6 osób</em></div></div><div class="pl odsl"><div class="pl-n">4</div><div class="pl-ic"><i class="ic " data-ic="user-check"></i></div><b>Poprzedni pracodawca i dzień próbny</b><span>Masz potwierdzenie ocen u jednego lub dwóch najlepszych kandydatów.</span><div class="pl-bar"><i style="width:7%"></i><em>2 osoby</em></div></div><div class="pl odsl"><div class="pl-n">5</div><div class="pl-ic"><i class="ic " data-ic="handshake"></i></div><b>Decyzja</b><span>Masz kolejność kandydatów względem profilu.</span><div class="pl-bar"><i style="width:6%"></i><em>1 osoba</em></div></div></div>
+<p class="pl-leg">Paski pokazują przykładową liczbę kandydatów na wejściu każdego etapu.</p>
+<p class="wniosek odsl">Każdy etap odsiewa część kandydatów. Narzędzia, które wymagają najwięcej twojego czasu, stosujesz więc tylko wobec osób, które przeszły wcześniejsze etapy.</p></div><div class="stopka"><span class="blokinfo">Blok 4 · Narzędzia i spotkanie z kandydatem</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1><i class="ic t" data-ic="clipboard-list"></i>Zadanie próbne: jak je przygotować</h1>
+<ol class="lista mala dwukol">
+<li class="odsl">Wybierz zadanie stanowiska, którego złe wykonanie kosztuje firmę najwięcej.</li>
+<li class="odsl">Opisz, co kandydat ma zrobić, tak jak przeczytasz to kandydatowi.</li>
+<li class="odsl">Ustal, co kandydat dostaje do ręki: materiał, narzędzia, dane.</li>
+<li class="odsl">Zapisz, co będziesz obserwować: czas, błędy, kolejność czynności, sprawdzenie wyniku.</li>
+<li class="odsl">Opisz wykonanie na ocenę 1, 2 i 3, zanim zobaczysz pierwszego kandydata.</li>
+<li class="odsl">Ustal limit czasu i daj to samo zadanie każdemu kandydatowi.</li>
+</ol>
+<p class="wniosek odsl"><i class="ic " data-ic="triangle-alert"></i> Efekt zadania nie może trafić do klienta ani zostać sprzedany. Praca kandydata na rzecz firmy bez umowy może zostać uznana za świadczenie pracy.</p></div><div class="stopka"><span class="blokinfo">Blok 4 · Narzędzia i spotkanie z kandydatem</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1><i class="ic t" data-ic="sparkles"></i>Ćwiczenie: narzędzia do twojego profilu</h1>
+<div class="cwiczenie"><div class="cw-g"><span class="cw-typ"><i class="ic " data-ic="user"></i>Ćwiczenie indywidualne, na laptopie</span><span class="cw-czas"><i class="ic " data-ic="clock"></i>20 minut</span></div>
+<ol class="lista mala">
+<li>Otwórz kreator i wczytaj zapisany profil przyciskiem „Wczytaj” w prawym górnym rogu.</li>
+<li>Przejdź do kroku „Narzędzia” i odpowiedz na pięć pytań o możliwości twojej firmy.</li>
+<li>Przejrzyj narzędzia zaproponowane przy każdym wymaganiu i zmień te, których nie możesz zastosować.</li>
+<li>Przejdź do kroku „Postępowanie” i sprawdź, ile czasu zajmą spotkania z jednym kandydatem.</li>
+<li>Napisz na czacie, które narzędzie kreator uznał za najtrafniejsze przy twoim najważniejszym zadaniu stanowiska.</li>
+</ol></div></div><div class="stopka"><span class="blokinfo">Blok 4 · Narzędzia i spotkanie z kandydatem</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1><i class="ic t" data-ic="heart-pulse"></i>Dlaczego spotkanie dzieli się na dwie części</h1>
+<div class="z-wyk"><ol class="lista mala">
+<li class="odsl">Sprawność działania człowieka rośnie wraz z pobudzeniem, ale tylko do pewnego poziomu. Po jego przekroczeniu sprawność spada, a przy zadaniach złożonych spada wcześniej niż przy prostych.</li>
+<li class="odsl">Kandydat przychodzi na spotkanie pobudzony, bo sytuacja jest dla niego nowa i oceniająca. Jeśli badanie zaczyna się od razu, widzisz w dużej mierze jego reakcję na stres, a nie sposób, w jaki pracuje.</li>
+<li class="odsl">Dlatego pierwsza część spotkania służy obniżeniu napięcia, a dopiero druga badaniu kandydata.</li>
+</ol><div class="wyk-box"><svg class="odwu" viewBox="0 0 560 400" aria-label="Wykres: sprawność w zależności od pobudzenia">
+<line x1="60" y1="340" x2="540" y2="340" stroke="#5E6B78" stroke-width="3"/><line x1="60" y1="340" x2="60" y2="30" stroke="#5E6B78" stroke-width="3"/>
+<text x="300" y="382" text-anchor="middle" font-size="22" fill="#1B2733">pobudzenie</text>
+<text x="24" y="185" text-anchor="middle" font-size="22" fill="#1B2733" transform="rotate(-90 24 185)">sprawność</text>
+<path d="M70 320 C 200 40, 380 40, 530 320" fill="none" stroke="#B68C20" stroke-width="6"/>
+<path d="M70 320 C 150 70, 260 70, 420 330" fill="none" stroke="#1F4460" stroke-width="6"/>
+<text x="532" y="60" font-size="19" fill="#B68C20" font-weight="700" text-anchor="end">zadania proste</text>
+<text x="80" y="60" font-size="19" fill="#1F4460" font-weight="700">zadania złożone</text>
+<circle class="odsl" cx="330" cy="205" r="14" fill="#C8202E"/><text class="odsl" x="310" y="210" text-anchor="end" font-size="18" fill="#C8202E" font-weight="700">początek spotkania</text>
+<circle class="odsl" cx="182" cy="141" r="14" fill="#2E7D4F"/><text class="odsl" x="110" y="100" font-size="18" fill="#2E7D4F" font-weight="700">po części czerwonej</text>
+</svg></div></div>
+<p class="zrodlo odsl">Zależność między pobudzeniem a sprawnością opisali Robert Yerkes i John Dodson.</p></div><div class="stopka"><span class="blokinfo">Blok 4 · Narzędzia i spotkanie z kandydatem</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1>Przebieg spotkania z kandydatem</h1>
+<div class="siatka2 ciasna">
+<div class="karta czer odsl"><h2><i class="ic " data-ic="coffee"></i>Część czerwona: obniżenie napięcia</h2><ol class="lista mini">
+<li>Przywitaj kandydata, zaprowadź go do pokoju, zaproponuj miejsce i coś do picia.</li>
+<li>Przedstaw się i powiedz, jaką funkcję pełnisz w firmie oraz czym firma się zajmuje.</li>
+<li>Zapowiedz przebieg spotkania i czas jego trwania.</li>
+<li>W tej części mówisz głównie ty, a kandydat ma czas, żeby się oswoić.</li>
+<li>Zapytaj, czy kandydat ma pytania, i dopiero wtedy przejdź dalej.</li></ol></div>
+<div class="karta ziel odsl"><h2><i class="ic " data-ic="search"></i>Część zielono-niebieska: badanie</h2><ol class="lista mini">
+<li>Zacznij od pytań i rozmowy, które najmniej obciążają kandydata.</li>
+<li>Potem daj studium przypadku albo zadanie, bo angażują myślenie, emocje i relację z tobą.</li>
+<li>Testy zostaw na koniec. Kandydat może je wykonać także później, na przykład na telefonie.</li>
+<li>Na zakończenie powiedz, kiedy i w jakiej formie kandydat otrzyma odpowiedź, i dotrzymaj tego.</li>
+<li>Odprowadź kandydata do wyjścia.</li></ol></div>
+</div><div class="os odsl"><div class="os-r"><span class="os-et">Przebieg</span><div class="os-pas"><div class="os-cz">Część czerwona</div><div class="os-zb">Część zielono-niebieska</div></div></div>
+<div class="os-r"><span class="os-et">Mówi więcej</span><div class="os-pas"><div class="os-m1"><i class="ic " data-ic="mic"></i> prowadzący</div><div class="os-m2"><i class="ic " data-ic="mic"></i> kandydat</div></div></div>
+<div class="os-r"><span class="os-et">Napięcie kandydata</span><div class="os-pas os-nap"><svg viewBox="0 0 1000 60" preserveAspectRatio="none"><polyline points="0,8 330,46 380,48 560,44 700,24 860,40 1000,48" fill="none" stroke="#C8202E" stroke-width="5"/></svg><span class="os-opis" style="left:66%">studium przypadku</span></div></div></div></div><div class="stopka"><span class="blokinfo">Blok 4 · Narzędzia i spotkanie z kandydatem</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1><i class="ic t" data-ic="handshake"></i>Drugie spotkanie: warunki i firma</h1>
+<div class="siatka2">
+<div class="karta miod odsl"><h2><i class="ic " data-ic="banknote"></i>Rozmowa o warunkach</h2><p>Informację o przedziale wynagrodzenia kandydat dostaje w ogłoszeniu albo najpóźniej przed pierwszą rozmową, bo wymagają tego przepisy.</p><p>Rozmowę o konkretnej kwocie, składnikach wynagrodzenia i pozostałych warunkach warto odłożyć na drugie spotkanie, gdy wiesz już, że chcesz z kandydatem pracować.</p></div>
+<div class="karta granat odsl"><h2><i class="ic " data-ic="door-open"></i>Pokazanie firmy</h2><p>Po rozmowie wiesz o kandydacie dużo, a on o firmie prawie nic. Widział pokój i osobę, która prowadziła spotkanie.</p><p>Na drugim spotkaniu pokaż mu miejsce pracy, ludzi, z którymi będzie pracować, i sposób organizacji pracy.</p></div>
+</div>
+<p class="wniosek odsl">Po drugim spotkaniu obie strony podejmują decyzję na podstawie informacji: ty wiesz, z kim będziesz pracować, a kandydat wie, co będzie robić, pod czyim kierownictwem i za jakie wynagrodzenie.</p></div><div class="stopka"><span class="blokinfo">Blok 4 · Narzędzia i spotkanie z kandydatem</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1><i class="ic t" data-ic="notebook-pen"></i>Rozmowa według scenariusza</h1>
+<ol class="lista mala">
+<li class="odsl">Zadajesz wszystkim kandydatom te same pytania w tej samej kolejności, bo tylko wtedy odpowiedzi dają się porównać.</li>
+<li class="odsl">Pytasz o konkretne sytuacje z przeszłości, bo zachowanie w podobnej sytuacji lepiej zapowiada przyszłe zachowanie niż deklaracja.</li>
+<li class="odsl">Gdy odpowiedź jest ogólna, prosisz o jeden konkretny przykład i dopytujesz, co kandydat zrobił, co powiedział i jaki był skutek.</li>
+<li class="odsl">W trakcie zapisujesz to, co kandydat mówi, a oceny wystawiasz zaraz po rozmowie, według opisów ocen z banku pytań.</li>
+<li class="odsl">Kandydatów porównujesz dopiero wtedy, gdy wszyscy mają wystawione oceny.</li>
+</ol></div><div class="stopka"><span class="blokinfo">Blok 4 · Narzędzia i spotkanie z kandydatem</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1><i class="ic t" data-ic="users"></i>Ćwiczenie: spotkanie w trójkach</h1>
+<div class="dwie">
+<div class="cwiczenie"><div class="cw-g"><span class="cw-typ"><i class="ic " data-ic="users"></i>W trójkach, w pokojach</span><span class="cw-czas"><i class="ic " data-ic="clock"></i>25 minut</span></div>
+<ol class="lista mini">
+<li><b>Prowadzący</b> przeprowadza część czerwoną i zadaje dwa pytania ze scenariusza: o planowanie pracy i o rozmowę z osobą zdenerwowaną.</li>
+<li><b>Kandydat</b> odpowiada na podstawie własnych doświadczeń.</li>
+<li><b>Obserwator</b> zaznacza na stronie ćwiczeń, co prowadzący zrobił, i ocenia odpowiedzi kandydata od 1 do 3.</li>
+<li>Jeśli zostanie czas, zamieńcie się rolami.</li></ol></div>
+<div class="karta"><h2><i class="ic " data-ic="eye"></i>Lista obserwatora</h2><ul class="lista mini chk">
+<li>Przywitał kandydata i zaproponował miejsce.</li><li>Przedstawił siebie i firmę.</li><li>Zapowiedział przebieg i czas spotkania.</li>
+<li>W części czerwonej mówił więcej niż kandydat.</li><li>Zapytał o pytania przed przejściem dalej.</li>
+<li>Zadał pytania bez zmiany ich treści.</li><li>Poprosił o konkretny przykład.</li><li>Zapisywał wypowiedzi, a nie oceny.</li></ul></div>
+</div></div><div class="stopka"><span class="blokinfo">Blok 4 · Narzędzia i spotkanie z kandydatem</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1><i class="ic t" data-ic="circle-check"></i>Podsumowanie bloku 4</h1><ul class="podsum"><li class="odsl"><i class="ic " data-ic="check"></i><span>Rozmowa według scenariusza, test wiedzy i próbka pracy należą do najtrafniejszych narzędzi selekcji i są dostępne bez psychologa.</span></li><li class="odsl"><i class="ic " data-ic="check"></i><span>Narzędzia układasz od najtańszego do najbardziej pracochłonnego, bo każdy etap odsiewa część kandydatów.</span></li><li class="odsl"><i class="ic " data-ic="check"></i><span>Spotkanie zaczynasz od części, która obniża napięcie kandydata, a dopiero potem go badasz.</span></li><li class="odsl"><i class="ic " data-ic="check"></i><span>Wszystkim kandydatom zadajesz te same pytania, a oceny wystawiasz według tych samych opisów.</span></li></ul></div><div class="stopka"><span class="blokinfo">Blok 4 · Narzędzia i spotkanie z kandydatem</span><span></span></div></section>
+<section class="slajd przerywnik"><div class="prz"><div class="prz-nr">Blok 5</div><h1>Kandydat, porównanie, decyzja</h1>
+<p>Jak kandydat widzi twoją firmę, jak porównać kandydatów z profilem, jak złożyć ofertę i jak zakończyć proces z osobami, których nie wybrałeś.</p></div><div class="stopka ciemna"><span class="blokinfo"></span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1><i class="ic t" data-ic="eye"></i>Firma w oczach kandydata</h1>
+<p class="wstep">Selekcja działa w obie strony. W czasie spotkania kandydat ocenia firmę tak samo uważnie, jak ty oceniasz jego, a lepsi kandydaci mają zwykle więcej ofert do wyboru.</p>
+<div class="siatka2 ciasna">
+<div class="karta granat odsl"><h2><i class="ic " data-ic="thumbs-up"></i>Buduje zaufanie</h2><ul class="lista mini">
+<li>Spotkanie zaczyna się o umówionej godzinie.</li>
+<li>Miejsce spotkania jest uporządkowane, a rozmowie nic nie przeszkadza.</li>
+<li>Prowadzący zna stanowisko i mówi konkretnie o zadaniach i warunkach.</li>
+<li>Pracownicy, których kandydat spotyka, są uprzejmi.</li>
+<li>Kandydat wie, kiedy i jak otrzyma odpowiedź.</li></ul></div>
+<div class="karta czer odsl"><h2><i class="ic " data-ic="thumbs-down"></i>Zniechęca</h2><ul class="lista mini">
+<li>Czekanie bez wyjaśnienia i spotkanie przerywane telefonami.</li>
+<li>Bałagan w miejscu spotkania i w miejscu pracy.</li>
+<li>Wulgarny język prowadzącego, także w rozmowie o innych osobach.</li>
+<li>Ogólniki zamiast informacji o zadaniach i wynagrodzeniu.</li>
+<li>„Odezwiemy się” bez terminu.</li></ul></div>
+</div></div><div class="stopka"><span class="blokinfo">Blok 5 · Kandydat, porównanie, decyzja</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1><i class="ic t" data-ic="users"></i>Ćwiczenie: co zobaczyła kandydatka</h1>
+<div class="dwie">
+<div class="zle-ogl"><div class="zo-t">Spotkanie z kandydatką na stanowisko księgowej</div>
+<p>Kandydatka przychodzi o umówionej godzinie. Czeka dwadzieścia minut na korytarzu obok magazynu, bo właściciel kończy rozmowę telefoniczną.</p>
+<p>Rozmowa odbywa się w pokoju socjalnym, przy stole z niesprzątniętymi kubkami. Właściciel przeprasza za spóźnienie, ale w trakcie dwa razy odbiera telefon, a raz przeklina, mówiąc o dostawcy.</p>
+<p>Rzetelnie opisuje zakres obowiązków i wynagrodzenie oraz pokazuje program księgowy. Na koniec mówi: „Odezwiemy się”.</p></div>
+<div class="cwiczenie"><div class="cw-g"><span class="cw-typ"><i class="ic " data-ic="users"></i>W grupach</span><span class="cw-czas"><i class="ic " data-ic="clock"></i>10 minut</span></div>
+<ol class="lista mini">
+<li>Wypiszcie, co kandydatka zobaczyła i usłyszała, dzieląc to na elementy, które budują zaufanie, i elementy, które zniechęcają.</li>
+<li>Napiszcie, jaki wniosek o firmie mogła wyciągnąć kandydatka.</li>
+<li>Wskażcie trzy zmiany, które właściciel może wprowadzić bez żadnych kosztów.</li>
+</ol><p class="uwaga">Odpowiedzi grup trafią na wspólną listę na stronie ćwiczeń.</p></div>
+</div></div><div class="stopka"><span class="blokinfo">Blok 5 · Kandydat, porównanie, decyzja</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1><i class="ic t" data-ic="scale"></i>Porównuj z profilem, nie ze sobą</h1>
+<div class="bledy">
+<div class="karta odsl"><div class="p3-ic"><i class="ic " data-ic="repeat"></i></div><h2>Efekt kontrastu</h2><p>Ocena kandydata zależy od tego, kto był przed nim. Przeciętny kandydat po bardzo słabym wydaje się dobry, a po bardzo dobrym wydaje się słaby.</p></div>
+<div class="karta odsl"><div class="p3-ic"><i class="ic " data-ic="timer"></i></div><h2>Pierwsze wrażenie</h2><p>Oceniający wyrabia sobie zdanie w pierwszych minutach, a przez resztę spotkania zauważa głównie to, co to zdanie potwierdza.</p></div>
+<div class="karta odsl"><div class="p3-ic"><i class="ic " data-ic="heart-handshake"></i></div><h2>Podobieństwo do siebie</h2><p>Kandydat podobny do oceniającego, na przykład z tymi samymi zainteresowaniami albo tym samym poczuciem humoru, dostaje wyższe oceny niezależnie od wymagań stanowiska.</p></div>
+</div>
+<p class="wniosek odsl">Wszystkie trzy błędy maleją, gdy każdego kandydata oceniasz według tych samych opisów ocen zaraz po spotkaniu, a kandydatów porównujesz dopiero wtedy, gdy wszyscy mają wystawione oceny.</p></div><div class="stopka"><span class="blokinfo">Blok 5 · Kandydat, porównanie, decyzja</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1><i class="ic t" data-ic="list-ordered"></i>Ćwiczenie: trzech kucharzy</h1>
+<div class="z-mock kuch">
+<div><table class="tab porown"><tr><th>Wymaganie</th><th>Wymagana ocena</th><th>Anna</th><th>Bartek</th><th>Celina</th></tr><tr><td>Koordynacja <span class='psy'>kluczowe</span></td><td class="c">3</td><td class="c">3</td><td class="c">2</td><td class="c">3</td></tr><tr><td>Kontrola działania <span class='psy'>kluczowe</span></td><td class="c">3</td><td class="c">2</td><td class="c">3</td><td class="c">3</td></tr><tr><td>Dokładność wykonania <span class='psy'>kluczowe</span></td><td class="c">3</td><td class="c">3</td><td class="c">2</td><td class="c">2</td></tr><tr><td>Planowanie i priorytetyzacja</td><td class="c">2</td><td class="c">2</td><td class="c">3</td><td class="c">1</td></tr><tr><td>Zadanie próbne: dania z karty <span class='psy'>kluczowe</span></td><td class="c">2</td><td class="c">3</td><td class="c">2</td><td class="c">2</td></tr>
+<tr class="uwagi"><td>Notatki prowadzącego</td><td></td><td>Mówiła cicho, rzadko się uśmiechała.</td><td>Świetny kontakt, kibicuje temu samemu klubowi co właściciel.</td><td>Rozmowa odbyła się zaraz po bardzo słabym kandydacie.</td></tr></table></div>
+<div class="cwiczenie"><div class="cw-g"><span class="cw-typ"><i class="ic " data-ic="users"></i>W grupach</span><span class="cw-czas"><i class="ic " data-ic="clock"></i>10 minut</span></div>
+<ol class="lista mini">
+<li>Ustalcie, kogo zatrudnilibyście jako pierwszego, drugiego i trzeciego.</li>
+<li>Wpiszcie kolejność na stronie ćwiczeń, wybierając grupę o tym samym numerze co wasz pokój w Teams.</li>
+<li>Zapiszcie jednym zdaniem, co przesądziło o waszym wyborze.</li>
+</ol><p class="uwaga">Kolejności grup zobaczymy obok siebie i porównamy z profilem.</p></div>
+</div></div><div class="stopka"><span class="blokinfo">Blok 5 · Kandydat, porównanie, decyzja</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1><i class="ic t" data-ic="scale"></i>Wynik porównania z profilem</h1>
+<table class="tab porown wyn"><tr><th>Wymaganie</th><th>Wymagana ocena</th><th>Anna</th><th>Bartek</th><th>Celina</th></tr><tr><td>Koordynacja</td><td class="c">3</td><td class="c ok">3</td><td class="c brak kl">2</td><td class="c ok">3</td></tr><tr><td>Kontrola działania</td><td class="c">3</td><td class="c brak kl">2</td><td class="c ok">3</td><td class="c ok">3</td></tr><tr><td>Dokładność wykonania</td><td class="c">3</td><td class="c ok">3</td><td class="c brak kl">2</td><td class="c brak kl">2</td></tr><tr><td>Planowanie i priorytetyzacja</td><td class="c">2</td><td class="c ok">2</td><td class="c ok">3</td><td class="c brak">1</td></tr><tr><td>Zadanie próbne: dania z karty</td><td class="c">2</td><td class="c ok">3</td><td class="c ok">2</td><td class="c ok">2</td></tr>
+<tr class="suma"><td>Niespełnione wymagania kluczowe</td><td></td><td class="c">1</td><td class="c">2</td><td class="c">1</td></tr>
+<tr class="suma"><td>Kolejność względem profilu</td><td></td><td class="c"><b>1</b></td><td class="c"><b>3</b></td><td class="c"><b>2</b></td></tr></table>
+<p class="wniosek odsl">Bartek zrobił najlepsze wrażenie, ale nie spełnia dwóch wymagań kluczowych. Anna i Celina mają po jednym brakującym wymaganiu kluczowym, a o kolejności między nimi przesądza planowanie, w którym Celina odbiega od wymagań. Jeśli wasza grupa wybrała inaczej, sprawdźcie, która notatka prowadzącego na to wpłynęła.</p></div><div class="stopka"><span class="blokinfo">Blok 5 · Kandydat, porównanie, decyzja</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1><i class="ic t" data-ic="file-signature"></i>Decyzja, oferta i kandydat rezerwowy</h1>
+<div class="plan p5 kroki4">
+<div class="pl odsl"><div class="pl-n">1</div><div class="pl-ic"><i class="ic " data-ic="phone"></i></div><b>Oferta</b><span>Zadzwoń do wybranego kandydata, przedstaw ofertę i ustal termin odpowiedzi.</span></div>
+<div class="pl odsl"><div class="pl-n">2</div><div class="pl-ic"><i class="ic " data-ic="mail-check"></i></div><b>Potwierdzenie na piśmie</b><span>Wyślij warunki: stanowisko, wynagrodzenie, formę umowy, datę rozpoczęcia.</span></div>
+<div class="pl odsl"><div class="pl-n">3</div><div class="pl-ic"><i class="ic " data-ic="user-check"></i></div><b>Kandydat rezerwowy</b><span>Drugiej osobie z listy nie odmawiaj, dopóki wybrany kandydat nie przyjmie oferty.</span></div>
+<div class="pl odsl"><div class="pl-n">4</div><div class="pl-ic"><i class="ic " data-ic="shield-check"></i></div><b>Badanie lekarskie</b><span>Skieruj kandydata na badanie przed dopuszczeniem do pracy.</span></div>
+<div class="pl odsl"><div class="pl-n">5</div><div class="pl-ic"><i class="ic " data-ic="mail"></i></div><b>Pozostali kandydaci</b><span>Poinformuj ich o decyzji dopiero po przyjęciu oferty przez wybraną osobę.</span></div>
+</div>
+<p class="wniosek odsl">W małej firmie odmowa wybranego kandydata często oznacza powrót do początku procesu. Kandydat rezerwowy pozwala tego uniknąć, pod warunkiem że nie dostał wcześniej odmowy.</p></div><div class="stopka"><span class="blokinfo">Blok 5 · Kandydat, porównanie, decyzja</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1><i class="ic t" data-ic="send"></i>Kontakt z kandydatami, których nie wybrałeś</h1>
+<div class="z-mock">
+<div class="karta"><h2><i class="ic " data-ic="check"></i>Jak to zrobić</h2><ul class="lista mini">
+<li><b>Po co:</b> w małym środowisku opinia o firmie szybko się rozchodzi, a dzisiejszy kandydat może być jutro pracownikiem, klientem albo osobą polecającą.</li>
+<li><b>Kiedy:</b> w terminie, który podałeś na spotkaniu.</li>
+<li><b>Jak:</b> osobom, z którymi się spotkałeś, telefonicznie albo osobistym e-mailem. Pozostałym e-mailem.</li>
+<li><b>Czego nie mówić:</b> nie odwołuj się do wieku, płci, zdrowia ani sytuacji rodzinnej i nie porównuj kandydata z osobą wybraną.</li>
+<li><b>Dane:</b> zatrzymanie CV do przyszłych rekrutacji wymaga osobnej zgody kandydata.</li></ul></div>
+<div class="list-wz"><div class="lw-t"><i class="ic " data-ic="mail"></i> Przykład wiadomości</div>
+<p>Dzień dobry, Pani Anno,</p>
+<p>dziękuję za spotkanie i rozmowę o stanowisku kucharza. Tym razem zdecydowaliśmy się zatrudnić inną osobę, której doświadczenie w prowadzeniu stanowiska w czasie wydawania dań lepiej odpowiada naszym potrzebom.</p>
+<p>Jeśli zgodzi się Pani, żebyśmy zachowali Pani zgłoszenie na potrzeby kolejnych rekrutacji, proszę o odpowiedź na tę wiadomość.</p>
+<p>Pozdrawiam, Marek Nowak</p></div>
+</div></div><div class="stopka"><span class="blokinfo">Blok 5 · Kandydat, porównanie, decyzja</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1><i class="ic t" data-ic="circle-check"></i>Podsumowanie bloku 5</h1><ul class="podsum"><li class="odsl"><i class="ic " data-ic="check"></i><span>Kandydat ocenia firmę w czasie spotkania. Punktualność, porządek, język i konkretne informacje o pracy nic nie kosztują, a wpływają na to, czy dobry kandydat przyjmie ofertę.</span></li><li class="odsl"><i class="ic " data-ic="check"></i><span>Kandydatów porównujesz z profilem, a nie ze sobą, bo porównanie ze sobą uruchamia efekt kontrastu, pierwszego wrażenia i podobieństwa.</span></li><li class="odsl"><i class="ic " data-ic="check"></i><span>Pozostałym kandydatom odmawiasz dopiero wtedy, gdy wybrana osoba przyjmie ofertę.</span></li><li class="odsl"><i class="ic " data-ic="check"></i><span>Odpowiedź dajesz każdemu kandydatowi w zapowiedzianym terminie, bez odwoływania się do cech, które nie mają związku z pracą.</span></li></ul></div><div class="stopka"><span class="blokinfo">Blok 5 · Kandydat, porównanie, decyzja</span><span></span></div></section>
+<section class="slajd"><div class="naglowek"><div class="mini"><svg class="znak" viewBox="0 0 200 215" aria-hidden="true"></svg><div class="kr"></div><div>Rekrutacja <b>i selekcja</b></div></div><div class="zmlmini" role="img" aria-label="ZMIANOLOGICA"></div></div>
+  <div class="tresc"><h1><i class="ic t" data-ic="clipboard-check"></i>Test na koniec</h1>
+<div class="z-mock">
+<div class="cwiczenie"><div class="cw-g"><span class="cw-typ"><i class="ic " data-ic="user"></i>Ćwiczenie indywidualne</span><span class="cw-czas"><i class="ic " data-ic="clock"></i>3 minuty</span></div>
+<ol class="lista mala">
+<li>Wróć na stronę ćwiczeń i otwórz test końcowy.</li>
+<li>Odpowiedz na te same trzy pytania co na początku szkolenia.</li>
+<li>Kliknij „Wyślij odpowiedzi”.</li>
+</ol><p class="uwaga">Na wspólnym ekranie porównamy wyniki grupy z testu wejściowego i końcowego.</p></div>
+<div class="karta miod"><h2><i class="ic " data-ic="flag"></i>Twój pierwszy krok</h2><p>Zapisz jeden krok, który wprowadzisz przy najbliższej rekrutacji w swojej firmie, na przykład: „przed ogłoszeniem opiszę cel i zadania stanowiska” albo „każdemu kandydatowi zadam te same pytania”.</p></div>
+</div></div><div class="stopka"><span class="blokinfo">Blok 5 · Kandydat, porównanie, decyzja</span><span></span></div></section>
+<section class="slajd przerywnik"><div class="prz koniec"><h1>Dziękuję</h1>
+<p>Prezentacja, kreator profilu stanowiska i ćwiczenia są dostępne pod adresem <b>zmianolog.github.io/szkolenie-rekrutacja</b> przez ograniczony czas po szkoleniu. Zapisz u siebie profil stanowiska i ogłoszenie, które dziś przygotowałeś.</p>
+<div class="kontakt"><div class="zmlmini"></div><p>dr Marcin Żółtak · marcin.zoltak@zmianologi.ca · zmianologi.ca</p></div></div><div class="stopka ciemna"><span class="blokinfo"></span><span></span></div></section>
+</div>
+
+<script>
+/* ---------- rysowanie znaku ---------- */
+const PASY = '<path class="pas1" d="M18 60 H182 L160 90 H40 Z"/><path class="pas2" d="M44 98 H156 L136 128 H64 Z"/><path class="pas3" d="M68 136 H132 L114 166 H86 Z"/>';
+const STATYCZNY = PASY + '<circle class="kand" cx="62" cy="34" r="6"/><circle class="kand" cx="100" cy="24" r="6"/><circle class="kand" cx="138" cy="34" r="6"/><circle class="wyb" cx="100" cy="192" r="10"/>';
+// kandydaci: pozycja startowa, etap odpadnięcia (1, 2, 3) albo s = wybrany
+const KAND = [[32,1],[54,2],[74,1],[92,3],[108,"s"],[126,1],[146,2],[168,1],[84,2]];
+function ruchomy(){
+  let h = "";
+  KAND.forEach(([x0,e],i)=>{
+    const x1=100+(x0-100)*.62, x2=100+(x0-100)*.36, x3=100+(x0-100)*.16, str=x0<100?-1:1;
+    const v=`--x0:${x0}px;--x1:${x1}px;--x2:${x2}px;--x3:${x3}px;--xo1:${x1+str*34}px;--xo2:${x2+str*30}px;--xo3:${x3+str*24}px;animation-delay:${(i*0.11).toFixed(2)}s`;
+    h += `<circle class="k ${e==="s"?"s":"r"+e}" cx="0" cy="0" r="${e==="s"?10:6}" style="${v}"/>`;
+  });
+  return h + PASY + '<circle class="fala" cx="100" cy="192" r="12" fill="none" stroke="#E8B62C" stroke-width="4" style="animation-delay:.44s"/>';
+}
+document.getElementById("znakDuzy").innerHTML = ruchomy();
+document.querySelectorAll(".naglowek .znak").forEach(s=>s.innerHTML=STATYCZNY);
+
+
+const IC={"target": "<circle cx=\"12\" cy=\"12\" r=\"10\" /> <circle cx=\"12\" cy=\"12\" r=\"6\" /> <circle cx=\"12\" cy=\"12\" r=\"2\" />", "monitor": "<rect width=\"20\" height=\"14\" x=\"2\" y=\"3\" rx=\"2\" /> <line x1=\"8\" x2=\"16\" y1=\"21\" y2=\"21\" /> <line x1=\"12\" x2=\"12\" y1=\"17\" y2=\"21\" />", "users": "<path d=\"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2\" /> <path d=\"M16 3.128a4 4 0 0 1 0 7.744\" /> <path d=\"M22 21v-2a4 4 0 0 0-3-3.87\" /> <circle cx=\"9\" cy=\"7\" r=\"4\" />", "venetian-mask": "<path d=\"M18 11c-1.5 0-2.5.5-3 2\" /> <path d=\"M4 6a2 2 0 0 0-2 2v4a5 5 0 0 0 5 5 8 8 0 0 1 5 2 8 8 0 0 1 5-2 5 5 0 0 0 5-5V8a2 2 0 0 0-2-2h-3a8 8 0 0 0-5 2 8 8 0 0 0-5-2z\" /> <path d=\"M6 11c1.5 0 2.5.5 3 2\" />", "message-circle": "<path d=\"M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719\" />", "clipboard-check": "<rect width=\"8\" height=\"4\" x=\"8\" y=\"2\" rx=\"1\" ry=\"1\" /> <path d=\"M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2\" /> <path d=\"m9 14 2 2 4-4\" />", "megaphone": "<path d=\"M11 6a13 13 0 0 0 8.4-2.8A1 1 0 0 1 21 4v12a1 1 0 0 1-1.6.8A13 13 0 0 0 11 14H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z\" /> <path d=\"M6 14a12 12 0 0 0 2.4 7.2 2 2 0 0 0 3.2-2.4A8 8 0 0 1 10 14\" /> <path d=\"M8 6v8\" />", "filter": "<path d=\"M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z\" />", "wallet": "<path d=\"M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1\" /> <path d=\"M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4\" />", "trending-down": "<path d=\"M16 17h6v-6\" /> <path d=\"m22 17-8.5-8.5-5 5L2 7\" />", "user": "<path d=\"M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2\" /> <circle cx=\"12\" cy=\"7\" r=\"4\" />", "clock": "<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"M12 6v6l4 2\" />", "file-text": "<path d=\"M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z\" /> <path d=\"M14 2v5a1 1 0 0 0 1 1h5\" /> <path d=\"M10 9H8\" /> <path d=\"M16 13H8\" /> <path d=\"M16 17H8\" />", "id-card": "<path d=\"M13 19a4 4 0 00-8 0\" /> <path d=\"M16 10h2\" /> <path d=\"M16 14h2\" /> <circle cx=\"9\" cy=\"12\" r=\"3\" /> <rect x=\"2\" y=\"5\" width=\"20\" height=\"14\" rx=\"2\" />", "banknote": "<rect width=\"20\" height=\"12\" x=\"2\" y=\"6\" rx=\"2\" /> <circle cx=\"12\" cy=\"12\" r=\"2\" /> <path d=\"M6 12h.01M18 12h.01\" />", "search": "<path d=\"m21 21-4.34-4.34\" /> <circle cx=\"11\" cy=\"11\" r=\"8\" />", "list-checks": "<path d=\"M13 5h8\" /> <path d=\"M13 12h8\" /> <path d=\"M13 19h8\" /> <path d=\"m3 17 2 2 4-4\" /> <path d=\"m3 7 2 2 4-4\" />", "messages-square": "<path d=\"M16 10a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 14.286V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z\" /> <path d=\"M20 9a2 2 0 0 1 2 2v10.286a.71.71 0 0 1-1.212.502l-2.202-2.202A2 2 0 0 0 17.172 19H10a2 2 0 0 1-2-2v-1\" />", "scale": "<path d=\"M12 3v18\" /> <path d=\"m19 8 3 8a5 5 0 0 1-6 0zV7\" /> <path d=\"M3 7h1a17 17 0 0 0 8-2 17 17 0 0 0 8 2h1\" /> <path d=\"m5 8 3 8a5 5 0 0 1-6 0zV7\" /> <path d=\"M7 21h10\" />", "handshake": "<path d=\"m11 17 2 2a1 1 0 1 0 3-3\" /> <path d=\"m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4\" /> <path d=\"m21 3 1 11h-2\" /> <path d=\"M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3\" /> <path d=\"M3 4h8\" />", "mail": "<path d=\"m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7\" /> <rect x=\"2\" y=\"4\" width=\"20\" height=\"16\" rx=\"2\" />", "arrow-right": "<path d=\"M5 12h14\" /> <path d=\"m12 5 7 7-7 7\" />", "log-in": "<path d=\"m10 17 5-5-5-5\" /> <path d=\"M15 12H3\" /> <path d=\"M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4\" />", "external-link": "<path d=\"M15 3h6v6\" /> <path d=\"M10 14 21 3\" /> <path d=\"M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6\" />", "sparkles": "<path d=\"M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z\" /> <path d=\"M20 2v4\" /> <path d=\"M22 4h-4\" /> <circle cx=\"4\" cy=\"20\" r=\"2\" />", "chevron-left": "<path d=\"m15 18-6-6 6-6\" />", "chevron-right": "<path d=\"m9 18 6-6-6-6\" />", "calculator": "<rect width=\"16\" height=\"20\" x=\"4\" y=\"2\" rx=\"2\" /> <line x1=\"8\" x2=\"16\" y1=\"6\" y2=\"6\" /> <line x1=\"16\" x2=\"16\" y1=\"14\" y2=\"18\" /> <path d=\"M16 10h.01\" /> <path d=\"M12 10h.01\" /> <path d=\"M8 10h.01\" /> <path d=\"M12 14h.01\" /> <path d=\"M8 14h.01\" /> <path d=\"M12 18h.01\" /> <path d=\"M8 18h.01\" />", "layers": "<path d=\"M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z\" /> <path d=\"M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12\" /> <path d=\"M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17\" />", "package": "<path d=\"M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z\" /> <path d=\"M12 22V12\" /> <polyline points=\"3.29 7 12 12 20.71 7\" /> <path d=\"m7.5 4.27 9 5.15\" />", "chef-hat": "<path d=\"M17 21a1 1 0 0 0 1-1v-5.35c0-.457.316-.844.727-1.041a4 4 0 0 0-2.134-7.589 5 5 0 0 0-9.186 0 4 4 0 0 0-2.134 7.588c.411.198.727.585.727 1.041V20a1 1 0 0 0 1 1Z\" /> <path d=\"M6 17h12\" />", "store": "<path d=\"M15 21v-5a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v5\" /> <path d=\"M17.774 10.31a1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.451 0 1.12 1.12 0 0 0-1.548 0 2.5 2.5 0 0 1-3.452 0 1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.77-3.248l2.889-4.184A2 2 0 0 1 7 2h10a2 2 0 0 1 1.653.873l2.895 4.192a2.5 2.5 0 0 1-3.774 3.244\" /> <path d=\"M4 10.95V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8.05\" />", "bar-chart-3": "<path d=\"M3 3v16a2 2 0 0 0 2 2h16\" /> <path d=\"M18 17V9\" /> <path d=\"M13 17V5\" /> <path d=\"M8 17v-3\" />", "globe": "<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20\" /> <path d=\"M2 12h20\" />", "check": "<path d=\"M20 6 9 17l-5-5\" />", "circle-check": "<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"m16 9-5.5 5.5L8 12\" />", "coffee": "<path d=\"M10 2v2\" /> <path d=\"M14 2v2\" /> <path d=\"M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1\" /> <path d=\"M6 2v2\" />", "utensils": "<path d=\"M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2\" /> <path d=\"M7 2v20\" /> <path d=\"M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7\" />", "alarm-clock": "<circle cx=\"12\" cy=\"13\" r=\"8\" /> <path d=\"M12 9v4l2 2\" /> <path d=\"M5 3 2 6\" /> <path d=\"m22 6-3-3\" /> <path d=\"M6.38 18.7 4 21\" /> <path d=\"M17.64 18.67 20 21\" />", "pencil": "<path d=\"M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z\" /> <path d=\"m15 5 4 4\" />", "ban": "<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"M4.929 4.929 19.07 19.071\" />", "newspaper": "<path d=\"M15 18h-5\" /> <path d=\"M18 14h-8\" /> <path d=\"M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0v-9a2 2 0 0 1 2-2h2\" /> <rect width=\"8\" height=\"4\" x=\"10\" y=\"6\" rx=\"1\" />", "share-2": "<circle cx=\"18\" cy=\"5\" r=\"3\" /> <circle cx=\"6\" cy=\"12\" r=\"3\" /> <circle cx=\"18\" cy=\"19\" r=\"3\" /> <line x1=\"8.59\" x2=\"15.42\" y1=\"13.51\" y2=\"17.49\" /> <line x1=\"15.41\" x2=\"8.59\" y1=\"6.51\" y2=\"10.49\" />", "school": "<path d=\"M14 21v-3a2 2 0 0 0-4 0v3\" /> <path d=\"M18 4.933V21\" /> <path d=\"m4 6 7.106-3.79a2 2 0 0 1 1.788 0L20 6\" /> <path d=\"m6 11-3.52 2.147a1 1 0 0 0-.48.854V19a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a1 1 0 0 0-.48-.853L18 11\" /> <path d=\"M6 4.933V21\" /> <circle cx=\"12\" cy=\"9\" r=\"2\" />", "building-2": "<path d=\"M10 12h4\" /> <path d=\"M10 8h4\" /> <path d=\"M14 21v-3a2 2 0 0 0-4 0v3\" /> <path d=\"M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2\" /> <path d=\"M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16\" />", "map-pin": "<path d=\"M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0\" /> <circle cx=\"12\" cy=\"10\" r=\"3\" />", "award": "<path d=\"m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526\" /> <circle cx=\"12\" cy=\"8\" r=\"6\" />", "flask-conical": "<path d=\"M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2\" /> <path d=\"M6.453 15h11.094\" /> <path d=\"M8.5 2h7\" />", "heart-pulse": "<path d=\"M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5\" /> <path d=\"M3.22 13H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27\" />", "door-open": "<path d=\"M10 21H2\" /> <path d=\"M10 3H7a2 2 0 00-2 2v16\" /> <path d=\"M14 12h.01\" /> <path d=\"M19 21V5a2 2 0 00-1.675-1.974l-6.163-1.013A1 1 0 0010 3v18a1 1 0 001.124.992z\" /> <path d=\"M22 21h-3\" />", "clipboard-list": "<rect width=\"8\" height=\"4\" x=\"8\" y=\"2\" rx=\"1\" ry=\"1\" /> <path d=\"M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2\" /> <path d=\"M12 11h4\" /> <path d=\"M12 16h4\" /> <path d=\"M8 11h.01\" /> <path d=\"M8 16h.01\" />", "eye": "<path d=\"M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0\" /> <circle cx=\"12\" cy=\"12\" r=\"3\" />", "user-check": "<path d=\"m16 11 2 2 4-4\" /> <path d=\"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2\" /> <circle cx=\"9\" cy=\"7\" r=\"4\" />", "phone": "<path d=\"M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384\" />", "briefcase": "<path d=\"M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16\" /> <rect width=\"20\" height=\"14\" x=\"2\" y=\"6\" rx=\"2\" />", "hourglass": "<path d=\"M5 22h14\" /> <path d=\"M5 2h14\" /> <path d=\"M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22\" /> <path d=\"M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2\" />", "brain": "<path d=\"M12 18V5\" /> <path d=\"M15 13a4.17 4.17 0 0 1-3-4 4.17 4.17 0 0 1-3 4\" /> <path d=\"M17.598 6.5A3 3 0 1 0 12 5a3 3 0 1 0-5.598 1.5\" /> <path d=\"M17.997 5.125a4 4 0 0 1 2.526 5.77\" /> <path d=\"M18 18a4 4 0 0 0 2-7.464\" /> <path d=\"M19.967 17.483A4 4 0 1 1 12 18a4 4 0 1 1-7.967-.517\" /> <path d=\"M6 18a4 4 0 0 1-2-7.464\" /> <path d=\"M6.003 5.125a4 4 0 0 0-2.526 5.77\" />", "route": "<circle cx=\"6\" cy=\"19\" r=\"3\" /> <path d=\"M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15\" /> <circle cx=\"18\" cy=\"5\" r=\"3\" />", "shield-alert": "<path d=\"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z\" /> <path d=\"M12 8v4\" /> <path d=\"M12 16h.01\" />", "thermometer": "<path d=\"M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z\" />", "hand": "<path d=\"M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2\" /> <path d=\"M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2\" /> <path d=\"M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8\" /> <path d=\"M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15\" />", "notebook-pen": "<path d=\"M13.4 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7.4\" /> <path d=\"M2 6h4\" /> <path d=\"M2 10h4\" /> <path d=\"M2 14h4\" /> <path d=\"M2 18h4\" /> <path d=\"M21.378 5.626a1 1 0 1 0-3.004-3.004l-5.01 5.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z\" />", "triangle-alert": "<path d=\"m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3\" /> <path d=\"M12 9v4\" /> <path d=\"M12 17h.01\" />", "smartphone": "<rect width=\"14\" height=\"20\" x=\"5\" y=\"2\" rx=\"2\" ry=\"2\" /> <path d=\"M12 18h.01\" />", "mic": "<path d=\"M12 19v3\" /> <path d=\"M19 10v2a7 7 0 0 1-14 0v-2\" /> <rect x=\"9\" y=\"2\" width=\"6\" height=\"13\" rx=\"3\" />", "trending-up": "<path d=\"M16 7h6v6\" /> <path d=\"m22 7-8.5 8.5-5-5L2 17\" />", "thumbs-up": "<path d=\"M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z\" /> <path d=\"M7 10v12\" />", "thumbs-down": "<path d=\"M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z\" /> <path d=\"M17 14V2\" />", "copy": "<rect width=\"14\" height=\"14\" x=\"8\" y=\"8\" rx=\"2\" ry=\"2\" /> <path d=\"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2\" />", "timer": "<line x1=\"10\" x2=\"14\" y1=\"2\" y2=\"2\" /> <line x1=\"12\" x2=\"15\" y1=\"14\" y2=\"11\" /> <circle cx=\"12\" cy=\"14\" r=\"8\" />", "user-x": "<path d=\"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2\" /> <circle cx=\"9\" cy=\"7\" r=\"4\" /> <line x1=\"17\" x2=\"22\" y1=\"8\" y2=\"13\" /> <line x1=\"22\" x2=\"17\" y1=\"8\" y2=\"13\" />", "heart-handshake": "<path d=\"M19.414 14.414C21 12.828 22 11.5 22 9.5a5.5 5.5 0 0 0-9.591-3.676.6.6 0 0 1-.818.001A5.5 5.5 0 0 0 2 9.5c0 2.3 1.5 4 3 5.5l5.535 5.362a2 2 0 0 0 2.879.052 2.12 2.12 0 0 0-.004-3 2.124 2.124 0 1 0 3-3 2.124 2.124 0 0 0 3.004 0 2 2 0 0 0 0-2.828l-1.881-1.882a2.41 2.41 0 0 0-3.409 0l-1.71 1.71a2 2 0 0 1-2.828 0 2 2 0 0 1 0-2.828l2.823-2.762\" />", "clipboard-signature": "<rect width=\"8\" height=\"4\" x=\"8\" y=\"2\" rx=\"1\" /> <path d=\"M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-.5\" /> <path d=\"M16 4h2a2 2 0 0 1 1.73 1\" /> <path d=\"M8 18h1\" /> <path d=\"M21.378 12.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z\" />", "file-signature": "<path d=\"M14.364 13.634a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506l4.013-4.009a1 1 0 0 0-3.004-3.004z\" /> <path d=\"M14.487 7.858A1 1 0 0 1 14 7V2\" /> <path d=\"M20 19.645V20a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l2.516 2.516\" /> <path d=\"M8 18h1\" />", "graduation-cap": "<path d=\"M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z\" /> <path d=\"M22 10v6\" /> <path d=\"M6 12.5V16a6 3 0 0 0 12 0v-3.5\" />", "flag": "<path d=\"M4 22V4a1 1 0 0 1 .4-.8A6 6 0 0 1 8 2c3 0 5 2 7.333 2q2 0 3.067-.8A1 1 0 0 1 20 4v10a1 1 0 0 1-.4.8A6 6 0 0 1 16 16c-3 0-5-2-8-2a6 6 0 0 0-4 1.528\" />", "send": "<path d=\"M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z\" /> <path d=\"m21.854 2.147-10.94 10.939\" />", "mail-check": "<path d=\"M22 13V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h8\" /> <path d=\"m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7\" /> <path d=\"m16 19 2 2 4-4\" />", "list-ordered": "<path d=\"M11 5h10\" /> <path d=\"M11 12h10\" /> <path d=\"M11 19h10\" /> <path d=\"M4 4h1v5\" /> <path d=\"M4 9h2\" /> <path d=\"M6.5 20H3.4c0-1 2.6-1.925 2.6-3.5a1.5 1.5 0 0 0-2.6-1.02\" />", "repeat": "<path d=\"m17 2 4 4-4 4\" /> <path d=\"M3 11v-1a4 4 0 0 1 4-4h14\" /> <path d=\"m7 22-4-4 4-4\" /> <path d=\"M21 13v1a4 4 0 0 1-4 4H3\" />", "shield-check": "<path d=\"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z\" /> <path d=\"m9 12 2 2 4-4\" />"};
+document.querySelectorAll("[data-ic]").forEach(e=>{e.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(IC[e.dataset.ic]||"")+'</svg>'});
+document.querySelectorAll(".zmlmini").forEach(e=>e.innerHTML='<svg class="zmlz" viewBox="0 0 80 85" aria-hidden="true"><path d="M76.75,44.38 L75.38,43.00 L73.75,42.25 L73.12,42.25 L71.50,43.00 L58.12,52.75 L51.50,57.12 L44.12,62.88 L42.12,64.12 L41.12,64.50 L40.38,64.50 L39.25,63.38 L39.00,62.62 L38.75,56.50 L38.00,52.25 L37.75,46.88 L37.12,41.88 L36.88,37.50 L35.88,32.50 L35.12,31.88 L33.62,31.62 L32.50,32.12 L29.25,34.88 L28.62,35.12 L26.12,37.62 L25.75,39.00 L25.75,41.25 L27.00,57.38 L28.00,61.88 L28.25,67.12 L28.88,72.62 L29.12,81.12 L30.12,84.00 L30.62,84.38 L31.62,84.50 L35.38,82.62 L38.38,80.00 L46.25,74.75 L56.88,67.00 L57.38,66.88 L69.38,58.12 L70.38,57.62 L75.50,53.88 L77.50,52.75 L78.88,51.38 L79.12,50.75 L79.88,50.38 L79.88,48.25 L79.50,48.25 L79.00,47.75ZM50.75,1.62 L50.00,1.00 L48.50,0.88 L47.38,1.12 L45.38,2.12 L42.25,4.75 L41.25,5.25 L35.38,9.62 L31.50,12.12 L19.62,20.88 L17.62,22.00 L15.25,23.88 L12.75,25.38 L5.50,30.88 L4.75,31.12 L2.50,32.75 L1.00,34.62 L1.00,36.62 L4.38,41.38 L6.75,42.88 L8.38,42.62 L14.25,38.00 L18.62,34.88 L20.62,33.75 L25.62,30.00 L26.50,29.62 L36.50,22.12 L38.62,20.88 L40.25,20.75 L41.00,21.38 L41.38,22.50 L42.12,32.00 L42.88,36.88 L43.12,44.50 L43.88,48.62 L44.00,51.00 L44.38,52.25 L45.75,53.25 L47.25,53.12 L48.25,52.62 L52.00,49.62 L53.62,48.12 L54.50,46.88 L54.88,46.00 L54.88,44.12 L54.12,39.25 L53.75,29.62 L53.00,26.25 L52.12,19.38 L51.50,6.75Z" fill="currentColor"/></svg><b>ZMIANOLOGICA</b>');
+const ikona=n=>'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+IC[n]+'</svg>';
+document.querySelectorAll(".stopka").forEach(st=>{const p=st.lastElementChild;p.className="prawa";p.innerHTML='<span class="nr"></span><button class="nawbtn wst" title="Poprzedni (strzałka w lewo)" aria-label="Poprzedni">'+ikona("chevron-left")+'</button><button class="nawbtn dal" title="Dalej (strzałka w prawo)" aria-label="Dalej">'+ikona("chevron-right")+'</button>'});
+
+/* ---------- logo ZMIANOLOGICA ---------- */
+
+
+/* ---------- skalowanie sceny ---------- */
+function skaluj(){const W=document.documentElement.clientWidth,H=document.documentElement.clientHeight,s=Math.min(W/1600,H/900);const sc=document.getElementById("scena");sc.style.transform=`translate(${(W-1600*s)/2}px,${(H-900*s)/2}px) scale(${s})`}
+addEventListener("resize",skaluj);addEventListener("orientationchange",()=>setTimeout(skaluj,200));skaluj();
+
+/* ---------- nawigacja ---------- */
+const SL=[...document.querySelectorAll(".slajd")];let nr=0;
+function ukryj(n){SL[n].querySelectorAll(".odsl").forEach(e=>e.classList.add("ukryty"))}
+function odslon(n){SL[n].querySelectorAll(".odsl").forEach(e=>e.classList.remove("ukryty"))}
+function pokaz(n,wstecz){
+  nr=Math.max(0,Math.min(SL.length-1,n));
+  SL.forEach((s,i)=>s.classList.toggle("on",i===nr));
+  if(wstecz) odslon(nr); else ukryj(nr);
+  document.getElementById("znakDuzy").classList.toggle("ruch",nr===0);
+  document.querySelectorAll(".nr").forEach(e=>e.textContent=nr+" / "+(SL.length-1));if(typeof licz==="function")licz();
+}
+function dalej(){const h=SL[nr].querySelector(".odsl.ukryty");if(h){h.classList.remove("ukryty");return}if(nr<SL.length-1)pokaz(nr+1)}
+function wstecz(){const w=[...SL[nr].querySelectorAll(".odsl:not(.ukryty)")];if(w.length&&SL[nr].querySelector(".odsl.ukryty")!==null||w.length&&false){}
+  if(nr>0)pokaz(nr-1,true)}
+
+function licz(){const sl=SL[nr];if(!sl||!sl.classList.contains("przerwa"))return;
+ if(!sl.dataset.koniec){sl.dataset.koniec=Date.now()+Number(sl.dataset.min)*60000}
+ const k=Number(sl.dataset.koniec),r=Math.max(0,Math.round((k-Date.now())/1000)),t=new Date(k);
+ sl.querySelector(".prw-licz").textContent=String(Math.floor(r/60)).padStart(2,"0")+":"+String(r%60).padStart(2,"0");
+ sl.querySelector(".prw-wr").textContent="Wracamy o "+String(t.getHours()).padStart(2,"0")+":"+String(t.getMinutes()).padStart(2,"0")}
+setInterval(licz,1000);
+document.querySelectorAll(".prw-licz").forEach(e=>e.addEventListener("dblclick",ev=>{ev.stopPropagation();const sl=e.closest(".przerwa");delete sl.dataset.koniec;licz()}));
+document.getElementById("start").onclick=()=>pokaz(1);
+document.querySelectorAll(".nawbtn.dal").forEach(b=>b.onclick=e=>{e.stopPropagation();dalej()});
+document.querySelectorAll(".nawbtn.wst").forEach(b=>b.onclick=e=>{e.stopPropagation();wstecz()});
+let tx=null,przesun=false;
+addEventListener("touchstart",e=>{tx=e.touches[0].clientX;przesun=false},{passive:true});
+addEventListener("touchend",e=>{if(tx===null)return;const dx=e.changedTouches[0].clientX-tx;tx=null;if(Math.abs(dx)>50){przesun=true;dx<0?(nr===0?pokaz(1):dalej()):wstecz()}},{passive:true});
+document.getElementById("scena").addEventListener("click",e=>{if(przesun){przesun=false;return}if(nr>0&&!e.target.closest("a,button"))dalej()});
+addEventListener("keydown",e=>{
+  if(["ArrowRight","PageDown"," ","Enter"].includes(e.key)){e.preventDefault();nr===0?pokaz(1):dalej()}
+  if(["ArrowLeft","PageUp","Backspace"].includes(e.key)){e.preventDefault();wstecz()}
+  if(e.key==="Home")pokaz(0);
+  if(e.key==="f"||e.key==="F"){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}
+});
+</script>
+</body>
+</html>

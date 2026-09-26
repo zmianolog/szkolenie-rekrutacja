@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PROFILENS · Rekrutacja w małej firmie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#1F4460;--navy-h:#163450;--honey:#E8B62C;--honey-h:#B68C20;--on-honey:#5C4810;--red:#C8202E;
+--bg:#F5F5F7;--info:#F0F6FB;--ink:#24282D;--mut:#5E656D;--line:#D9DCE1;--ok:#2E6B45;--okb:#E7F2EA;--warnb:#FDF4DC}
+*{box-sizing:border-box}html,body{margin:0;padding:0}
+body{font-family:'Montserrat',-apple-system,'Segoe UI',Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.6}
+header{background:var(--navy);color:#fff;position:sticky;top:0;z-index:40}
+.hdr{max-width:1080px;margin:0 auto;padding:12px 22px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.brand{font-weight:800;font-size:17px;letter-spacing:.04em;line-height:1.2}
+.brand small{display:block;font-weight:500;font-size:11px;letter-spacing:.02em;color:#B9C8D6}
+.steps{display:flex;gap:4px;flex-wrap:wrap;margin-left:auto}
+.step{font-size:12px;font-weight:600;padding:6px 11px;border-radius:999px;background:rgba(255,255,255,.09);color:#C9D5E1;cursor:pointer;border:none;font-family:inherit}
+.step.on{background:var(--honey);color:var(--on-honey)}.step.done{color:var(--honey)}
+.step:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--honey);outline-offset:2px}
+.tools{display:flex;gap:6px}
+.tools button,.tools label{font-family:inherit;font-size:12px;font-weight:600;background:transparent;color:#DCE5EE;border:1px solid rgba(255,255,255,.3);border-radius:8px;padding:5px 10px;cursor:pointer}
+main{max-width:1080px;margin:0 auto;padding:8px 22px 90px}
+h1{font-size:28px;font-weight:800;color:var(--navy);margin:28px 0 6px;line-height:1.25}
+h2{font-size:19px;font-weight:700;color:var(--navy);margin:26px 0 10px}
+h3{font-size:16px;font-weight:700;color:var(--navy);margin:0 0 6px}
+.lead{color:var(--mut);max-width:760px;margin:0 0 20px}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px;margin-bottom:14px}
+.info{background:var(--info);border-left:4px solid var(--navy);padding:12px 16px;border-radius:0 10px 10px 0;margin:12px 0;font-size:14.5px;max-width:860px}
+.warn{background:var(--warnb);border-left:4px solid var(--honey);padding:12px 16px;border-radius:0 10px 10px 0;margin:12px 0;font-size:14.5px}
+.alarm{background:#FBEAEA;border-left:4px solid var(--red);padding:12px 16px;border-radius:0 10px 10px 0;margin:12px 0;font-size:14.5px}
+label.f{display:block;font-weight:600;font-size:14px;color:var(--navy);margin:14px 0 5px}
+.hint{font-size:13.5px;color:var(--mut);margin:4px 0 0}
+input[type=text],input[type=number],textarea{width:100%;font-family:inherit;font-size:15px;color:var(--ink);border:1.5px solid var(--line);border-radius:9px;padding:10px 12px;background:#fff}
+textarea{resize:vertical;min-height:70px}
+input:focus,textarea:focus{border-color:var(--navy);outline:none}
+.row{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+.row input{flex:1}
+.x{font-family:inherit;border:1.5px solid var(--line);background:#fff;border-radius:8px;width:38px;height:40px;cursor:pointer;color:var(--mut);font-size:18px}
+.btn{font-family:inherit;font-size:14.5px;font-weight:700;border:none;border-radius:10px;padding:11px 20px;cursor:pointer;background:var(--navy);color:#fff}
+.btn:hover{background:var(--navy-h)}
+.btn.sec{background:#fff;color:var(--navy);border:1.5px solid var(--navy)}
+.btn.hon{background:var(--honey);color:var(--on-honey)}.btn.hon:hover{background:var(--honey-h);color:#fff}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:22px;flex-wrap:wrap}
+.q{display:grid;grid-template-columns:1fr 390px;gap:14px;align-items:center;border:1.5px solid var(--line);border-radius:10px;padding:10px 14px;background:#fff;margin-bottom:8px}
+.q.set{border-color:#9DB0C2}
+.q .t{font-size:14.8px;font-weight:500;line-height:1.4}
+.sc{display:grid;grid-template-columns:repeat(3,1fr);border:1.5px solid var(--line);border-radius:8px;overflow:hidden}
+.sc.two{grid-template-columns:repeat(2,1fr)}.sc.five{grid-template-columns:repeat(5,1fr)}.sc.five button{font-size:12px}
+.sc button{font-family:inherit;font-size:13px;font-weight:600;padding:9px 2px;border:none;border-right:1.5px solid var(--line);background:#fff;color:var(--mut);cursor:pointer}
+.sc button:last-child{border-right:none}.sc button.on{background:var(--navy);color:#fff}
+@media(max-width:760px){.q{grid-template-columns:1fr}}
+.grp{margin:18px 0 8px;font-weight:700;color:var(--navy);font-size:15px}
+.pick{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(max-width:760px){.pick{grid-template-columns:1fr}}
+.opt{border:2px solid var(--line);border-radius:12px;padding:14px 16px;background:#fff;cursor:pointer;text-align:left;font-family:inherit;color:var(--ink)}
+.opt b{display:block;color:var(--navy);font-size:15px;margin-bottom:4px}
+.opt span{font-size:13.5px;color:var(--mut)}
+.opt.on{border-color:var(--navy);background:var(--info)}
+.opt.two{border-color:var(--honey);background:#FFFBEF}
+.res{border-left:5px solid var(--honey);background:#fff;border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:12px;border-top:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.res .k{font-size:13px;color:var(--mut);font-weight:600}
+.res .v{font-size:19px;font-weight:800;color:var(--navy);margin:2px 0 4px}
+.crit{display:grid;grid-template-columns:30px 1fr 230px;gap:12px;align-items:start;padding:12px 0;border-bottom:1px solid var(--line)}
+.crit:last-child{border-bottom:none}
+.crit.off .nm{color:var(--mut)}
+.crit .nm{font-weight:700;color:var(--navy)}
+.crit .why{font-size:13.5px;color:var(--mut)}
+.crit .tg{font-size:13px;background:var(--bg);border-radius:8px;padding:6px 10px}
+.crit input[type=checkbox]{width:20px;height:20px;margin-top:3px;accent-color:var(--navy)}
+@media(max-width:760px){.crit{grid-template-columns:30px 1fr}.crit .tg{grid-column:2}}
+.pill{display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;margin-left:6px;vertical-align:1px}
+.p1{background:#FBEAEA;color:var(--red)}.p2{background:var(--warnb);color:var(--on-honey)}.p3{background:var(--info);color:var(--navy)}
+.stage{display:grid;grid-template-columns:54px 1fr;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+.stage:last-child{border-bottom:none}
+.stage .n{width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;font-weight:800;font-size:18px;display:flex;align-items:center;justify-content:center}
+.stage h3{margin-bottom:2px}.stage .tm{font-size:13px;color:var(--honey-h);font-weight:700}
+.stage p{margin:6px 0 0;font-size:14.5px}
+.tot{display:flex;gap:14px;flex-wrap:wrap;margin:10px 0}
+.tot div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 18px}
+.tot b{display:block;font-size:24px;color:var(--navy)}.tot span{font-size:13px;color:var(--mut)}
+.trial{border:1.5px solid var(--line);border-radius:12px;padding:18px;background:#fff;margin-bottom:14px}
+.trial .hd{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.ex{font-size:13px;color:var(--mut);background:var(--bg);border-radius:8px;padding:8px 12px;margin-top:6px}
+.ex b{color:var(--navy)}
+.chk{display:flex;gap:8px;align-items:flex-start;font-size:14.5px;margin:4px 0}
+.chk input{width:18px;height:18px;margin-top:3px;accent-color:var(--navy)}
+.anch{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(max-width:760px){.anch{grid-template-columns:1fr}}
+table.cmp{width:100%;border-collapse:collapse;font-size:14px;background:#fff}
+table.cmp th,table.cmp td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+table.cmp th{background:var(--info);color:var(--navy);font-size:13px}
+.scwrap{overflow-x:auto}
+.mini{display:inline-grid;grid-template-columns:repeat(3,32px);border:1.5px solid var(--line);border-radius:7px;overflow:hidden}
+.mini button{font-family:inherit;border:none;border-right:1px solid var(--line);background:#fff;padding:4px 0;cursor:pointer;font-weight:700;color:var(--mut)}
+.mini button:last-child{border-right:none}.mini button.on{background:var(--navy);color:#fff}
+.rank{display:flex;gap:14px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin-bottom:10px}
+.rank .pos{font-size:22px;font-weight:800;color:var(--navy);min-width:30px}
+.rank.out{opacity:.6}
+.tool{padding:12px 0;border-bottom:1px solid var(--line)}.tool:last-child{border-bottom:none}
+.tool .nm{font-weight:700;color:var(--navy);margin-bottom:6px}
+.tpick{display:flex;flex-wrap:wrap;gap:8px}
+.topt{font-family:inherit;text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:9px;padding:6px 12px;cursor:pointer;color:var(--ink);font-size:14px}
+.topt .rk{display:block;font-size:11.5px;color:var(--mut);font-weight:600}
+.topt.on{border-color:var(--navy);background:var(--info)}
+.hint.psy{color:var(--honey-h)}
+.anb{border-top:1px solid var(--line);padding-top:10px;margin-top:10px}.anb .nm{font-weight:700;color:var(--navy)}
+.hidden{display:none!important}
+#druk{display:none}
+@media print{
+ body{background:#fff;font-size:10.5pt}
+ header,main{display:none!important}
+ #druk{display:block}
+ @page{size:A4;margin:16mm 15mm}
+}
+#druk h1{font-size:17pt;margin:0 0 4pt;color:var(--navy)}
+#druk h2{font-size:12.5pt;margin:14pt 0 5pt;color:var(--navy);border-bottom:1.5pt solid var(--honey);padding-bottom:2pt}
+#druk h3{font-size:11pt;margin:10pt 0 3pt}
+#druk p{margin:3pt 0}
+#druk .sub{color:#555;margin-bottom:8pt}
+#druk .cr{page-break-inside:avoid;border:1pt solid #bbb;border-radius:4pt;padding:7pt 9pt;margin:7pt 0}
+#druk .notes{border:1pt dashed #999;height:52pt;margin:5pt 0;border-radius:3pt}
+#druk .notes.big{height:120pt}
+#druk .box{display:inline-block;border:1pt solid #333;width:18pt;height:16pt;text-align:center;margin-right:4pt;font-weight:700;line-height:16pt}
+#druk .a{font-size:9.5pt;margin:2pt 0}
+#druk table{width:100%;border-collapse:collapse;font-size:9.5pt}
+#druk th,#druk td{border:1pt solid #999;padding:3pt 5pt;text-align:left;vertical-align:top}
+#druk .pb{page-break-before:always}
+#druk .ft{margin-top:14pt;font-size:8pt;color:#777}
+</style>
+</head>
+<body>
+<header><div class="hdr">
+ <div class="brand">PROFILENS<small>Rekrutacja w małej firmie</small></div>
+ <nav class="steps" id="steps"></nav>
+ <div class="tools"><button onclick="expJSON()" title="Zapisz stan pracy do pliku">Zapisz</button>
+ <label title="Wczytaj zapisany plik">Wczytaj<input type="file" accept=".json" onchange="impJSON(event)" hidden></label></div>
+</div></header>
+<main id="app"></main>
+<div id="druk"></div>
+<script>
+const J={'01':['N1.1','Zainteresowanie treścią pracy','N','DOP'],'02':['N1.2','Potrzeba osiągnięć','N','DOP'],
+ '03':['N1.3','Potrzeba wpływu','N','DOP'],'04':['N1.4','Potrzeba afiliacji','N','DOP'],
+ '05':['N2.1','Źródło zaangażowania','N','DOP'],'06':['N2.2','Wyrazistość napędu','N','FLAGA'],
+ '07':['O.1','Uprawnienia i licencje','O','BIN'],'08':['O.2','Wykształcenie formalne','O','BIN'],
+ '09':['O.3','Brak przeciwwskazań zdrowotnych','O','BIN'],'10':['O.4','Dostępność czasowa','O','BIN'],
+ '11':['O.5','Mobilność i lokalizacja','O','BIN'],'12':['O.6','Status prawny','O','BIN'],'13':['O.7','Zasoby własne','O','BIN'],
+ '14':['R1.1','Koordynacja','R','NAT'],'15':['R1.2','Kierowanie','R','NAT'],'16':['R1.3','Wpływ bez władzy','R','NAT'],
+ '17':['R1.4','Negocjowanie i deeskalacja','R','NAT'],'18':['R1.5','Reprezentowanie','R','NAT'],
+ '19':['R2.1','Sprawczość','R','DOP'],'20':['R2.2','Wspólnotowość','R','DOP'],'21':['R2.3','Elastyczność interpersonalna','R','NAT'],
+ '22':['M1.1','Planowanie i priorytetyzacja','M','NAT'],'23':['M1.2','Praca z informacją','M','NAT'],
+ '24':['M1.3','Formułowanie i uzasadnianie decyzji','M','NAT'],'25':['M1.4','Autokontrola jakości','M','NAT'],
+ '26':['M1.5','Zarządzanie własnym obciążeniem','M','NAT'],'27':['M2.1','Sprawność rozumowania','M','NAT'],
+ '28':['M2.2','Styl adaptacyjno-innowacyjny','M','DOP'],'29':['M2.3','Kontrola działania','M','NAT'],
+ '30':['M2.4','Dokładność wykonania','M','NAT'],'31':['M3.1','Precyzja i szybkość ruchu, koordynacja','M','NAT'],
+ '32':['M3.2','Szybkość spostrzegania, odstępstwo od wzorca','M','NAT'],'33':['M3.3','Uwaga trwała','M','NAT'],
+ '34':['A1.1','Kompetencja dziedzinowa','A','NAT'],'35':['A1.2','Kompetencja dziedzinowa','A','NAT'],
+ '36':['A1.3','Kompetencja dziedzinowa','A','NAT'],'37':['A1.4','Kompetencja dziedzinowa','A','NAT'],
+ '38':['A1.5','Kompetencja dziedzinowa','A','NAT'],'39':['A1.6','Kompetencja dziedzinowa','A','NAT'],
+ '40':['A1.7','Kompetencja dziedzinowa','A','NAT'],'41':['A1.8','Kompetencja dziedzinowa','A','NAT']};
+const CZYM={
+ '01':'Czy sama treść tej pracy kandydata pociąga — nie nagroda za nią, tylko materiał, z którym ma pracować.',
+ '02':'Czy napędza go mierzalny wynik i mistrzostwo w tym, co robi.',
+ '03':'Czy napędza go oddziaływanie na innych i możliwość decydowania.',
+ '04':'Czy napędza go przynależność i bliskie relacje w pracy.',
+ '05':'Czy zaangażowanie płynie z samej pracy, czy z nagrody, oceny i presji z zewnątrz.',
+ '06':'Czy napęd kandydata jest wyraźny, czy rozmyty.',
+ '07':'Czy kandydat ma uprawnienie albo licencję wymaganą przepisem.',
+ '08':'Czy ma wykształcenie formalne — jako dokument, nie jako wiedzę.',
+ '09':'Czy lekarz medycyny pracy dopuszcza go do pracy na tym stanowisku.',
+ '10':'Czy jest dostępny w wymaganym trybie: zmianowość, gotowość, dyspozycyjność.',
+ '11':'Czy może dojeżdżać i wyjeżdżać w wymaganym zakresie.',
+ '12':'Czy ma prawo do pracy i spełnia wymagane poświadczenia.',
+ '13':'Czy dysponuje własnym pojazdem, narzędziami albo warunkami do pracy zdalnej.',
+ '14':'Czy potrafi uzgodnić pracę z kimś równorzędnym, gdy nikt nikomu nie może wydać polecenia.',
+ '15':'Czy potrafi rozdzielić pracę, dać informację zwrotną i wyegzekwować ustalenia.',
+ '16':'Czy potrafi doprowadzić do decyzji kogoś, kto mu nie podlega — klienta, przełożonego, decydenta.',
+ '17':'Czy potrafi prowadzić rozmowę, gdy druga strona jest w sporze, i doprowadzić ją do ustalenia.',
+ '18':'Czy potrafi wystąpić przed grupą i obronić stanowisko w odpowiedzi na pytania.',
+ '19':'Ile kandydat przejmuje kierunku rozmowy i stawia granic — wymiar dwubiegunowy.',
+ '20':'Ile dostraja się do drugiej strony i dba o relację — wymiar dwubiegunowy.',
+ '21':'Czy potrafi zmienić podejście, gdy dotychczasowe przestaje działać, i czy robi to w trafnym momencie.',
+ '22':'Czy potrafi ułożyć zadania w kolejności, oszacować czas i odróżnić pilne od ważnego.',
+ '23':'Czy potrafi znaleźć potrzebną informację, sprawdzić źródło i uporządkować materiał.',
+ '24':'Czy potrafi nazwać kryterium swojego wyboru i je obronić — nie chodzi o trafność wyboru.',
+ '25':'Czy sprawdza własną pracę przed oddaniem i wychwytuje w niej usterkę.',
+ '26':'Czy wie, co odpuścić i co zakomunikować, gdy nie wyrabia.',
+ '27':'Jak dobrze wnioskuje i jak szybko radzi sobie z problemem, którego wcześniej nie znał.',
+ '28':'Czy udoskonala istniejącą ramę, czy ją przebudowuje — wymiar dwubiegunowy.',
+ '29':'Czy rusza z miejsca, domyka decyzję przy niepełnych danych i wraca do pracy po niepowodzeniu.',
+ '30':'Czy oddaje pracę kompletną wobec instrukcji i sprawdzoną przed przekazaniem.',
+ '31':'Jak precyzyjnie i szybko wykonuje czynność ręką oraz jak koordynuje ruch ze wzrokiem.',
+ '32':'Jak szybko dostrzega odstępstwo od wzorca — usterkę, błąd w zapisie, odchylenie od normy.',
+ '33':'Czy utrzymuje wykrywalność w pracy jednostajnej, gdy nic się nie dzieje przez dłuższy czas.'};
+const DOPOPT={'01':['Treść pracy musi kandydata pociągać','Zainteresowanie treścią mile widziane'],
+ '02':['Rola karmi potrzebę osiągnięć mocno','Rola karmi ją umiarkowanie','Rola jej nie karmi'],
+ '03':['Rola karmi potrzebę wpływu mocno','Rola karmi ją umiarkowanie','Rola jej nie karmi'],
+ '04':['Rola karmi potrzebę afiliacji mocno','Rola karmi ją umiarkowanie','Rola jej nie karmi'],
+ '05':['Zaangażowanie musi płynąć z samej pracy','Źródło zaangażowania obojętne'],
+ '19':['Przejmuje kierunek i stawia granice','Umiarkowana sprawczość','Nie przejmuje kierunku'],
+ '20':['Dostraja się i dba o relację','Umiarkowana wspólnotowość','Relacja drugorzędna'],
+ '28':['Usprawnia istniejącą ramę — biegun adaptacyjny','Przebudowuje ramę — biegun innowacyjny']};
+const BAZA={
+ W:{'22':2,'24':2,'26':2,'27':2,'29':3,'30':1,'21':2,'19':0,'20':1,'28':1,'01':0,'02':0,'03':0,'04':1,'05':0},
+ P:{'22':2,'23':2,'25':2,'27':2,'29':2,'30':2,'21':1,'19':1,'20':0,'28':0,'01':1,'02':0,'03':1,'04':0,'05':1},
+ C:{'25':2,'27':1,'29':1,'30':3,'21':1,'19':2,'20':1,'28':0,'01':1,'02':0,'03':2,'04':2,'05':1}};
+const DLACZEGO={
+ '22':{W:'rola sama ustala drogę do celu i prowadzi kilka wątków naraz',P:'praca jest cykliczna, więc kolejność wynika z harmonogramu',C:'praca ma stały rytm, więc planowanie waży mniej'},
+ '23':{P:'zadania powtarzają się w wariantach, więc rozstrzyga znalezienie właściwego przepisu'},
+ '24':{W:'skoro sposób ustala wykonawca, musi umieć nazwać kryterium wyboru'},
+ '25':{P:'błąd jest korygowalny, ale tylko gdy zostanie wychwycony przed przekazaniem',C:'rozliczana jest jakość, więc wychwycenie własnej usterki decyduje o wyniku'},
+ '26':{W:'wiele wątków naraz oznacza konieczność odpuszczania czegoś świadomie'},
+ '27':{W:'problemy bywają nowe, a rozumowanie przewiduje wyniki tym silniej, im mniej praca jest opisana',P:'przyłożenie przepisu do przypadku nietypowego wymaga wnioskowania',C:'czynność jest opisana, więc wystarczy poziom pozwalający opanować instrukcję'},
+ '28':{W:'rozliczenie z rezultatu premiuje przebudowę ramy',P:'rozliczenie proceduralne wymaga działania wewnątrz przyjętych założeń',C:'czynność ma pozostać niezmienna'},
+ '29':{W:'decyzje zapadają przy niepełnych danych, a błąd bywa nieodwracalny',P:'zakłócenia zdarzają się, ale procedura podpowiada, co dalej',C:'sposób jest wyuczony, więc liczy się rozpoczęcie i utrzymanie pracy'},
+ '30':{W:'dokładność jest potrzebna, ale nie jest tym, z czego rola jest rozliczana',P:'rozliczana jest zgodność z trybem, więc kompletność jest wymogiem podstawowym',C:'rozliczana jest jakość wykonania — to jednostka najbardziej różnicująca'},
+ '21':{W:'trzeba zmienić podejście, gdy druga strona nie reaguje jak zakładano',P:'elastyczność potrzebna przy uzgodnieniach między działami',C:'wystarczy poziom pozwalający przyjąć zadanie i zgłosić odchylenie'},
+ '19':{W:'cel osiąga się przez ludzi i mimo ludzi',P:'uzgadnianie wymaga umiarkowanej sprawczości',C:'praca jest w znacznej mierze samodzielna'},
+ '20':{W:'wspólnotowość potrzebna, ale nie może przeważyć nad stawianiem granic',P:'wymiana informacji stoi na dbałości o relację',C:'wystarczy poziom pozwalający współistnieć w zespole'},
+ '01':{W:'nikt nie wytrzyma nieprzewidywalnego rytmu dla samej nagrody',P:'rama procedury utrzyma także kogoś obojętnego wobec dziedziny',C:'wprawa rośnie szybciej u kogoś, kogo materiał interesuje'},
+ '02':{W:'mierzalny wynik jest istotą tej roli',P:'rola karmi osiągnięcia przez domykanie kolejnych spraw',C:'rola karmi osiągnięcia w sensie rzemieślniczym'},
+ '03':{W:'rola daje realny wpływ na decyzje',P:'rama procedury ogranicza decyzyjność',C:'stanowisko jest wykonawcze i nie daje wpływu'},
+ '04':{W:'praca bywa samotna i rywalizacyjna',P:'praca opiera się na stałym zespole i uzgodnieniach',C:'stanowisko bywa izolowane'},
+ '05':{W:'nikt nie utrzyma tej roli wyłącznie na nagrodzie zewnętrznej',P:'jasne rozliczenie działa także przy zaangażowaniu zewnętrznym',C:'powtarzalność oznacza, że zaangażowanie musi mieć własne źródło'}};
+const ZEFF={
+ zar:{L:[['15',2,'rola odpowiada za przebieg pracy innych osób','prowadzenie zespołu'],
+   ['22',2,'kilka wątków biegnie cudzymi rękami i ktoś musi ustalić kolejność','prowadzenie zespołu'],
+   ['26',2,'trzeba decydować, co odpuścić, gdy zespół nie wyrabia','prowadzenie zespołu']],
+  K:[['15',3,'kierowanie idzie przez liderów, a nie przez wykonawców','koordynowanie kilku zespołów'],
+   ['14',2,'uzgadnianie między zespołami jest codzienną czynnością','koordynowanie kilku zespołów'],
+   ['24',2,'przesunięcie ludzi między zespołami trzeba umieć uzasadnić','koordynowanie kilku zespołów']],
+  PR:[['16',3,'ludzie w projekcie podlegają służbowo komu innemu, więc cel osiąga się przez uzgodnienie','prowadzenie przedsięwzięcia'],
+   ['17',2,'spory o zasoby z przełożonymi członków zespołu są w tej roli regułą','prowadzenie przedsięwzięcia'],
+   ['22',3,'termin jest nieprzesuwalny, a zasób cudzy','prowadzenie przedsięwzięcia'],
+   ['29',3,'decyzje zapadają pod presją terminu i przy niepełnych danych','prowadzenie przedsięwzięcia']],
+  T:[['24',3,'rozdział zasobów musi mieć jawne kryterium i musi dać się obronić przed tym, komu zasobu zabrakło','rozdział zasobów w pionie'],
+   ['23',2,'decyzja o pionie wymaga zebrania i zweryfikowania danych z kilku funkcji','rozdział zasobów w pionie']],
+  S:[['16',3,'na tym poziomie prowadzi się ludzi, nad którymi nie ma się zwierzchnictwa','wyznaczanie kierunku'],
+   ['27',3,'przedmiotem decyzji jest kierunek, a nie przebieg','wyznaczanie kierunku'],
+   ['28',1,'kierunek wyznacza się przez przebudowę ramy, a nie jej usprawnianie','wyznaczanie kierunku']]},
+ spec:{O:[['14',1,'rola uzgadnia i tłumaczy sprawy ludziom, choć nikim nie kieruje','praca w zadanym trybie']],
+  S:[['29',2,'sprawę trzeba domknąć bez cudzej akceptacji','samodzielne rozstrzyganie'],
+   ['24',2,'wybór drogi trzeba umieć nazwać i obronić','samodzielne rozstrzyganie']],
+  E:[['27',3,'przypadek nietypowy wymaga wnioskowania na materiale, którego nikt nie opisał','wiodąca rola w dziedzinie'],
+   ['16',2,'rozstrzygnięcie roli bywa podstawą cudzych decyzji, a władzy formalnej nie ma','wiodąca rola w dziedzinie'],
+   ['15',1,'uczenie innych i konfrontowanie ich rozstrzygnięć jest częścią roli','wiodąca rola w dziedzinie']]},
+ czyn:{J:[],
+  W:[['32',3,'rola sama rozpoznaje odchylenie od wzorca','kilka operacji i samodzielne zatrzymanie'],
+   ['29',2,'zatrzymanie pracy jest decyzją podejmowaną samodzielnie i pod presją wyniku','kilka operacji i samodzielne zatrzymanie'],
+   ['25',2,'przezbrojenie trzeba sprawdzić przed wznowieniem pracy','kilka operacji i samodzielne zatrzymanie']]}};
+const POZ_ZAR=[
+ {g:'L',nm:'Liderski',adj:'liderskich',op:'Prowadzi jeden zespół: rozdziela pracę na dziś, rozstrzyga odchylenia, odpowiada przed przełożonym za wynik tego zespołu. Horyzont dni i tygodni.'},
+ {g:'K',nm:'Koordynacyjny',adj:'koordynacyjnych',op:'Prowadzi kilka zespołów w ramach sekcji lub działu, zwykle przez ich liderów. Uzgadnia między zespołami i przesuwa ludzi. Horyzont miesięcy.'},
+ {g:'PR',nm:'Projektowy',adj:'projektowych',op:'Odpowiada za rezultat przedsięwzięcia, jego budżet i harmonogram, prowadząc ludzi podlegających służbowo komu innemu. Egzekwuje przez uzgodnienie, nie przez polecenie.'},
+ {g:'T',nm:'Taktyczny',adj:'taktycznych',op:'Rozstrzyga o rozdziale zasobów i sposobie działania pionu obejmującego kilka funkcji. Współdecyduje o zatrudnieniu i awansach. Horyzont kwartałów.'},
+ {g:'S',nm:'Strategiczny',adj:'strategicznych',op:'Wyznacza kierunek: czym się zajmujemy, czego nie robimy, gdzie wchodzimy. Horyzont lat, decyzje praktycznie nieodwracalne.'}];
+const POZ_SPEC=[
+ {g:'O',nm:'Operacyjny',adj:'operacyjnych',op:'Pracuje według zadanego trybu, ale z ludźmi; rozstrzyga drobne sprawy poza instrukcją, a niejasne oddaje wyżej.'},
+ {g:'S',nm:'Samodzielny',adj:'samodzielnych',op:'Kończy sprawę bez zatwierdzania i sam wybiera drogę, ale zakres spraw jest powtarzalny — te same typy przypadków w kolejnych odsłonach.'},
+ {g:'E',nm:'Wiodący ekspert',adj:'eksperckich',op:'Rozstrzyga przypadki najtrudniejsze i jest właścicielem wiedzy w dziedzinie: inni u niego konsultują, on uczy i pierwszy przyswaja zmiany.'}];
+const POZ_CZYN=[
+ {g:'J',nm:'Jednooperacyjny',adj:'jednooperacyjnych',op:'Jedna wyuczona czynność na zadanym materiale, wzorzec ustalony z zewnątrz, odchylenie wykrywa kontrola.'},
+ {g:'W',nm:'Wielooperacyjny',adj:'wielooperacyjnych',op:'Kilka czynności, przezbrojenia albo zmiana parametrów; rola sama rozpoznaje odchylenie i zatrzymuje pracę, zanim wyjdzie brak.'}];
+const BANK=[{"czesc": "NAPĘD", "opis": "Kryteria z obszaru napędu opisują, czego kandydat chce od pracy: co go w niej pociąga, jakie potrzeby praca ma zaspokajać i skąd bierze się jego zaangażowanie. Te kryteria nie mówią, czy kandydat jest dobry, tylko czy to, czego chce, zgadza się z tym, co daje stanowisko. Dlatego przy większości z nich ocena nie jest wynikiem, tylko opisem, który porównuje się z tym, co oferuje rola.", "items": [{"kod": "N1.1", "ps": "Wyobraźmy sobie wolny tydzień bez żadnych obowiązków. Czym z tej dziedziny chciałoby się wtedy zająć i dlaczego?", "nazwa": "Zainteresowanie treścią pracy", "rodzaj": "poziom", "co": "To kryterium sprawdza, czy kandydata pociąga sam materiał, z którym będzie pracował, na przykład gotowanie, programowanie albo obsługa maszyn, a nie wyłącznie wynagrodzenie, godziny pracy czy dojazd. Ma ono znaczenie wtedy, gdy praca wymaga ciągłego uczenia się albo gdy rytm pracy jest nieregularny, ponieważ w takich warunkach osobę, której dziedzina nie interesuje, trudno utrzymać w pracy samą nagrodą.", "p1": "Proszę opowiedzieć, które zajęcie w ostatniej pracy albo w nauce było najbardziej interesujące i co konkretnie w nim ciekawiło.", "p2": "Proszę opowiedzieć o ostatniej sytuacji, w której poświęcono czas na poznanie czegoś z tej dziedziny, choć nikt tego nie wymagał. Co to było i skąd wziął się ten wybór?", "pd": "Co w pracy na tym stanowisku byłoby najmniej interesujące?", "o1": "Kandydat mówi o pracy przede wszystkim przez wynagrodzenie, warunki albo lokalizację. O samym materiale pracy wypowiada się ogólnie i nie potrafi podać przykładu, w którym zajmował się dziedziną z własnej woli.", "o2": "Kandydat wskazuje konkretne części pracy, które go interesują, ale jego przykłady dotyczą wyłącznie tego, czego wymagało od niego stanowisko. Nie podaje przykładów zajmowania się dziedziną poza obowiązkiem.", "o3": "Kandydat podaje konkretne przykłady zajmowania się dziedziną z własnej inicjatywy, na przykład czytania, próbowania nowych rozwiązań albo nauki poza obowiązkiem, i potrafi szczegółowo opisać, co go w tej dziedzinie pociąga."}, {"kod": "N1.2", "ps": "Wyobraźmy sobie, że przełożony wyznaczył cel, który łatwo osiągnąć. Co zostanie zrobione z pozostałym czasem i możliwościami?", "nazwa": "Potrzeba osiągnięć", "rodzaj": "dopasowanie", "co": "To kryterium sprawdza, jak silnie kandydata napędza mierzalny wynik i doskonalenie się w tym, co robi. Silna potrzeba osiągnięć jest korzystna w roli, która daje jasne cele i widoczny wynik, natomiast w roli powtarzalnej, bez możliwości poprawiania wyniku, ta sama potrzeba prowadzi do znużenia i odejścia.", "p1": "Proszę opowiedzieć o wyniku w pracy, który daje największą satysfakcję. Jaki to był wynik i w jaki sposób został zmierzony?", "p2": "Proszę opisać sytuację, w której postawiono sobie cel wyższy, niż wymagał przełożony. Co to był za cel i co z niego wyszło?", "pd": "Po czym było wiadomo, że to był dobry wynik?", "o1": "Oznacza słabą potrzebę osiągnięć. Kandydat opisuje satysfakcję z pracy przez atmosferę, uznanie albo spokój, nie podaje przykładu samodzielnie podniesionego celu, a wynik opisuje ogólnie, bez miary.", "o2": "Oznacza umiarkowaną potrzebę osiągnięć. Kandydat podaje mierzalny wynik, ale cele przyjmował od przełożonego, a cel wyższy od wymaganego pojawia się w jego opowieści jako wyjątek.", "o3": "Oznacza silną potrzebę osiągnięć. Kandydat podaje kilka przykładów celów, które wyznaczył sobie sam i które dało się zmierzyć, porównuje swoje wyniki z wcześniejszymi i mówi o tym, co zrobił, żeby je poprawić."}, {"kod": "N1.3", "ps": "Wyobraźmy sobie, że zespół przyjmuje sposób pracy, który wydaje się gorszy od znanego rozwiązania. Co zostanie zrobione?", "nazwa": "Potrzeba wpływu", "rodzaj": "dopasowanie", "co": "To kryterium sprawdza, jak silnie kandydata napędza możliwość oddziaływania na innych i decydowania. Silna potrzeba wpływu jest korzystna w roli kierowniczej albo w roli, która przekonuje klientów, natomiast na stanowisku wykonawczym, bez realnego wpływu na decyzje, ta sama potrzeba prowadzi do frustracji i konfliktów z przełożonym.", "p1": "Proszę opowiedzieć o sytuacji, w której udało się przekonać innych do własnego rozwiązania albo zmienić sposób działania zespołu.", "p2": "Proszę opisać sytuację, w której decyzję podjął ktoś inny, choć było własne zdanie w tej sprawie. Co wtedy zostało zrobione?", "pd": "Co w tej sytuacji dawało największą satysfakcję?", "o1": "Oznacza słabą potrzebę wpływu. Kandydat przyjmuje decyzje innych bez prób ich zmiany, a satysfakcję z pracy czerpie ze źródeł niezwiązanych z decydowaniem.", "o2": "Oznacza umiarkowaną potrzebę wpływu. Kandydat próbuje wpływać na decyzje wtedy, gdy dotyczą one jego własnej pracy, ale nie szuka wpływu poza tym zakresem.", "o3": "Oznacza silną potrzebę wpływu. Kandydat podaje wiele przykładów dążenia do decydowania, satysfakcję opisuje przez to, że inni przyjęli jego kierunek, a sytuacje bez wpływu opisuje jako uciążliwe."}, {"kod": "N1.4", "ps": "Wyobraźmy sobie dwie oferty pracy: jedną w stałym, zgranym zespole, drugą samodzielną i lepiej płatną. Co przesądzi o wyborze?", "nazwa": "Potrzeba afiliacji", "rodzaj": "dopasowanie", "co": "To kryterium sprawdza, jak silnie kandydata napędza przynależność do zespołu i bliskie relacje w pracy. Silna potrzeba afiliacji jest korzystna w pracy opartej na stałym zespole, natomiast na stanowisku, na którym pracuje się w pojedynkę albo w rywalizacji, ta sama potrzeba pozostaje niezaspokojona i obniża zadowolenie z pracy.", "p1": "Proszę opowiedzieć o zespole, w którym pracowało się najlepiej, i o tym, co decydowało, że było dobrze.", "p2": "Proszę opisać okres, w którym pracowało się w pojedynkę albo z niewielką liczbą kontaktów z ludźmi. Jak ten czas był odbierany?", "pd": "Czego brakowało w pracy, która była najmniej lubiana?", "o1": "Oznacza słabą potrzebę afiliacji. Kandydat dobrze ocenia pracę samodzielną, a relacje ze współpracownikami nie pojawiają się w jego odpowiedziach jako źródło zadowolenia.", "o2": "Oznacza umiarkowaną potrzebę afiliacji. Kandydat ceni dobre relacje w zespole, ale traktuje je jako dodatek do pracy, a okresy pracy w pojedynkę opisuje bez skarg.", "o3": "Oznacza silną potrzebę afiliacji. Kandydat wskazuje relacje jako główny powód zadowolenia z pracy, pracę w izolacji opisuje jako trudną, a swoje wybory zawodowe tłumaczy ludźmi, z którymi pracował."}, {"kod": "N2.1", "ps": "Wyobraźmy sobie zadanie, którego nikt nie będzie sprawdzał ani nagradzał. Jak zostanie wykonane i dlaczego?", "nazwa": "Źródło zaangażowania", "rodzaj": "poziom", "co": "To kryterium sprawdza, czy zaangażowanie kandydata płynie z samej pracy, czy głównie z nagrody, oceny i kontroli z zewnątrz. Ma ono znaczenie wtedy, gdy praca jest mało nadzorowana albo powtarzalna, ponieważ osoba zaangażowana wyłącznie przez nagrodę i kontrolę obniża jakość pracy, gdy kontrola słabnie.", "p1": "Proszę opowiedzieć o okresie, w którym praca szła wyjątkowo dobrze. Co wtedy powodowało, że chciało się ją wykonywać?", "p2": "Proszę opisać sytuację, w której zadanie zostało wykonane starannie, choć nikt tego nie sprawdzał i nie nagradzał.", "pd": "Co zdecydowało o odejściu z poprzedniej pracy albo o tym, że rozważana jest zmiana?", "o1": "Kandydat opisuje swoje zaangażowanie przez premię, ocenę przełożonego, kontrolę albo obawę przed konsekwencjami i nie podaje przykładu starannej pracy wykonanej bez nadzoru.", "o2": "Kandydat wymienia zarówno nagrodę i ocenę, jak i samą pracę jako źródła zaangażowania, a przykład starannej pracy bez nadzoru podaje dopiero po dopytaniu.", "o3": "Kandydat opisuje swoje zaangażowanie przez samą pracę i jej jakość, podaje konkretny przykład starannej pracy wykonanej bez nadzoru i nagrody, a o nagrodzie mówi jako o sprawie drugorzędnej."}, {"kod": "N2.2", "nazwa": "Wyrazistość napędu", "rodzaj": "flaga", "co": "To kryterium nie ma osobnych pytań, ponieważ ocenia się je na podstawie odpowiedzi na wszystkie pytania z obszaru napędu. Sprawdza ono, czy z tych odpowiedzi wyłania się spójny obraz tego, czego kandydat chce od pracy. Niska ocena nie jest powodem odrzucenia kandydata, tylko sygnałem, że jego napęd trzeba sprawdzić w inny sposób, na przykład w rozmowie z poprzednim pracodawcą albo w okresie próbnym.", "o1": "Napęd jest rozmyty. Kandydat nie potrafi wskazać, co pociąga go w pracy, jego odpowiedzi są ogólne i deklaratywne, a w kolejnych pytaniach wskazuje różne, niezwiązane ze sobą powody.", "o2": "Napęd jest częściowo wyraźny. Kandydat wskazuje jedną lub dwie potrzeby, ale tylko część jego odpowiedzi potwierdza je konkretnymi przykładami.", "o3": "Napęd jest wyraźny. Z odpowiedzi wyłania się jedna lub dwie dominujące potrzeby, które kandydat potwierdza w kilku niezależnych przykładach."}]}, {"czesc": "RELACJE", "opis": "Kryteria z obszaru relacji opisują, jak kandydat pracuje z drugim człowiekiem: ze współpracownikiem, z podwładnym, z klientem, ze stroną sporu i z grupą. Pięć pierwszych kryteriów to układy z ludźmi, które występują w roli z różną częstością, a trzy kolejne opisują sposób, w jaki kandydat zachowuje się wobec ludzi niezależnie od układu.", "items": [{"kod": "R1.1", "ps": "Wyobraźmy sobie, że osoba z sąsiedniego stanowiska potrzebuje wyników pracy wcześniej, niż da się je przygotować, a nikt nie może rozstrzygnąć za was. Co zostanie zrobione?", "nazwa": "Koordynacja", "rodzaj": "poziom", "co": "To kryterium sprawdza, czy kandydat potrafi uzgodnić pracę z osobą równorzędną, gdy żadna ze stron nie może drugiej wydać polecenia. Ma ono znaczenie wszędzie tam, gdzie wynik zależy od kilku osób, na przykład między kuchnią a salą albo między programistą a osobą testującą.", "p1": "Proszę opowiedzieć o sytuacji, w której trzeba było uzgodnić pracę z osobą z innego działu albo z równorzędnym współpracownikiem, a każda ze stron miała inne potrzeby.", "p2": "Proszę opisać sytuację, w której praca stanęła, ponieważ ktoś inny nie dostarczył tego, co było potrzebne. Co zostało zrobione?", "pd": "Jakie ustalenie z tej rozmowy wynikło i czy zostało dotrzymane?", "o1": "Kandydat czeka, aż sprawę rozstrzygnie ktoś inny, przekazuje ją przełożonemu albo próbuje narzucić swoje rozwiązanie. Z jego opowieści nie wynika żadne konkretne ustalenie.", "o2": "Kandydat doprowadza do ustalenia w sytuacji typowej, w której obie strony są chętne do współpracy, ale przy sprzecznych potrzebach sprawa trafia do przełożonego.", "o3": "Kandydat doprowadza do ustalenia także przy sprzecznych potrzebach stron, uzgadnia termin i sposób informowania się nawzajem, a potem sprawdza, czy ustalenie zostało dotrzymane."}, {"kod": "R1.2", "ps": "Wyobraźmy sobie pracownika, który drugi raz nie dotrzymał ustalonego terminu. Jak będzie wyglądała rozmowa z nim?", "nazwa": "Kierowanie", "rodzaj": "poziom", "co": "To kryterium sprawdza, czy kandydat potrafi rozdzielić pracę między ludzi, przekazać im informację zwrotną o ich pracy i wyegzekwować to, co zostało ustalone. Ma ono znaczenie w każdej roli, w której ktoś odpowiada za pracę innych osób, także wtedy, gdy wdraża nowego pracownika.", "p1": "Proszę opowiedzieć o sytuacji, w której trzeba było rozdzielić pracę między kilka osób przy ograniczonym czasie. Jak zapadły decyzje, kto co robi?", "p2": "Proszę opisać rozmowę z pracownikiem, który nie wykonał tego, co zostało ustalone. Co zostało powiedziane i co działo się potem?", "pd": "Po czym było widać, że ta rozmowa przyniosła skutek?", "o1": "Kandydat wykonuje pracę sam zamiast ją rozdzielać albo unika trudnych rozmów, a jego informacja zwrotna jest ogólna i nie prowadzi do egzekwowania ustaleń.", "o2": "Kandydat rozdziela pracę i przekazuje informację zwrotną w sytuacjach typowych, ale gdy pracownik stawia opór, nie wraca do sprawy albo robi to niekonsekwentnie.", "o3": "Kandydat rozdziela pracę z uwzględnieniem możliwości poszczególnych osób, w informacji zwrotnej nazywa konkretne zachowanie, jego skutek i oczekiwanie na przyszłość, a do ustaleń wraca i wyciąga konsekwencje także wtedy, gdy pracownik stawia opór."}, {"kod": "R1.3", "ps": "Wyobraźmy sobie klienta, który chce rozwiązania droższego i gorszego dla niego niż to, które da się zaproponować. Jak będzie wyglądała rozmowa?", "nazwa": "Wpływ bez władzy", "rodzaj": "poziom", "co": "To kryterium sprawdza, czy kandydat potrafi doprowadzić do decyzji osobę, która mu nie podlega, czyli klienta, przełożonego albo inną osobę decydującą. Ma ono znaczenie w sprzedaży, w obsłudze klienta i w każdej roli, w której trzeba uzyskać zgodę osoby stojącej wyżej.", "p1": "Proszę opowiedzieć o sytuacji, w której trzeba było przekonać klienta, przełożonego albo inną osobę decydującą do rozwiązania, na które początkowo się nie zgadzała.", "p2": "Proszę opisać sytuację, w której nie udało się przekonać osoby decydującej. Co zostało zrobione i jaki wniosek z tego wynikł?", "pd": "Jakie argumenty zostały użyte i skąd było wiadomo, że będą ważne dla tej osoby?", "o1": "Kandydat argumentuje wyłącznie ze swojej perspektywy, powtarza te same argumenty albo szybko ustępuje i nie próbuje ustalić, czego potrzebuje druga strona.", "o2": "Kandydat przygotowuje argumenty i dopasowuje je do rozmówcy w sytuacji typowej, ale przy odmowie nie proponuje innego rozwiązania.", "o3": "Kandydat ustala, czym kieruje się osoba decydująca, buduje propozycję pod jej kryteria, a przy odmowie proponuje inny wariant albo kolejny krok. Niepowodzenie potrafi przeanalizować i wskazać, co zrobiłby inaczej."}, {"kod": "R1.4", "ps": "Wyobraźmy sobie klienta, który głośno składa reklamację przy innych klientach. Co zostanie powiedziane i zrobione w pierwszych minutach?", "nazwa": "Negocjowanie i deeskalacja", "rodzaj": "poziom", "co": "To kryterium sprawdza, czy kandydat potrafi prowadzić rozmowę z osobą zdenerwowaną albo będącą w sporze i doprowadzić ją do konkretnego ustalenia. Deeskalacja oznacza obniżenie napięcia w rozmowie do poziomu, na którym da się rozmawiać o rozwiązaniu. Kryterium ma znaczenie przy obsłudze reklamacji, w rozmowach z trudnymi klientami i przy sporach w zespole.", "p1": "Proszę opowiedzieć o rozmowie z osobą zdenerwowaną albo składającą reklamację. Jak przebiegła i czym się skończyła?", "p2": "Proszę opisać spór, w którym każda ze stron miała swoje racje, i sposób, w jaki doszło do porozumienia.", "pd": "Co dokładnie zostało powiedziane w pierwszych minutach tej rozmowy?", "o1": "Kandydat reaguje obroną, tłumaczeniem się albo podniesieniem tonu, albo natychmiast ustępuje we wszystkim. Rozmowa kończy się bez ustalenia albo ustaleniem niekorzystnym dla firmy.", "o2": "Kandydat uspokaja rozmowę i dochodzi do ustalenia w sporze o umiarkowanym napięciu, ale przy silnym konflikcie przekazuje sprawę komuś innemu.", "o3": "Kandydat najpierw obniża napięcie, na przykład wysłuchując drugiej strony i nazywając jej problem, potem oddziela to, czego strona się domaga, od tego, czego naprawdę potrzebuje, i doprowadza do konkretnego ustalenia także przy silnym konflikcie, bez rezygnacji z interesu firmy."}, {"kod": "R1.5", "ps": "Wyobraźmy sobie prezentację propozycji przed kilkoma osobami, z których jedna od początku ją podważa. Jak zostanie poprowadzona odpowiedź?", "nazwa": "Reprezentowanie", "rodzaj": "poziom", "co": "To kryterium sprawdza, czy kandydat potrafi wystąpić przed grupą i obronić swoje stanowisko, gdy ktoś zadaje pytania albo je kwestionuje. Ma ono znaczenie w rolach, które prowadzą zebrania, prezentują ofertę albo reprezentują firmę na zewnątrz.", "p1": "Proszę opowiedzieć o wystąpieniu przed grupą, na przykład na zebraniu, prezentacji albo szkoleniu. Jak wyglądało przygotowanie i jak przebiegło wystąpienie?", "p2": "Proszę opisać sytuację, w której ktoś z grupy publicznie zakwestionował przedstawione stanowisko. Co zostało odpowiedziane?", "pd": "Co w tym wystąpieniu zostałoby dziś zrobione inaczej?", "o1": "Kandydat unika wystąpień i nie podaje przykładu albo, gdy ktoś zakwestionuje jego stanowisko, wycofuje je bez uzasadnienia.", "o2": "Kandydat przedstawia przygotowany materiał i odpowiada na pytania, które dało się przewidzieć, ale przy nieprzewidzianym sprzeciwie traci wątek albo odkłada odpowiedź.", "o3": "Kandydat przygotowuje wystąpienie pod konkretnych słuchaczy, na zakwestionowanie odpowiada rzeczowo i albo utrzymuje stanowisko z uzasadnieniem, albo zmienia je, podając powód zmiany."}, {"kod": "R2.1", "ps": "Wyobraźmy sobie współpracownika, który prosi o przejęcie swojego zadania, choć własnej pracy jest dużo. Co zostanie odpowiedziane?", "nazwa": "Sprawczość", "rodzaj": "dwubiegun", "co": "To kryterium sprawdza, w jakim stopniu kandydat przejmuje kierunek rozmowy i stawia granice innym. Kryterium jest dwubiegunowe, co oznacza, że ocena opisuje położenie kandydata na osi od niskiej do wysokiej sprawczości, a żadne z tych położeń nie jest samo w sobie lepsze. Wysoka sprawczość jest potrzebna kierownikowi i osobie, która negocjuje, natomiast w roli opartej na ścisłej współpracy wysoka sprawczość bywa źródłem konfliktów.", "p1": "Proszę opowiedzieć o sytuacji, w której ktoś oczekiwał czegoś, na co nie było zgody. Co zostało powiedziane?", "p2": "Proszę opisać spotkanie albo rozmowę, w której nikt nie prowadził, a sprawy się przeciągały. Co zostało zrobione?", "pd": "Jak zareagowała druga strona?", "o1": "Oznacza niską sprawczość. Kandydat dostosowuje się do oczekiwań innych, z trudem odmawia i czeka, aż ktoś inny pokieruje rozmową.", "o2": "Oznacza umiarkowaną sprawczość. Kandydat przejmuje kierunek rozmowy wtedy, gdy sytuacja tego wymaga, a odmawia z podaniem powodu.", "o3": "Oznacza wysoką sprawczość. Kandydat regularnie przejmuje prowadzenie rozmowy i stawia granice wprost, także wtedy, gdy nikt tego od niego nie oczekuje."}, {"kod": "R2.2", "ps": "Wyobraźmy sobie nową osobę w zespole, która wyraźnie sobie nie radzi, choć o nic nie prosi. Co zostanie zrobione?", "nazwa": "Wspólnotowość", "rodzaj": "dwubiegun", "co": "To kryterium sprawdza, w jakim stopniu kandydat dostraja się do drugiej osoby i dba o relację z nią. Kryterium jest dwubiegunowe, co oznacza, że ocena opisuje położenie kandydata na osi od niskiej do wysokiej wspólnotowości. Wysoka wspólnotowość jest potrzebna w pracy opartej na stałym zespole i w opiece nad klientem, natomiast w roli, która musi stawiać ludziom wymagania, zbyt wysoka wspólnotowość utrudnia egzekwowanie.", "p1": "Proszę opowiedzieć o sytuacji, w której współpracownik przechodził trudniejszy okres. Czy zostało to zauważone i co zostało zrobione?", "p2": "Proszę opisać sytuację, w której trzeba było wybrać między dobrą relacją z kimś a postawieniem mu wymagania.", "pd": "Jak ta relacja wyglądała później?", "o1": "Oznacza niską wspólnotowość. Kandydat skupia się na zadaniu, nie zauważa sygnałów wysyłanych przez innych, a w sytuacji wyboru stawia wymaganie bez względu na relację.", "o2": "Oznacza umiarkowaną wspólnotowość. Kandydat dba o relację, dopóki nie koliduje ona z zadaniem, a przy konflikcie potrafi postawić wymaganie.", "o3": "Oznacza wysoką wspólnotowość. Kandydat wcześnie zauważa, co dzieje się z innymi, dostraja się do nich, a w sytuacji wyboru stara się przede wszystkim zachować relację."}, {"kod": "R2.3", "ps": "Wyobraźmy sobie rozmowę, w której rzeczowe argumenty nie trafiają do rozmówcy. Co zostanie zmienione w sposobie rozmowy?", "nazwa": "Elastyczność interpersonalna", "rodzaj": "poziom", "co": "To kryterium sprawdza, czy kandydat potrafi zmienić sposób postępowania z człowiekiem, gdy dotychczasowy przestaje działać, i czy robi to we właściwym momencie. Ma ono znaczenie w każdej roli, w której pracuje się z różnymi ludźmi, ponieważ ten sam sposób rozmowy nie działa na wszystkich.", "p1": "Proszę opowiedzieć o rozmowie, w której przyjęty sposób nie działał, ponieważ rozmówca nie reagował tak, jak się spodziewano. Co zostało zmienione?", "p2": "Proszę opisać dwie osoby, z którymi pracowało się w zupełnie różny sposób, i to, na czym ta różnica polegała.", "pd": "Po czym było widać, że trzeba zmienić podejście?", "o1": "Kandydat stosuje jeden sposób postępowania wobec wszystkich, a gdy ten sposób nie działa, powtarza go albo przypisuje winę rozmówcy.", "o2": "Kandydat zmienia podejście, ale późno, zwykle dopiero po wyraźnym niepowodzeniu albo po wskazówce kogoś innego.", "o3": "Kandydat wcześnie rozpoznaje sygnały, że podejście nie działa, zmienia je w trakcie rozmowy i potrafi opisać różne sposoby postępowania dopasowane do różnych osób."}]}, {"czesc": "MECHANIZM", "opis": "Kryteria z obszaru mechanizmu opisują, jak kandydat pracuje z zadaniem: jak planuje, jak korzysta z informacji, jak podejmuje decyzje, jak sprawdza własną pracę i jak radzi sobie z obciążeniem, nowym problemem i niepowodzeniem. Dwa z tych kryteriów, czyli sprawność rozumowania i dokładność wykonania, rozmowa mierzy tylko w przybliżeniu, dlatego jeśli są ważne dla roli, warto sprawdzić je także w zadaniu próbnym.", "items": [{"kod": "M1.1", "ps": "Wyobraźmy sobie początek dnia z pięcioma zadaniami, z których da się wykonać trzy. Jak zostanie ustalona kolejność?", "nazwa": "Planowanie i priorytetyzacja", "rodzaj": "poziom", "co": "To kryterium sprawdza, czy kandydat potrafi ułożyć zadania w kolejności, oszacować potrzebny czas i odróżnić sprawy pilne od ważnych. Sprawa pilna to taka, która ma bliski termin, a sprawa ważna to taka, której niewykonanie ma poważny skutek; te dwie cechy nie zawsze występują razem.", "p1": "Proszę opowiedzieć o dniu albo tygodniu, w którym zadań było więcej, niż dało się wykonać. Jak została ustalona kolejność?", "p2": "Proszę opisać większe zadanie, które trzeba było rozłożyć na etapy. Jak powstał plan i jak został oszacowany czas?", "pd": "Co z tego planu zostało wykonane w terminie, a co nie, i z jakiego powodu?", "o1": "Kandydat wykonuje zadania w kolejności, w jakiej napływają, nie podaje kryterium ustalania kolejności, a czas szacuje ogólnie i często nie dotrzymuje terminów.", "o2": "Kandydat układa kolejność według terminów i potrafi zaplanować zadanie typowe, ale przy nieprzewidzianych zmianach nie koryguje planu.", "o3": "Kandydat ustala kolejność według jawnego kryterium, na przykład skutku niewykonania albo zależności między zadaniami, szacuje czas realistycznie, koryguje plan przy zmianach i wcześniej informuje o zagrożonym terminie."}, {"kod": "M1.2", "ps": "Wyobraźmy sobie, że potrzebna jest informacja o nowym przepisie albo produkcie, a nikt w firmie jej nie zna. Jak zostanie znaleziona i sprawdzona?", "nazwa": "Praca z informacją", "rodzaj": "poziom", "co": "To kryterium sprawdza, czy kandydat potrafi samodzielnie znaleźć informację potrzebną do pracy, sprawdzić, czy jest wiarygodna, i uporządkować ją tak, żeby dało się z niej korzystać. Ma ono znaczenie w rolach, które pracują z przepisami, dokumentacją, cennikami albo specyfikacjami.", "p1": "Proszę opowiedzieć o sytuacji, w której trzeba było samodzielnie znaleźć informację potrzebną do pracy. Gdzie była szukana i jak zostało sprawdzone, że jest prawdziwa?", "p2": "Proszę opisać sytuację, w której informacja okazała się błędna albo nieaktualna. Jak zostało to wykryte?", "pd": "W jaki sposób ta informacja została uporządkowana albo przekazana dalej?", "o1": "Kandydat zdobywa informacje głównie przez pytanie innych albo korzysta z pierwszego znalezionego źródła i nie sprawdza jego wiarygodności.", "o2": "Kandydat znajduje informację i sprawdza ją w typowych, znanych mu źródłach, ale nie porównuje źródeł między sobą.", "o3": "Kandydat porównuje kilka źródeł, ocenia ich wiarygodność i porządkuje zebrany materiał w taki sposób, że mogą z niego korzystać także inne osoby."}, {"kod": "M1.3", "ps": "Wyobraźmy sobie wybór między dwoma dostawcami: jednym tańszym, drugim pewniejszym. Jak zostanie podjęta decyzja i jak zostanie uzasadniona?", "nazwa": "Formułowanie i uzasadnianie decyzji", "rodzaj": "poziom", "co": "To kryterium sprawdza, czy kandydat potrafi nazwać kryterium, według którego wybrał rozwiązanie, i obronić swój wybór. Kryterium nie ocenia trafności decyzji, ponieważ w rozmowie nie da się jej sprawdzić, tylko to, czy decyzja ma jawne uzasadnienie.", "p1": "Proszę opowiedzieć o decyzji w pracy, przy której było kilka możliwości. Co przesądziło o wyborze?", "p2": "Proszę opisać sytuację, w której ktoś zakwestionował podjętą decyzję. Jak została uzasadniona?", "pd": "Co musiałoby się zmienić, żeby wybór był inny?", "o1": "Kandydat nie nazywa kryterium wyboru i tłumaczy decyzję przeczuciem albo tym, że tak wyszło.", "o2": "Kandydat podaje kryterium wyboru, ale jest ono jedno i ogólne, a kandydat nie porównuje wybranego rozwiązania z innymi możliwościami.", "o3": "Kandydat nazywa kilka kryteriów i wskazuje, które było najważniejsze, porównuje z nimi rozważane możliwości i potrafi powiedzieć, w jakich warunkach wybrałby inaczej."}, {"kod": "M1.4", "ps": "Wyobraźmy sobie pracę gotową do oddania pięć minut przed terminem. Co zostanie zrobione w tych pięciu minutach?", "nazwa": "Autokontrola jakości", "rodzaj": "poziom", "co": "To kryterium sprawdza, czy kandydat sprawdza własną pracę przed jej oddaniem i wychwytuje w niej usterki. Ma ono znaczenie wszędzie tam, gdzie błąd jest do naprawienia tylko wtedy, gdy zostanie wykryty, zanim praca trafi do klienta albo do kolejnej osoby.", "p1": "Proszę opowiedzieć, jak wygląda sprawdzanie własnej pracy przed jej oddaniem, na ostatnim konkretnym przykładzie.", "p2": "Proszę opisać błąd we własnej pracy, który został wykryty przed przekazaniem jej dalej. W jaki sposób udało się go wykryć?", "pd": "A błąd, który wykrył ktoś inny: co po nim zostało zmienione w sposobie pracy?", "o1": "Kandydat sprawdza pracę pobieżnie albo wcale, a o błędach w swoich przykładach dowiaduje się od innych.", "o2": "Kandydat sprawdza pracę według stałego nawyku i wychwytuje błędy w zadaniach typowych, ale po błędzie wykrytym przez innych nie zmienia sposobu sprawdzania.", "o3": "Kandydat ma określony sposób sprawdzania pracy, dopasowany do tego, gdzie najłatwiej o błąd, wychwytuje własne usterki, a po błędzie zmienia sposób pracy tak, żeby się nie powtórzył."}, {"kod": "M1.5", "ps": "Wyobraźmy sobie tydzień, w którym zadań jest dwa razy więcej niż zwykle. Co zostanie zrobione i kto zostanie o tym poinformowany?", "nazwa": "Zarządzanie własnym obciążeniem", "rodzaj": "poziom", "co": "To kryterium sprawdza, czy kandydat wie, z czego zrezygnować, gdy nie jest w stanie wykonać wszystkiego, i czy informuje o tym innych na czas. Ma ono znaczenie w rolach, w których pracy przybywa nierównomiernie i nie da się przewidzieć szczytów obciążenia.", "p1": "Proszę opowiedzieć o okresie, w którym nie dało się wykonać wszystkiego. Z czego zrezygnowano i kto został o tym poinformowany?", "p2": "Proszę opisać sytuację, w której przełożony albo współpracownicy zostali uprzedzeni, że termin jest zagrożony. Kiedy to nastąpiło?", "pd": "Jak zareagowali?", "o1": "Kandydat próbuje wykonać wszystko naraz i informuje o niewykonaniu dopiero po terminie albo wcale.", "o2": "Kandydat rezygnuje z części zadań i informuje o tym innych, ale robi to późno, zwykle dopiero wtedy, gdy termin został przekroczony.", "o3": "Kandydat wybiera, z czego zrezygnować, według jawnego kryterium i informuje zainteresowanych z wyprzedzeniem, proponując rozwiązanie, na przykład nowy termin albo zmniejszenie zakresu."}, {"kod": "M2.1", "ps": "Wyobraźmy sobie problem, którego nikt wcześniej nie spotkał, na przykład urządzenie działające inaczej, niż opisuje instrukcja. Jak będzie przebiegało szukanie rozwiązania?", "nazwa": "Sprawność rozumowania", "rodzaj": "poziom", "co": "To kryterium sprawdza, jak dobrze kandydat wnioskuje i jak szybko radzi sobie z problemem, którego wcześniej nie znał. Rozmowa daje o tym tylko przybliżoną informację, ponieważ kandydat opowiada o problemie, który już rozwiązał, a prowadzący rozmowę nie widzi samego rozumowania. Jeśli to kryterium jest ważne dla roli, warto wbudować w zadanie próbne problem nowy dla kandydata.", "p1": "Proszę opowiedzieć o problemie w pracy, który był nowy albo z którym inni sobie nie radzili. Jak przebiegało dochodzenie do rozwiązania?", "p2": "Proszę opisać sytuację, w której trzeba było szybko nauczyć się nowego programu, przepisu, urządzenia albo procedury. Ile to trwało i jak przebiegało?", "pd": "Jakie inne rozwiązania były rozważane i z jakiego powodu zostały odrzucone?", "o1": "Kandydat rozwiązywał problem przez próby bez planu albo dzięki pomocy innych, a jego opis przebiegu jest chaotyczny i trudny do odtworzenia.", "o2": "Kandydat dochodzi do rozwiązania w problemach podobnych do tych, które znał wcześniej, i opisuje przebieg spójnie, ale nie rozważa innych rozwiązań.", "o3": "Kandydat dzieli problem na części, sprawdza kolejne przypuszczenia, rozważa i odrzuca inne rozwiązania z podaniem powodu, a nową wiedzę szybko przenosi na kolejne sytuacje."}, {"kod": "M2.2", "ps": "Wyobraźmy sobie procedurę, która działa, ale jest powolna. Co zostanie zaproponowane?", "nazwa": "Styl adaptacyjno-innowacyjny", "rodzaj": "dwubiegun", "co": "To kryterium sprawdza, czy kandydat woli usprawniać istniejący sposób działania, czy go przebudowywać. Kryterium jest dwubiegunowe, co oznacza, że ocena opisuje położenie kandydata na osi od stylu adaptacyjnego do innowacyjnego. Styl adaptacyjny jest potrzebny w roli, która ma działać według przyjętych zasad i je dopracowywać, natomiast styl innowacyjny jest potrzebny tam, gdzie trzeba budować nowe rozwiązania.", "p1": "Proszę opowiedzieć o zmianie wprowadzonej w sposobie pracy. Na czym polegała?", "p2": "Proszę opisać sytuację, w której obowiązujący sposób działania wydawał się niewłaściwy. Co zostało zrobione?", "pd": "Jak na tę zmianę zareagowali inni?", "o1": "Oznacza styl adaptacyjny. Kandydat usprawnia pracę w ramach obowiązujących zasad, wprowadza zmiany stopniowo i uzasadnia je tym, że poprawiają istniejący sposób działania.", "o2": "Oznacza styl pośredni. Kandydat zwykle usprawnia istniejący sposób działania, ale w pojedynczych przykładach proponuje zmianę samych zasad.", "o3": "Oznacza styl innowacyjny. Kandydat proponuje zmianę samych zasad działania, kwestionuje przyjęte założenia i opisuje swoje zmiany jako zastąpienie starego sposobu nowym."}, {"kod": "M2.3", "ps": "Wyobraźmy sobie decyzję, którą trzeba podjąć jeszcze dziś, choć brakuje części informacji. Jak zostanie podjęta?", "nazwa": "Kontrola działania", "rodzaj": "poziom", "co": "To kryterium sprawdza, czy kandydat rozpoczyna zadania bez zwłoki, czy potrafi podjąć decyzję przy niepełnych danych i czy wraca do pracy po niepowodzeniu. Ma ono znaczenie w rolach, w których decyzje zapadają pod presją czasu, oraz w rolach, w których niepowodzenia są częste, na przykład w sprzedaży.", "p1": "Proszę opowiedzieć o decyzji, którą trzeba było podjąć, choć brakowało części informacji. Ile czasu to zajęło i co przesądziło?", "p2": "Proszę opisać niepowodzenie w pracy i to, co działo się w kolejnych dniach.", "pd": "Czy zdarzyło się zadanie, którego rozpoczęcie było odkładane? Co wtedy pomogło zacząć?", "o1": "Kandydat odkłada rozpoczęcie zadań, czeka na komplet informacji przed decyzją, a po niepowodzeniu długo nie wraca do pełnej pracy.", "o2": "Kandydat rozpoczyna i kończy zadania w typowych warunkach, ale przy niepełnych danych zwleka z decyzją, a niepowodzenie przez pewien czas obniża jego pracę.", "o3": "Kandydat rozpoczyna zadania bez zwłoki, podejmuje decyzję przy niepełnych danych po ocenie ryzyka, a po niepowodzeniu szybko wraca do pracy i potrafi powiedzieć, co z niego wyniósł."}, {"kod": "M2.4", "ps": "Wyobraźmy sobie trzystronicową instrukcję, według której trzeba po raz pierwszy wykonać zadanie. Jak będzie wyglądała praca z nią?", "nazwa": "Dokładność wykonania", "rodzaj": "poziom", "co": "To kryterium sprawdza, czy kandydat oddaje pracę kompletną wobec instrukcji i sprawdzoną przed przekazaniem. Rozmowa mierzy dokładność tylko w przybliżeniu, ponieważ kandydaci zwykle deklarują, że są dokładni. Jeśli to kryterium jest ważne dla roli, warto sprawdzić je w zadaniu próbnym, licząc pominięcia i usterki.", "p1": "Proszę opowiedzieć o zadaniu, w którym liczyła się dokładność co do szczegółu. W jaki sposób zostało zapewnione, że nic nie zostało pominięte?", "p2": "Proszę opisać pracę z długą albo bardzo szczegółową instrukcją. Jak ta praca przebiegała?", "pd": "Jak często zdarza się, że praca wraca do poprawki, i z jakiego powodu?", "o1": "Kandydat nie podaje sposobu, w jaki zapewnia kompletność pracy, a z jego odpowiedzi wynika, że praca wraca do poprawki z powodu pominięć.", "o2": "Kandydat oddaje pracę kompletną w zadaniach typowych, ale przy długich albo nietypowych instrukcjach zdarzają mu się pominięcia.", "o3": "Kandydat oddaje pracę kompletną także przy długich i szczegółowych instrukcjach i opisuje konkretny sposób, w jaki tego pilnuje, na przykład listę kontrolną albo sprawdzanie punkt po punkcie."}]}];
+</script>
+<script>
+/* ---------- DANE WŁASNE WERSJI UPROSZCZONEJ ---------- */
+const KOD2ID={};Object.keys(J).forEach(id=>KOD2ID[J[id][0]]=id);
+const B={};BANK.forEach(c=>c.items.forEach(it=>{B[KOD2ID[it.kod]]=Object.assign({obszar:c.czesc},it)}));
+const SKALA=[[0,'nigdy'],[1,'rzadko'],[2,'czasami'],[3,'często'],[4,'zawsze']];
+const SKALA_OP='„Nigdy” oznacza, że to się nie zdarza. „Rzadko” oznacza kilka razy w roku, zwykle w zastępstwie. „Czasami” oznacza, że zdarza się regularnie, ale nie jest trzonem pracy. „Często” oznacza, że należy do zwykłego biegu pracy. „Zawsze” oznacza, że trudno wskazać tydzień, w którym to się nie zdarzyło.';
+const RODZ_Q=[
+ ['r1','zar','Przydziela pracę konkretnym osobom.'],
+ ['r2','zar','Odpowiada przed tobą za wynik pracy innych osób, a nie tylko za własną pracę.'],
+ ['r3','spec','Rozstrzyga sprawy, do których potrzebna jest wiedza fachowa.'],
+ ['r4','spec','Uzgadnia z ludźmi, co i jak robicie, albo tłumaczy im, co i dlaczego trzeba zrobić.'],
+ ['r5','czyn','Wykonuje czynności według wzorca ustalonego z góry.'],
+ ['r6','czyn','Kontakt z ludźmi ogranicza się do przyjęcia zadania i zgłoszenia problemu.']];
+const POZ_Q={
+ zar:{L:[['zl1','Przydziela zadania konkretnym osobom na dany dzień albo zmianę.'],['zl2','Zatwierdza grafik pracy, urlopy albo nadgodziny.'],['zl3','Odpowiada przed tobą za wynik pracy zespołu, a nie tylko za własny.']],
+  K:[['zk1','Kieruje kilkoma zespołami przez ich szefów, a nie bezpośrednio przez wykonawców.'],['zk2','Przesuwa ludzi z jednego zespołu do drugiego.'],['zk3','Odpowiada za to, żeby praca kilku zespołów do siebie pasowała.']],
+  PR:[['zp1','Odpowiada za rezultat projektu albo wdrożenia.'],['zp2','Dysponuje budżetem projektu.'],['zp3','Prowadzi ludzi, którzy służbowo podlegają komuś innemu.']],
+  T:[['zt1','Rozdziela budżet albo ludzi między kilka działów.'],['zt2','Współdecyduje o zatrudnieniu, zwolnieniu albo awansie pracowników w swoim obszarze.'],['zt3','Odpowiada za pion obejmujący kilka różnych funkcji, na przykład sprzedaż, obsługę klienta i marketing.']],
+  S:[['zs1','Współdecyduje o wejściu firmy w nowy obszar działalności albo o rezygnacji z dotychczasowego.'],['zs2','Jej rekomendacja przesądza o inwestycji, której skutki sięgają dalej niż rok.'],['zs3','Reprezentuje firmę wobec partnerów zewnętrznych w sprawach wiążących dla firmy.']]},
+ spec:{O:[['so1','Pracuje według ustalonego trybu, a sprawy niejasne przekazuje wyżej.'],['so2','Uzgadnia sprawy z ludźmi, choć nikim nie kieruje.'],['so3','Rozstrzyga drobne sprawy, które nie mieszczą się wprost w instrukcji.']],
+  S:[['ss1','Kończy sprawę bez zatwierdzania przez ciebie albo przełożonego.'],['ss2','Sama wybiera sposób rozwiązania sprawy.'],['ss3','Odpowiada za skutek swojego rozstrzygnięcia, a nie tylko za jego przygotowanie.']],
+  E:[['se1','Inni przychodzą do tej osoby skonsultować własne rozstrzygnięcie albo się nauczyć.'],['se2','Rozstrzyga najtrudniejsze przypadki, których nikt wcześniej nie opisał.'],['se3','Od tej osoby oczekuje się, że pierwsza pozna zmiany w swojej dziedzinie.']]},
+ czyn:{J:[['cj1','Wykonuje jedną wyuczoną czynność na zadanym materiale.'],['cj2','Wzorzec wykonania jest ustalony z góry i się nie zmienia.'],['cj3','Odchylenie od wzorca wykrywa kontrola, a nie sam wykonawca.']],
+  W:[['cw1','Wykonuje kilka różnych czynności albo przezbraja stanowisko.'],['cw2','Sama zatrzymuje pracę, gdy rozpozna odchylenie od wzorca.'],['cw3','Zmienia ustawienia pracy zależnie od materiału albo warunków.']]}};
+const GRUPA={zar:'zarządzający',spec:'specjaliści',czyn:'operatorzy'};
+const TYPY={zar:{L:'kierownik lider',K:'kierownik koordynator',PR:'kierownik koordynator',T:'kierownik koordynator',S:'kierownik strateg'},
+ spec:{O:'specjalista',S:'specjalista',E:'ekspert'},czyn:{J:'operator',W:'operator wielozadaniowy'}};
+const TYP_OP={'kierownik lider':'Prowadzi jeden zespół: rozdziela pracę na bieżący dzień, rozstrzyga odchylenia i odpowiada przed tobą za wynik tego zespołu. Horyzont dni i tygodni.',
+ 'kierownik koordynator':'Prowadzi kilka zespołów przez ich szefów, cały pion albo projekt z ludźmi, którzy służbowo podlegają komuś innemu. Uzgadnia pracę między zespołami i rozdziela zasoby. Horyzont miesięcy i kwartałów.',
+ 'kierownik strateg':'Odpowiada za całą firmę, jak dyrektor zarządzający, prezes albo CEO. Wyznacza kierunek: czym firma się zajmuje, czego nie robi i gdzie wchodzi. Horyzont lat.',
+ 'specjalista':'Rozstrzyga sprawy wymagające wiedzy fachowej: od pracy według ustalonego trybu po samodzielne kończenie spraw bez zatwierdzania, przy powtarzalnych typach spraw.',
+ 'ekspert':'Rozstrzyga najtrudniejsze przypadki w swojej dziedzinie. Inni przychodzą do tej osoby po radę, a ona pierwsza poznaje zmiany w dziedzinie i przekazuje je dalej.',
+ 'operator':'Wykonuje jedną wyuczoną czynność na zadanym materiale według wzorca ustalonego z góry. Odchylenia od wzorca wykrywa kontrola.',
+ 'operator wielozadaniowy':'Wykonuje kilka różnych czynności, zmienia ustawienia pracy zależnie od materiału i sam zatrzymuje pracę, gdy zauważy odchylenie od wzorca.'};
+const RQ=[
+ {k:'W',nm:'Rozliczanie z wyniku',q:[['rw1','Rozmowa o pracy tej osoby zaczyna się od pytania, czy cel został osiągnięty.'],['rw2','Ta osoba sama ustala sposób dojścia do celu.'],['rw3','Ta osoba mierzy się z problemami, których nikt wcześniej nie opisał.'],['rw4','Błąd tej osoby bywa kosztowny i nie da się go odwrócić.']]},
+ {k:'P',nm:'Rozliczanie z trzymania się zasad',q:[['rp1','Rozmowa o pracy tej osoby zaczyna się od pytania, czy postąpiła zgodnie z przepisem, procedurą albo standardem.'],['rp2','Sposób działania wynika z przepisu, standardu albo z wyboru spośród opisanych możliwości.'],['rp3','Ta osoba stosuje przepis do przypadku, który nie mieści się wprost w instrukcji.'],['rp4','Odstępstwo od przyjętego trybu jest poważniejsze niż słabszy wynik.']]},
+ {k:'C',nm:'Rozliczanie z jakości wykonania',q:[['rc1','Rozmowa o pracy tej osoby zaczyna się od pytania, jak dobrze wykonała robotę.'],['rc2','Sposób wykonania jest wyuczony i powtarzany za każdym razem tak samo.'],['rc3','Praca polega na powtarzaniu tych samych czynności w podobnych warunkach.'],['rc4','Błąd zostaje wykryty przy kontroli, zanim wywoła skutek.']]}];
+const PRZEDZ=['nie występuje','występuje ubocznie','jedno z głównych rozliczeń','rozliczenie podstawowe'];
+const ROZ_NM={W:'z wyniku',P:'z trzymania się zasad',C:'z jakości wykonania'};
+const REL_Q=[
+ ['14a','14','Uzgadnia ze współpracownikami, co i jak robicie wspólnie, choć nikt nikomu nie wydaje poleceń.'],
+ ['14b','14','Uzgadnia pracę z osobami z innych działów albo z wykonawcami z zewnątrz.'],
+ ['15a','15','Rozdziela pracę innym osobom.'],
+ ['15b','15','Mówi innym, co w ich pracy jest dobre, a co trzeba poprawić.'],
+ ['15c','15','Pilnuje, żeby inni dotrzymali tego, co zostało ustalone.'],
+ ['15d','15','Wdraża nowe osoby do pracy.'],
+ ['16a','16','Przekonuje klienta do swojego rozwiązania.'],
+ ['16b','16','Przekonuje ciebie albo inną osobę decydującą do swojej propozycji.'],
+ ['17a','17','Rozmawia z osobami zdenerwowanymi albo składającymi reklamację.'],
+ ['17b','17','Pomaga rozstrzygnąć spór między innymi osobami albo z klientem.'],
+ ['18a','18','Występuje przed grupą, na przykład prowadzi zebranie, prezentuje ofertę albo szkoli.']];
+const PSY_Q=[['31a','31','Od precyzji ruchów rąk zależy jakość pracy.'],
+ ['31b','31','Od szybkości ruchów rąk zależy wydajność pracy.'],
+ ['32a','32','Trzeba wychwytywać wzrokiem usterki albo odstępstwa od wzorca.'],
+ ['33a','33','Praca jest jednostajna i trzeba długo utrzymać uwagę, choć niewiele się dzieje.']];
+const OGR_Q=[['07','07','Uprawnienia lub licencja, na przykład prawo jazdy określonej kategorii, uprawnienia elektryczne albo uprawnienia do obsługi wózka widłowego','Sprawdź dokument uprawnienia. Wymagaj tylko tych uprawnień, których wymaga przepis albo rzeczywisty zakres pracy.','DOK'],
+ ['08','08','Wykształcenie potwierdzone dokumentem','Sprawdź dyplom lub świadectwo. Wymagaj wykształcenia tylko wtedy, gdy wynika z przepisu albo gdy bez niego nie da się wykonywać zadań.','DOK'],
+ ['09','09','Badanie lekarskie dopuszczające do pracy','O dopuszczeniu decyduje lekarz medycyny pracy na podstawie twojego skierowania. Nie pytaj kandydata o stan zdrowia.','LEK'],
+ ['10','10','Praca zmianowa, gotowość albo dyspozycyjność','Opisz kandydatowi tryb pracy i zapytaj, czy może w nim pracować. Nie pytaj o sytuację rodzinną.','TEL'],
+ ['11','11','Wyjazdy albo dojazd do określonego miejsca','Opisz, gdzie i jak często trzeba być, i zapytaj, czy kandydat może to zapewnić.','TEL'],
+ ['12a','12','Prawo do wykonywania pracy w Polsce','Dotyczy cudzoziemców. Sprawdź dokument uprawniający do pracy albo podstawę zwolnienia z tego obowiązku.','DOK'],
+ ['12b','12','Zaświadczenie o niekaralności','Możesz go wymagać tylko wtedy, gdy nakazuje to przepis dotyczący stanowiska.','DOK'],
+ ['12c','12','Poświadczenie bezpieczeństwa','Dotyczy stanowisk z dostępem do informacji niejawnych. Sprawdź dokument poświadczenia.','DOK'],
+ ['13','13','Własny samochód, narzędzia albo warunki do pracy zdalnej','Zapytaj wprost i zapisz odpowiedź.','TEL']];
+const OGR_SK=[['wym','wymagane'],['mile','mile widziane'],['nie','nie dotyczy']];
+const TNC=[['tak','tak'],['czesc','częściowo'],['nie','nie']];
+/* ---------- NARZĘDZIA ---------- */
+const T={
+ DOK:{nm:'Analiza dokumentów',op:'Sprawdzasz CV, dyplomy, świadectwa i dokumenty uprawnień, zanim zaprosisz kandydata na spotkanie.',etap:1},
+ TEL:{nm:'Rozmowa telefoniczna wstępna',op:'Krótka rozmowa, w której sprawdzasz warunki formalne i dostępność kandydata. Pozwala nie zapraszać osób, które nie spełniają warunków.',etap:2,czas:15},
+ RB:{nm:'Rozmowa według scenariusza',op:'Pytania o to, jak kandydat zachował się w konkretnych sytuacjach w przeszłości, z gotowymi opisami ocen. Spośród narzędzi dostępnych bez psychologa ma najlepiej udokumentowaną trafność.',etap:3},
+ RS:{nm:'Pytania sytuacyjne',op:'Pytania o to, co kandydat zrobi w opisanej sytuacji. Stosuje się je, gdy kandydaci nie mają doświadczenia, o które można pytać. Pokazują zamiar kandydata, a nie jego rzeczywiste zachowanie.',etap:3},
+ PORT:{nm:'Przegląd wcześniejszych prac',op:'Kandydat pokazuje wcześniejsze prace, na przykład kod, projekty albo zdjęcia dań, i opowiada, jak powstały. Trafność tego narzędzia jest słabo zbadana, dlatego warto je łączyć z innym.',etap:3,proj:1},
+ P1:{nm:'Próbka pracy',op:'Kandydat wykonuje rzeczywiste zadanie tej pracy, na stanowisku i na prawdziwym sprzęcie. Najlepiej pokazuje, jak kandydat będzie pracował.',etap:4,proj:1},
+ T4:{nm:'Odtworzenie czynności',op:'Kandydat wykonuje czynność o tej samej budowie co praca na stanowisku, ale na materiale zastępczym. Stosuje się je, gdy nie da się dać prawdziwej pracy.',etap:4,proj:1},
+ CS:{nm:'Studium przypadku',op:'Kandydat dostaje opis sytuacji z tej pracy i proponuje, co zrobić, na piśmie albo ustnie. Sprawdza sposób myślenia i wiedzę, ale nie wykonanie.',etap:4,proj:1},
+ TW:{nm:'Test wiedzy',op:'Kilka lub kilkanaście pytań z wiedzy potrzebnej na stanowisku, z kluczem odpowiedzi. Dobrze przewiduje wyniki pracy, jeśli pytania dotyczą wiedzy rzeczywiście używanej w pracy.',etap:4,proj:1},
+ Z2:{nm:'Zadanie z rozmową',op:'Kandydat prowadzi rozmowę z osobą, która odgrywa pracownika, klienta albo współpracownika według przygotowanego opisu. Pokazuje zachowanie, o którym w rozmowie kandydat tylko opowiada.',etap:4,proj:1},
+ REF:{nm:'Rozmowa z poprzednim pracodawcą',op:'Za zgodą kandydata pytasz poprzedniego pracodawcę o konkretne zachowania kandydata w pracy. Przeprowadzasz ją tylko z kandydatami, których bierzesz pod uwagę na końcu.',etap:5,czas:15},
+ DP:{nm:'Płatny dzień próbny',op:'Kandydat pracuje jeden dzień na podstawie krótkiej umowy, a ty obserwujesz wybrane kryteria. Stosuje się go przy jednym lub dwóch najlepszych kandydatach.',etap:6},
+ LEK:{nm:'Orzeczenie lekarza medycyny pracy',op:'Kierujesz wybranego kandydata na badanie przed zawarciem umowy.',etap:7}};
+const PSYCH={X1:'test zdolności poznawczych',X2:'badanie psychotechniczne',X3:'kwestionariusz osobowości'};
+const PSYMAP={'27':'X1','31':'X2','32':'X2','33':'X2','30':'X3','19':'X3','20':'X3'};
+const RANK={'01':['RB','RS','REF','DP'],'02':['RB','RS','REF'],'03':['RB','RS','REF'],'04':['RB','RS','REF'],'05':['RB','RS','REF','DP'],
+ '14':['Z2','RB','RS','REF'],'15':['Z2','RB','RS','REF'],'16':['Z2','RB','RS','REF'],'17':['Z2','RB','RS','REF'],'18':['Z2','RB','RS','REF'],
+ '19':['RB','Z2','RS','REF'],'20':['RB','Z2','RS','REF'],'21':['RB','Z2','RS','REF'],
+ '22':['P1','CS','RB','RS'],'23':['CS','P1','RB','RS'],'24':['CS','RB','RS'],'25':['P1','RB','REF','RS'],'26':['RB','REF','RS'],
+ '27':['CS','RB','RS'],'28':['RB','CS','RS'],'29':['RB','REF','DP','RS'],'30':['P1','T4','RB','DP'],
+ '31':['P1','T4','DP'],'32':['P1','T4','DP'],'33':['P1','T4','DP'],
+ TASK_spec:['P1','CS','TW','PORT','DP'],TASK_zar:['P1','CS','TW','PORT','DP'],TASK_czyn:['P1','T4','TW','DP'],AK:['TW','CS','RB']};
+const MOZ=[['a','Czy możesz dać kandydatowi rzeczywiste zadanie tej pracy, na stanowisku i na prawdziwym sprzęcie, bez ryzyka dla klientów i bez wykorzystania efektu w działalności firmy?'],
+ ['b','Czy masz osobę, która może odegrać pracownika albo klienta w zadaniu z rozmową, na przykład wspólnika albo zaufanego pracownika?'],
+ ['c','Czy kandydaci na to stanowisko mają zwykle doświadczenie zawodowe, o które można pytać?'],
+ ['d','Czy kandydaci mogą pokazać wcześniejsze prace, na przykład kod, projekty albo zdjęcia swoich realizacji?'],
+ ['e','Czy możesz zawrzeć z kandydatem umowę na jeden płatny dzień próbny?']];
+const Z2WAR={'14':'Rozmowa z osobą odgrywającą współpracownika, z którym trzeba uzgodnić wspólną pracę przy sprzecznych potrzebach.',
+ '15':'Rozmowa z osobą odgrywającą pracownika, który drugi raz nie dotrzymał ustalenia.',
+ '16':'Rozmowa z osobą odgrywającą klienta albo decydenta, którego trzeba przekonać do rozwiązania.',
+ '17':'Rozmowa z osobą odgrywającą zdenerwowanego klienta, który składa reklamację.',
+ '18':'Krótkie przedstawienie propozycji przed dwiema lub trzema osobami, które zadają trudne pytania.'};
+const REFQ={'01':'podchodziła do samej treści swojej pracy i czy zajmowała się tą dziedziną z własnej inicjatywy','02':'podchodziła do wyznaczonych celów i czy stawiała sobie wyższe','03':'wpływała na decyzje w zespole','04':'odnajdywała się w zespole i w pracy samodzielnej','05':'pracowała wtedy, gdy nikt jej nie sprawdzał',
+ '14':'uzgadniała pracę ze współpracownikami','15':'rozdzielała pracę innym i pilnowała ustaleń','16':'przekonywała klientów albo przełożonych do swoich propozycji','17':'prowadziła rozmowy z niezadowolonymi klientami albo w sporach','18':'występowała przed grupą',
+ '19':'stawiała granice i przejmowała prowadzenie rozmów','20':'dbała o relacje ze współpracownikami','21':'zmieniała sposób postępowania z ludźmi, gdy dotychczasowy nie działał',
+ '22':'planowała pracę i dotrzymywała terminów','23':'znajdowała i sprawdzała informacje potrzebne do pracy','24':'uzasadniała swoje decyzje','25':'sprawdzała własną pracę przed jej oddaniem','26':'radziła sobie z nadmiarem pracy i czy uprzedzała o zagrożonych terminach','27':'radziła sobie z nowymi, nieznanymi problemami','28':'wprowadzała zmiany w sposobie pracy','29':'podejmowała decyzje przy niepełnych informacjach i wracała do pracy po niepowodzeniach','30':'dbała o kompletność i dokładność pracy'};
+const POLA={
+ P1:[['opis','Co kandydat ma zrobić','Przygotuj risotto i sos pomidorowy z dostępnych składników. Albo: skompletuj pięć zamówień z listy i przygotuj je do wysyłki.'],['mat','Co kandydat dostaje do ręki','Kuchnia i składniki bez przepisu. Albo: lista zamówień, regał z towarem, skaner.'],['obs','Co będziesz obserwować i zapisywać','Kolejność czynności, utrzymanie czasu, liczba błędów, czy kandydat sam sprawdził wynik przed oddaniem.']],
+ T4:[['opis','Co kandydat ma zrobić','Ułóż elementy według wzoru na rysunku w określonym czasie.'],['mat','Co kandydat dostaje do ręki','Zestaw elementów zastępczych i rysunek wzoru.'],['obs','Co będziesz obserwować i zapisywać','Czas, liczba odstępstw od wzoru, czy kandydat sam wychwycił błąd.']],
+ CS:[['opis','Opis sytuacji','Sobota wieczór, pełna sala, jeden kucharz zachorował, a dostawa ryb nie dotarła. Albo: klient zgłasza, że aplikacja po aktualizacji przestała wysyłać powiadomienia.'],['pyt','Pytania do kandydata','Co zrobisz w pierwszej kolejności i dlaczego? Czego potrzebujesz się dowiedzieć? Jakie widzisz ryzyka?'],['mat','Materiały dla kandydata','Karta dań, grafik zmiany. Albo: opis zgłoszenia i fragment dziennika błędów.']],
+ TW:[['pyt','Pytania testu','Na przykład: jaka jest temperatura przechowywania ryb? Które składniki są podstawą sosu carbonara? Albo pytania o przepisy i procedury, z których kandydat będzie korzystał.'],['klucz','Klucz odpowiedzi','Poprawna odpowiedź do każdego pytania i liczba punktów.']],
+ Z2:[['opis','Sytuacja dla kandydata','Pracownik drugi raz spóźnił się na zmianę. Przeprowadź z nim rozmowę.'],['mat','Instrukcja dla osoby odgrywającej rozmówcę','Czego chce, jak reaguje, kiedy ustępuje, czego nie przyjmie.'],['obs','Co będziesz obserwować i zapisywać','Czy kandydat najpierw wysłuchał, czy nazwał problem, czy rozmowa zakończyła się konkretnym ustaleniem z terminem.']],
+ PORT:[['opis','Co kandydat ma pokazać','Trzy prace, z których jest najbardziej zadowolony, i jedną, którą zrobiłby dziś inaczej.'],['obs','Na co patrzysz i o co pytasz','Jaki był udział kandydata w pracy, jakie decyzje podjął sam, co by zmienił i dlaczego.']]};
+const PROG={czyn:90,spec:150,zar:180};
+const LIMIT={czyn:4,spec:7,zar:7};
+const SLOW={4:'cztery kryteria',7:'siedem kryteriów'};
+const KROKI=['Stanowisko','Praca','Ludzie i warunki','Profil','Narzędzia','Przygotowanie','Postępowanie','Kandydaci'];
+
+/* ---------- STAN ---------- */
+const S0=()=>({krok:1,nazwa:'',cel:'',zad:['','',''],odp:{},rq:{},rel:{},psy:{},ogr:{},wyl:{},dod:{},moz:{},wyb:{},proj:{},kand:[]});
+let S=S0();
+const KEY='profilens_mf_v3';
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function load(){try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(S0(),JSON.parse(r))}catch(e){}}
+const esc=t=>String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const kropka=t=>{t=String(t||'').trim();return !t||/[.!?]$/.test(t)?t:t+'.'};
+const SL=v=>SKALA.find(x=>x[0]===v)[1];
+
+/* ---------- SILNIK ---------- */
+function rodzina(){const o=S.odp;if(RODZ_Q.some(([id])=>o[id]===undefined))return '';
+ if(o.r2>=3||(o.r2>=2&&o.r1>=3))return 'zar';
+ return (o.r5+o.r6)>(o.r3+o.r4)?'czyn':'spec'}
+function pozSet(r){return r==='zar'?POZ_ZAR:r==='czyn'?POZ_CZYN:POZ_SPEC}
+function stany(){const r=rodzina(),P=pozSet(r),Q=POZ_Q[r];
+ return P.map(p=>{const max=Q[p.g].length*4,s=Q[p.g].reduce((a,[id])=>a+(S.odp[id]||0),0);return {g:p.g,s,max,st:s>=max*0.6?2:s>=max*0.28?1:0}})}
+function poziom(){const r=rodzina();if(!r)return -1;const st=stany();
+ let m=-1;for(let i=st.length-1;i>=0;i--)if(st[i].st===2){m=i;break}
+ if(m<0)for(let i=st.length-1;i>=0;i--)if(st[i].st===1){m=i;break}
+ return m<0?0:m}
+function typ(){const r=rodzina(),z=poziom();if(!r||z<0)return '';return TYPY[r][pozSet(r)[z].g]}
+function sumR(k){return RQ.find(g=>g.k===k).q.reduce((a,[id])=>a+(S.rq[id]||0),0)}
+function roz(){const r={};['W','P','C'].forEach(k=>{const p=sumR(k);r[k]=p>=11?3:p>=6?2:p>=1?1:0});
+ if(!['W','P','C'].some(k=>r[k]>=2)){const top=['W','P','C'].slice().sort((a,b)=>sumR(b)-sumR(a))[0];r[top]=2}return r}
+function relV(id){return Math.max(0,...REL_Q.filter(x=>x[1]===id).map(x=>S.rel[x[0]]||0))}
+function psyV(id){return Math.max(0,...PSY_Q.filter(x=>x[1]===id).map(x=>S.psy[x[0]]||0))}
+function ogrWym(){return OGR_Q.filter(x=>S.ogr[x[0]]==='wym').map(x=>x[0])}
+function ogrMile(){return OGR_Q.filter(x=>S.ogr[x[0]]==='mile').map(x=>x[0])}
+const OG=k=>OGR_Q.find(x=>x[0]===k);
+function wszystkoOdp(){const r=rodzina();if(!r)return false;
+ const ids=[].concat(...Object.values(POZ_Q[r]).map(g=>g.map(x=>x[0])));
+ return ids.every(id=>S.odp[id]!==undefined)&&RQ.every(g=>g.q.every(([id])=>S.rq[id]!==undefined))}
+function buduj(){
+ const P={},r=rodzina(),zas=poziom(),R=roz();
+ const add=(id,val,dl)=>{if(!P[id])P[id]={id,val,dl};else if(J[id][3]==='NAT'&&typeof val==='number'&&val>P[id].val){P[id].val=val;P[id].dl=dl}};
+ const naz={W:'wyniku',P:'trzymania się zasad',C:'jakości wykonania'};
+ const L=v=>['W','P','C'].filter(k=>R[k]===v);
+ L(3).concat(L(2)).forEach(k=>Object.entries(BAZA[k]).forEach(([id,v])=>add(id,v,(DLACZEGO[id]&&DLACZEGO[id][k])||('wynika z rozliczania z '+naz[k]))));
+ L(1).forEach(k=>Object.entries(BAZA[k]).forEach(([id,v])=>{if(!P[id])add(id,J[id][3]==='NAT'?Math.min(v,1):v,(DLACZEGO[id]&&DLACZEGO[id][k])||('wynika ubocznie z rozliczania z '+naz[k]))}));
+ add('06','flaga','');
+ const ZE=ZEFF[r]||{};pozSet(r).forEach((l,i)=>{if(i<=zas&&ZE[l.g])ZE[l.g].forEach(([id,v,pw])=>add(id,v,pw))});
+ ogrWym().forEach(k=>add(OG(k)[1],0,''));
+ ['14','15','16','17','18'].forEach(id=>{const v=relV(id);if(v>=2)add(id,v>=4?3:2,'ten układ z ludźmi występuje w tej pracy '+SL(v))});
+ if(r!=='zar')['31','32','33'].forEach(id=>{const v=psyV(id);if(v>=2)add(id,v>=4?3:2,'od tego zależy jakość pracy')});
+ const out=Object.values(P);
+ out.forEach(u=>{const sk=J[u.id][3];
+  if(sk==='BIN')u.pri=1;else if(sk==='FLAGA')u.pri=3;
+  else if(sk==='NAT')u.pri=u.val===3?1:u.val===2?2:3;
+  else{const slabe=(['02','03','04','19','20'].includes(u.id)&&u.val===2)||(['01','05'].includes(u.id)&&u.val===1);u.pri=slabe?3:2}});
+ return out}
+function cel(u){const id=u.id,sk=J[id][3];
+ if(sk==='NAT')return {t:'poz',w:u.val===3?3:2};
+ if(['02','03','04','19','20'].includes(id))return {t:'pol',w:[3,2,1][u.val]};
+ if(id==='28')return {t:'pol',w:[1,3][u.val]};
+ if(['01','05'].includes(id))return u.val===0?{t:'poz',w:2}:{t:'poz',w:1};
+ return {t:'flaga',w:0}}
+function celTxt(c,id){
+ if(c.t==='poz')return c.w===3?'Wymagana ocena 3: radzi sobie także w sytuacji trudnej lub nietypowej.':c.w===2?'Wymagana ocena co najmniej 2: radzi sobie w sytuacji typowej.':'Bez wymagania; ocena ma charakter informacyjny.';
+ if(c.t==='pol'){const b=B[id],tx=b?b['o'+c.w].split('.')[0]:'';return 'Najlepiej dopasowana ocena '+c.w+': '+tx.charAt(0).toLowerCase()+tx.slice(1)+'.'}
+ return ''}
+function kryteria(){const prof=buduj(),r=rodzina();
+ const kand=prof.filter(u=>['N','R','M'].includes(J[u.id][2])&&u.id!=='06'&&!['31','32','33'].includes(u.id));
+ kand.sort((a,b)=>a.pri-b.pri||((J[a.id][3]==='NAT'?0:1)-(J[b.id][3]==='NAT'?0:1))||(b.val-a.val)*(J[a.id][3]==='NAT'?1:0)||a.id.localeCompare(b.id));
+ const n1=kand.find(u=>J[u.id][2]==='N'&&u.pri<=2),L=LIMIT[r]||7;
+ let auto=kand.filter(u=>u!==n1).slice(0,n1?L-1:L);if(n1)auto.push(n1);auto=auto.map(u=>u.id);
+ kand.forEach(u=>{u.auto=auto.includes(u.id);u.on=(u.auto&&!S.wyl[u.id])||!!S.dod[u.id]});
+ return kand}
+const OBO={N:0,R:1,M:2};
+/* pozycje do oceny: kryteria, zadania stanowiska, wiedza kierownicza, sprawność */
+function pozycje(){const r=rodzina(),out=[];
+ kryteria().filter(u=>u.on).sort((a,b)=>OBO[J[a.id][2]]-OBO[J[b.id][2]]||a.id.localeCompare(b.id)).forEach(u=>
+  out.push({key:u.id,rodz:'kryt',nm:B[u.id].nazwa,c:cel(u),pri:u.pri,rank:RANK[u.id],dl:u.dl}));
+ zadania().forEach((t,j)=>out.push({key:'T'+j,rodz:'zad',nm:t,c:{t:'poz',w:(S.proj['wymT'+j]||2)},pri:1,rank:RANK['TASK_'+r]}));
+ if(r==='zar')out.push({key:'AK',rodz:'zad',nm:'Wiedza kierownicza: prawo pracy potrzebne w rozmowie dyscyplinującej, rozliczanie czasu pracy, ocenianie pracowników',c:{t:'poz',w:(S.proj.wymAK||2)},pri:2,rank:RANK.AK});
+ buduj().filter(u=>['31','32','33'].includes(u.id)).forEach(u=>out.push({key:u.id,rodz:'psy',nm:J[u.id][1],c:{t:'poz',w:u.val===3?3:2},pri:u.val===3?1:2,rank:RANK[u.id]}));
+ return out}
+function zadania(){return S.zad.map(z=>z.trim()).filter(Boolean)}
+function mozliwe(t){const m=S.moz;
+ if(t==='P1')return m.a!=='nie';if(t==='Z2')return m.b!=='nie';if(t==='PORT')return m.d!=='nie';if(t==='DP')return m.e!=='nie';
+ if(t==='RB')return m.c!=='nie';return true}
+function ranking(p){let r=p.rank.slice();
+ if(S.moz.c==='nie'){r=r.filter(t=>t!=='RB')}
+ else if(S.moz.c==='czesc'&&r.includes('RS')&&r.includes('RB')){}
+ return r.filter(mozliwe)}
+function narz(p){const r=ranking(p);const w=S.wyb[p.key];return (w&&r.includes(w))?w:r[0]}
+function kluczProj(p,t){if(t!=='Z2')return t;
+ if(['14','15','16','17','18'].includes(p.key))return 'Z2_'+p.key;
+ const inne=pozycje().filter(q=>['14','15','16','17','18'].includes(q.key)&&narz(q)==='Z2');
+ if(inne.length)return 'Z2_'+inne[0].key;
+ const rm=['15','17','16','14','18'].filter(id=>relV(id)>=2)[0]||'14';return 'Z2_'+rm}
+function projekty(){const m={};pozycje().forEach(p=>{const t=narz(p);if(!t)return;if(T[t].proj){const k=kluczProj(p,t);(m[k]=m[k]||[]).push(p)}});return m}
+function uzyte(){const m={};pozycje().forEach(p=>{const t=narz(p);if(t)(m[t]=m[t]||[]).push(p)});
+ ogrWym().concat(ogrMile()).forEach(k=>{const t=OG(k)[4];(m[t]=m[t]||[]).push({key:k,rodz:'ogr',nm:OG(k)[2]})});return m}
+function pr(k){return S.proj[k]=S.proj[k]||{a:{},limit:k.startsWith('Z2')?20:k==='PORT'?20:k==='TW'?20:30}}
+function kotwiceDomyslne(k,p){const P=pr(k);if(!P.a[p.key]){P.a[p.key]=p.rodz==='kryt'?{o1:B[p.key].o1,o2:B[p.key].o2,o3:B[p.key].o3}:{o1:'',o2:'',o3:''}}return P.a[p.key]}
+function projGotowy(k,lista){const P=pr(k),t=k.split('_')[0];
+ return POLA[t].every(([f])=>(P[f]||'').trim())&&lista.every(p=>{const a=kotwiceDomyslne(k,p);return a.o1.trim()&&a.o2.trim()&&a.o3.trim()})}
+function nazwaProj(k){const t=k.split('_')[0];return T[t].nm+(k.startsWith('Z2_')?': '+(Z2WAR[k.slice(3)]||'').split(',')[0].toLowerCase():'')}
+
+/* ---------- NAWIGACJA I KONTROLKI ---------- */
+function go(n){S.krok=n;save();render();window.scrollTo({top:0})}
+function mozna(n){if(n<=1)return true;if(zadania().length<3)return false;if(n>=3&&!wszystkoOdp())return false;return true}
+function renderSteps(){document.getElementById('steps').innerHTML=KROKI.map((k,i)=>{const n=i+1;
+ return `<button class="step ${n===S.krok?'on':n<S.krok?'done':''}" ${mozna(n)?`onclick="go(${n})"`:'disabled'}>${n}. ${k}</button>`}).join('')}
+function nav(prev,next,lbl,ok){return `<div class="nav">${prev?`<button class="btn sec" onclick="go(${prev})">Wstecz</button>`:'<span></span>'}
+ ${next?`<button class="btn" ${ok===false?'disabled':''} onclick="go(${next})">${lbl||'Dalej'}</button>`:''}</div>`}
+function scale(id,val,fn,opts){opts=opts||SKALA;return `<div class="sc ${opts.length===2?'two':opts.length===5?'five':''}">${opts.map(([v,l])=>
+ `<button class="${val===v?'on':''}" onclick="${fn}('${id}',${typeof v==='string'?`'${v}'`:v})">${l}</button>`).join('')}</div>`}
+function qrow(id,txt,val,fn,opts){return `<div class="q ${val!==undefined?'set':''}"><div class="t">${txt}</div>${scale(id,val,fn,opts)}</div>`}
+function render(){renderSteps();document.getElementById('app').innerHTML=[null,k1,k2,k3,k4,k5,k6,k7,k8][S.krok]()}
+
+/* ---------- KROK 1 ---------- */
+function k1(){const z=S.zad;
+ return `<h1>Stanowisko</h1><p class="lead">Opisz stanowisko, na które szukasz pracownika. Z tych danych kreator ułoży kartę stanowiska, a zadania wrócą później jako to, co trzeba sprawdzić u kandydata.</p>
+ <div class="card"><label class="f" for="nazwa">Nazwa stanowiska</label>
+ <input type="text" id="nazwa" value="${esc(S.nazwa)}" oninput="S.nazwa=this.value;save()" placeholder="na przykład kucharz kuchni włoskiej">
+ <label class="f" for="cel">Cel stanowiska</label>
+ <textarea id="cel" oninput="S.cel=this.value;save()" placeholder="na przykład samodzielne przygotowywanie dań kuchni włoskiej z karty, w standardzie restauracji i w czasie wydawania">${esc(S.cel)}</textarea>
+ <p class="hint">Napisz jednym lub dwoma zdaniami, po co to stanowisko istnieje: jaki rezultat ma zapewniać firmie.</p>
+ <label class="f">Zadania stanowiska</label>
+ <p class="hint" style="margin-bottom:10px">Wpisz od trzech do ośmiu zadań, od najważniejszego. Najważniejsze są te, bez których stanowisko nie spełnia swojego celu.</p>
+ ${z.map((t,i)=>`<div class="row"><input type="text" value="${esc(t)}" oninput="S.zad[${i}]=this.value;save();renderSteps();document.getElementById('nav1').innerHTML=nav(0,2,'Dalej',zadania().length>=3)" placeholder="zadanie ${i+1}">
+  ${z.length>3?`<button class="x" onclick="S.zad.splice(${i},1);save();render()" title="Usuń zadanie">×</button>`:''}</div>`).join('')}
+ ${z.length<8?`<button class="btn sec" onclick="S.zad.push('');save();render()">Dodaj zadanie</button>`:''}
+ </div><div id="nav1">${nav(0,2,'Dalej',zadania().length>=3)}</div>`}
+
+/* ---------- KROK 2 ---------- */
+function setO(id,v){S.odp[id]=v;save();render()}
+function setRQ(id,v){S.rq[id]=v;save();render()}
+function uzasadnienie(){const r=rodzina(),o=S.odp,z=poziom(),P=pozSet(r),st=stany(),g=P[z].g;
+ let t;
+ if(r==='zar')t='Stanowisko należy do grupy zarządzających, ponieważ zaznaczyłeś, że ta osoba '+SL(o.r2)+' odpowiada przed tobą za wynik pracy innych osób'+(o.r2<3?' i '+SL(o.r1)+' przydziela pracę konkretnym osobom':'')+'.';
+ else if(r==='spec')t='Stanowisko należy do grupy specjalistów, ponieważ zdania o wiedzy fachowej i uzgadnianiu z ludźmi uzyskały '+(o.r3+o.r4)+' punktów na 8 możliwych, a zdania o pracy według wzorca '+(o.r5+o.r6)+' punktów.';
+ else t='Stanowisko należy do grupy operatorów, ponieważ zdania o pracy według wzorca uzyskały '+(o.r5+o.r6)+' punktów na 8 możliwych, a zdania o wiedzy fachowej i uzgadnianiu z ludźmi '+(o.r3+o.r4)+' punktów.';
+ const Q=POZ_Q[r][g],s=st[z];
+ t+=' Typ „'+typ()+'” wynika z odpowiedzi: '+Q.map(([id,tx])=>'„'+tx.replace(/\.$/,'')+'” – '+SL(S.odp[id]||0)).join('; ')+'. Ta grupa zdań uzyskała '+s.s+' punktów na '+s.max+' możliwych.';
+ const wyzsze=st.slice(z+1).filter(x=>x.st>=1).map(x=>TYPY[r][x.g]).filter(n=>n!==typ());
+ if(wyzsze.length)t+=' Część odpowiedzi wskazuje też na elementy typu „'+wyzsze[0]+'”, ale zbyt słabo, żeby zmienić wynik.';
+ return t+' Jeśli wynik się nie zgadza, sprawdź te odpowiedzi.'}
+function k2(){const r=rodzina();let h=`<h1>Jak wygląda ta praca</h1>
+ <p class="lead">Odpowiedz, jak często osoba na tym stanowisku będzie robić to, co opisuje każde zdanie.</p>
+ <div class="info">${SKALA_OP}</div>
+ <div class="card"><h3>Rodzaj pracy</h3>${RODZ_Q.map(([id,,t])=>qrow(id,t,S.odp[id],'setO')).join('')}</div>`;
+ if(r){const P=pozSet(r),Q=POZ_Q[r];
+  h+=`<div class="card"><h3>Zakres odpowiedzialności</h3>${P.map(p=>Q[p.g].map(([id,t])=>qrow(id,t,S.odp[id],'setO')).join('')).join('')}</div>
+  <div class="card"><h3>Z czego rozliczasz tę osobę</h3><p class="hint" style="margin-bottom:10px">Każda z trzech podstaw rozliczenia jest liczona osobno, dlatego stanowisko może być rozliczane z dwóch albo trzech podstaw naraz.</p>
+  ${RQ.map(g=>`<div class="grp">${g.nm}</div>${g.q.map(([id,t])=>qrow(id,t,S.rq[id],'setRQ')).join('')}`).join('')}</div>`;
+  if(wszystkoOdp())h+=`<div class="res"><div class="k">Typ stanowiska wynikający z twoich odpowiedzi</div><div class="v">${typ().charAt(0).toUpperCase()+typ().slice(1)}</div><div>${TYP_OP[typ()]}</div><p class="hint" style="margin-top:10px">${uzasadnienie()}</p></div>`}
+ h+=nav(1,3,'Dalej',wszystkoOdp());
+ if(r&&!wszystkoOdp())h+='<p class="hint" style="text-align:right">Odpowiedz na wszystkie zdania, żeby zobaczyć typ stanowiska i przejść dalej.</p>';
+ return h}
+
+/* ---------- KROK 3 ---------- */
+function setRel(id,v){S.rel[id]=v;save();render()}
+function setPsy(id,v){S.psy[id]=v;save();render()}
+function setOgr(id,v){S.ogr[id]=v;save();render()}
+function k3(){const r=rodzina();
+ let h=`<h1>Ludzie i warunki</h1><p class="lead">Odpowiedz, z kim ta osoba będzie pracować i jakie warunki formalne musi spełnić. Skala częstości jest taka sama jak w poprzednim kroku.</p>
+ <div class="card"><h3>Praca z ludźmi</h3>${REL_Q.map(([id,,t])=>qrow(id,t,S.rel[id],'setRel')).join('')}</div>`;
+ if(r!=='zar')h+=`<div class="card"><h3>Sprawność w wykonywaniu czynności</h3><p class="hint" style="margin-bottom:10px">Zaznacz, jak często od tego zależy jakość pracy. Jeśli od sprawności zależy, czy ktoś w ogóle może tę pracę wykonywać, rozstrzyga o tym badanie lekarskie w warunkach formalnych.</p>${PSY_Q.map(([id,,t])=>qrow(id,t,S.psy[id],'setPsy')).join('')}</div>`;
+ h+=`<div class="card"><h3>Warunki formalne</h3><p class="hint" style="margin-bottom:10px">Warunek wymagany eliminuje kandydata, który go nie spełnia. Warunek mile widziany nie eliminuje nikogo, ale zobaczysz go przy porównaniu kandydatów.</p>
+ ${OGR_Q.map(([k,,t,p])=>{const v=S.ogr[k]||'nie';return `<div class="q ${v!=='nie'?'set':''}"><div class="t">${t}${v!=='nie'?`<p class="hint">${p}</p>`:''}</div>${scale(k,v,'setOgr',OGR_SK)}</div>`}).join('')}</div>`;
+ return h+nav(2,4,'Pokaż profil stanowiska')}
+
+/* ---------- KROK 4 ---------- */
+function togW(id,on,auto){if(auto){if(on)delete S.wyl[id];else S.wyl[id]=true}else{if(on)S.dod[id]=true;else delete S.dod[id]}save();render()}
+function k4(){const r=rodzina(),R=roz(),lista=kryteria(),n=lista.filter(u=>u.on).length,ps=buduj().filter(u=>['31','32','33'].includes(u.id));
+ let h=`<h1>Profil stanowiska${S.nazwa?': '+esc(S.nazwa):''}</h1>
+ <p class="lead">Kreator przełożył twoje odpowiedzi na wymagania wobec kandydata. W następnym kroku dobierzesz narzędzia, którymi je sprawdzisz.</p>
+ <div class="res"><div class="k">Typ stanowiska</div><div class="v">${typ().charAt(0).toUpperCase()+typ().slice(1)} (grupa: ${GRUPA[r]})</div><div>${TYP_OP[typ()]}</div></div>
+ <div class="res"><div class="k">Podstawa rozliczenia</div>${['W','P','C'].filter(k=>R[k]>0).map(k=>`<div><b>Rozliczanie ${ROZ_NM[k]}:</b> ${PRZEDZ[R[k]]}.</div>`).join('')}</div>
+ <h2>Warunki formalne</h2><div class="card">${ogrWym().length||ogrMile().length?ogrWym().concat(ogrMile()).map(k=>`<p style="margin:4px 0"><b>${OG(k)[2]}</b> (${S.ogr[k]==='wym'?'wymagane':'mile widziane'}).</p>`).join(''):'<p class="hint" style="margin:0">Nie zaznaczyłeś warunków formalnych.</p>'}</div>
+ <h2>Kryteria zachowań</h2>
+ <p class="lead">Kreator wybrał najwyżej ${SLOW[LIMIT[r]]}, których ta praca wymaga najbardziej. Przy większej liczbie kryteriów trudno rzetelnie ocenić każde z nich. Możesz wyłączyć kryterium albo włączyć jedno z pozostałych.</p>
+ <div class="card">${lista.map(u=>{const b=B[u.id];
+  return `<div class="crit ${u.on?'':'off'}"><input type="checkbox" ${u.on?'checked':''} onchange="togW('${u.id}',this.checked,${u.auto})" aria-label="${esc(b.nazwa)}">
+  <div><div class="nm">${b.nazwa}${u.pri===1?'<span class="pill p1">kluczowe</span>':''}</div><div class="why">${u.dl?('Dlaczego: '+u.dl+'.'):''}</div></div>
+  <div class="tg">${celTxt(cel(u),u.id)}</div></div>`}).join('')}</div>
+ ${n>LIMIT[r]?`<div class="warn">Wybrałeś ${n} kryteriów. Przy większej liczbie kryteriów oceny zaczynają się do siebie upodabniać, bo oceniający kieruje się ogólnym wrażeniem zamiast poszczególnymi zachowaniami.</div>`:''}
+ <h2>Umiejętności wynikające z zadań stanowiska</h2><div class="card">
+ <p style="margin-top:0">Każde zadanie stanowiska to umiejętność, którą trzeba sprawdzić u kandydata: ${zadania().map(esc).join('; ')}.</p>
+ ${r==='zar'?'<p><b>Wiedza kierownicza:</b> prawo pracy potrzebne w rozmowie dyscyplinującej, rozliczanie czasu pracy, ocenianie pracowników.</p>':''}
+ ${ps.length?`<p style="margin-bottom:0"><b>Sprawność:</b> ${ps.map(u=>J[u.id][1].toLowerCase()).join('; ')}.</p>`:''}</div>`;
+ return h+nav(3,5,'Dobierz narzędzia')}
+
+/* ---------- KROK 5: NARZĘDZIA ---------- */
+function setMoz(k,v){S.moz[k]=v;save();render()}
+function setWyb(k,t){S.wyb[k]=t;save();render()}
+function k5(){const ps=pozycje(),grp=[['kryt','Kryteria zachowań'],['zad','Umiejętności z zadań stanowiska'],['psy','Sprawność']];
+ let h=`<h1>Narzędzia selekcji</h1><p class="lead">Przy każdym wymaganiu kreator układa narzędzia od najtrafniejszego w twojej sytuacji. Domyślnie wybrane jest pierwsze. Możesz wybrać inne, jeśli jest dla ciebie łatwiejsze do przygotowania, pamiętając, że dalsze na liście sprawdza wymaganie słabiej.</p>
+ <div class="card"><h3>Twoje możliwości</h3><p class="hint" style="margin-bottom:10px">Od tych odpowiedzi zależy, które narzędzia kreator weźmie pod uwagę.</p>${MOZ.map(([k,t])=>qrow(k,t,S.moz[k],'setMoz',TNC)).join('')}
+ ${S.moz.a==='czesc'?'<div class="info">Przy odpowiedzi „częściowo” próbka pracy łączy pracę na stanowisku z materiałem przygotowanym na potrzeby zadania, na przykład z wymyślonym zamówieniem zamiast zamówienia klienta.</div>':''}
+ ${S.moz.c==='czesc'?'<div class="info">Przy odpowiedzi „częściowo” w scenariuszu rozmowy przy każdym kryterium będzie też pytanie sytuacyjne dla kandydatów bez doświadczenia.</div>':''}</div>`;
+ if(ogrWym().length||ogrMile().length)h+=`<h2>Warunki formalne</h2><div class="card">${ogrWym().concat(ogrMile()).map(k=>`<div class="crit" style="grid-template-columns:1fr 280px"><div><div class="nm">${OG(k)[2]}</div><div class="why">${OG(k)[3]}</div></div><div class="tg"><b>${T[OG(k)[4]].nm}</b></div></div>`).join('')}</div>`;
+ grp.forEach(([g,nm])=>{const l=ps.filter(p=>p.rodz===g);if(!l.length)return;
+  h+=`<h2>${nm}</h2><div class="card">${l.map(p=>{const r=ranking(p),w=narz(p);
+   return `<div class="tool"><div class="nm">${esc(p.nm)}</div>
+   <div class="tpick">${r.map((t,i)=>`<button class="topt ${w===t?'on':''}" onclick="setWyb('${p.key}','${t}')"><span class="rk">${i===0?'najtrafniejsze':'zamiennik '+i}</span><b>${T[t].nm}</b></button>`).join('')||'<span class="hint">Brak narzędzia w twoich warunkach.</span>'}</div>
+   ${w?`<p class="hint">${T[w].op}</p>`:''}
+   ${PSYMAP[p.key]?`<p class="hint psy">To wymaganie najtrafniej bada ${PSYCH[PSYMAP[p.key]]}, który wymaga psychologa. Możesz zlecić go na zewnątrz; kreator nie włącza go do postępowania.</p>`:''}</div>`}).join('')}</div>`});
+ const u=uzyte();
+ h+=`<div class="info"><b>Wybrane narzędzia:</b> ${Object.keys(u).sort((a,b)=>T[a].etap-T[b].etap).map(t=>T[t].nm.toLowerCase()+(T[t].proj?' (do przygotowania)':'')).join('; ')}.</div>`;
+ return h+nav(4,6,'Przygotuj narzędzia')}
+
+/* ---------- KROK 6: PRZYGOTOWANIE ---------- */
+function setPF(k,f,v){pr(k)[f]=v;save()}
+function setA(k,key,o,v){kotwiceDomyslne(k,{key,rodz:'x'});pr(k).a[key][o]=v;save()}
+function setWT(key,v){S.proj['wym'+key]=v;save();render()}
+function k6(){const P=projekty(),u=uzyte();
+ let h=`<h1>Przygotowanie narzędzi</h1><p class="lead">Narzędzia, które wybrałeś, dzielą się na gotowe i do przygotowania. Gotowe wydrukujesz w następnym kroku. Narzędzia do przygotowania układasz sam, bo tylko ty znasz pracę na tym stanowisku; kreator prowadzi cię przez decyzje, które trzeba podjąć, żeby wynik dało się porównać między kandydatami.</p>`;
+ const got=Object.keys(u).filter(t=>!T[t].proj).sort((a,b)=>T[a].etap-T[b].etap);
+ h+=`<h2>Gotowe</h2><div class="card">${got.map(t=>`<p style="margin:4px 0"><b>${T[t].nm}.</b> ${t==='RB'||t==='RS'?'Scenariusz z pytaniami i opisami ocen z banku pytań.':t==='TEL'?'Scenariusz rozmowy z pytaniami o warunki formalne i dostępność.':t==='REF'?'Pytania do poprzedniego pracodawcy o wybrane kryteria.':t==='DP'?'Karta obserwacji z wybranymi kryteriami i opisami ocen.':t==='DOK'?'Lista dokumentów do sprawdzenia jest na karcie stanowiska.':'Skierowanie wystawiasz według zwykłej procedury.'}</p>`).join('')||'<p class="hint">Brak.</p>'}</div>`;
+ if(u.DP)h+=`<div class="warn">Płatny dzień próbny wymaga umowy na ten dzień. Bez umowy praca kandydata na rzecz firmy może zostać uznana za świadczenie pracy bez podstawy prawnej. W sprawach wątpliwych zapytaj prawnika.</div>`;
+ h+=`<h2>Do przygotowania</h2>`;
+ const ks=Object.keys(P);
+ if(!ks.length)h+='<div class="card"><p class="hint" style="margin:0">Żadne z wybranych narzędzi nie wymaga przygotowania.</p></div>';
+ ks.forEach(k=>{const t=k.split('_')[0],p=pr(k),lista=P[k],ok=projGotowy(k,lista);
+  h+=`<div class="trial"><h3>${nazwaProj(k)}</h3><p class="hint">${T[t].op}</p>
+  <p><b>Sprawdza:</b> ${lista.map(q=>esc(q.nm)).join('; ')}.</p>
+  ${k.startsWith('Z2_')?`<div class="info">${Z2WAR[k.slice(3)]||''}</div>`:''}
+  ${POLA[t].map(([f,l,ex],i)=>`<label class="f">${i+1}. ${l}</label><textarea oninput="setPF('${k}','${f}',this.value)">${esc(p[f])}</textarea><div class="ex"><b>Przykład:</b> ${t==='Z2'&&f==='opis'?(Z2WAR[k.slice(3)]||ex):ex}</div>`).join('')}
+  <label class="f">${POLA[t].length+1}. Jak ocenisz każde wymaganie</label><p class="hint">Opisz wykonanie na każdą ocenę, zanim zobaczysz pierwszego kandydata. Przy kryteriach zachowań kreator wpisał opisy z banku pytań; dopasuj je do tego zadania.</p>
+  ${lista.map(q=>{const a=kotwiceDomyslne(k,q);return `<div class="anb"><div class="nm">${esc(q.nm)}</div>
+   ${q.rodz==='zad'?`<div style="max-width:320px;margin:4px 0 8px">${scale(q.key,S.proj['wym'+q.key]||2,'setWT',[[2,'wymagane co najmniej 2'],[3,'wymagane 3']])}</div>`:`<p class="hint">${celTxt(q.c,q.key)}</p>`}
+   <div class="anch">${[1,2,3].map(o=>`<div><label class="f" style="margin-top:4px">Ocena ${o}</label><textarea oninput="setA('${k}','${q.key}','o${o}',this.value)">${esc(a['o'+o])}</textarea></div>`).join('')}</div></div>`}).join('')}
+  <label class="f">${POLA[t].length+2}. Limit czasu w minutach</label><input type="number" min="5" max="480" style="max-width:140px" value="${esc(p.limit)}" oninput="setPF('${k}','limit',this.value)">
+  ${t==='P1'?`<label class="f">Czy efekt zadania zostanie wykorzystany w działalności firmy, na przykład podany klientowi, sprzedany albo włączony do projektu?</label><div style="max-width:330px">${scale(k,p.kom,'setKom',TNC)}</div>
+   ${p.kom==='tak'?'<div class="alarm">Wykonanie pracy na rzecz firmy bez umowy może zostać uznane za świadczenie pracy, a kandydaci odbierają je jako pracę za darmo. Zmień zadanie tak, żeby jego efekt nie był wykorzystany, albo zawrzyj z kandydatem umowę na ten czas. W sprawach wątpliwych zapytaj prawnika.</div>':''}
+   ${p.kom==='czesc'?'<div class="warn">Jeśli część efektu zadania zostanie wykorzystana w działalności firmy, ta część może zostać uznana za świadczenie pracy bez umowy. Oddziel ją od zadania albo zawrzyj z kandydatem umowę na ten czas.</div>':''}`:''}
+  ${ok?'':'<div class="warn">To narzędzie nie trafi do postępowania, dopóki nie wypełnisz wszystkich pól i opisów ocen.</div>'}</div>`});
+ return h+`<button class="btn sec" onclick="render()">Sprawdź kompletność</button>`+nav(5,7,'Pokaż przebieg postępowania')}
+function setKom(k,v){pr(k).kom=v;save();render()}
+
+/* ---------- KROK 7: POSTĘPOWANIE ---------- */
+function gotoweP(){const P=projekty(),o={};Object.keys(P).forEach(k=>{if(projGotowy(k,P[k]))o[k]=P[k]});return o}
+function etapy(){const u=uzyte(),P=projekty(),G=gotoweP(),r=rodzina(),st=[];
+ const nm=l=>l.map(p=>p.nm.toLowerCase().replace(/\.$/,'')).join('; ');
+ if(u.DOK)st.push({n:'Analiza dokumentów',cz:0,tm:'przed zaproszeniem, około 5 minut na kandydata, bez jego udziału',co:'Sprawdzasz w dokumentach: '+nm(u.DOK)+'.',wy:'Wiesz, którzy kandydaci mają wymagane dokumenty. Kto nie spełnia warunku wymaganego, nie przechodzi dalej. Ten etap nic nie kosztuje kandydata ani ciebie, dlatego jest pierwszy.'});
+ if(u.TEL)st.push({n:'Rozmowa telefoniczna wstępna',cz:15,tm:'około 15 minut',co:'Pytasz o: '+nm(u.TEL)+'.',wy:'Wiesz, kto może pracować w wymaganym trybie i miejscu. Zapraszasz na spotkanie tylko te osoby.'});
+ const rb=(u.RB||[]).concat(u.RS||[]);
+ if(rb.length){const c=10+5*rb.length;st.push({n:'Rozmowa według scenariusza',cz:c,tm:'około '+c+' minut',co:'Zadajesz wszystkim kandydatom te same pytania w tej samej kolejności, zapisujesz odpowiedzi, a oceny wystawiasz zaraz po rozmowie. Kryteria: '+nm(rb)+'.',wy:'Masz ocenę od 1 do 3 w każdym z tych kryteriów. Kandydat z oceną 1 w kryterium kluczowym nie spełnia wymagań stanowiska.'})}
+ Object.keys(G).sort((a,b)=>T[a.split('_')[0]].etap-T[b.split('_')[0]].etap).forEach(k=>{const p=pr(k),c=parseInt(p.limit,10)||0;
+  st.push({n:nazwaProj(k),cz:c,tm:'około '+c+' minut',co:kropka(p.opis||p.pyt||'Według przygotowanej instrukcji')+' Sprawdza: '+nm(G[k])+'.',wy:'Masz ocenę od 1 do 3 w każdym sprawdzanym wymaganiu, według opisów, które przygotowałeś.'})});
+ if(u.REF)st.push({n:'Rozmowa z poprzednim pracodawcą',cz:0,tm:'około 15 minut na kandydata, bez jego udziału, tylko z kandydatami branymi pod uwagę na końcu',co:'Za zgodą kandydata pytasz o: '+nm(u.REF)+'.',wy:'Masz potwierdzenie albo zaprzeczenie ocen z wcześniejszych etapów w oczach osoby, która widziała kandydata w pracy.'});
+ if(u.DP)st.push({n:'Płatny dzień próbny',cz:0,tm:'jeden dzień, na podstawie umowy, z jednym lub dwoma najlepszymi kandydatami',co:'Obserwujesz: '+nm(u.DP)+'.',wy:'Masz ocenę zachowań w rzeczywistych warunkach pracy, które wcześniej znałeś tylko z opowieści kandydata.'});
+ st.push({n:'Porównanie kandydatów i decyzja',cz:0,tm:'po ostatnim kandydacie, około 15 minut',co:'Wpisujesz oceny wszystkich kandydatów w kroku „Kandydaci”. Kreator odrzuca tych, którzy nie spełniają warunków wymaganych, a pozostałych porządkuje według tego, jak daleko ich oceny odbiegają od wymagań.',wy:'Masz kolejność kandydatów i dla każdego listę różnic względem wymagań, w tym sprawy do sprawdzenia w okresie próbnym.'});
+ if(u.LEK)st.push({n:'Badanie lekarskie',cz:0,tm:'przed zawarciem umowy',co:'Kierujesz wybranego kandydata do lekarza medycyny pracy.',wy:'Masz orzeczenie o braku przeciwwskazań do pracy na tym stanowisku.'});
+ return st}
+function k7(){const r=rodzina(),st=etapy(),tot=st.reduce((a,s)=>a+s.cz,0),P=projekty(),G=gotoweP(),u=uzyte();
+ let h=`<h1>Przebieg postępowania</h1><p class="lead">Etapy są ułożone od najtańszego do najbardziej pracochłonnego, dlatego możesz zakończyć postępowanie z kandydatem na każdym z nich. Przy każdym etapie podany jest czas i wynik, który masz po jego zakończeniu.</p>
+ <div class="tot"><div><b>${tot} min</b><span>spotkań z jednym kandydatem</span></div><div><b>${st.length}</b><span>etapów</span></div></div>
+ ${tot>PROG[r]?`<div class="warn">Spotkania z jednym kandydatem trwają dłużej niż ${PROG[r]} minut. Możesz wyłączyć jedno z kryteriów w profilu albo skrócić limit czasu któregoś zadania.</div>`:''}
+ ${Object.keys(P).length>Object.keys(G).length?'<div class="warn">Część narzędzi do przygotowania nie jest kompletna, dlatego nie ma ich w postępowaniu. Uzupełnij je w kroku „Przygotowanie”.</div>':''}
+ <div class="card">${st.map((s,i)=>`<div class="stage"><div class="n">${i+1}</div><div><h3>${s.n}</h3><div class="tm">${s.tm}</div><p>${s.co}</p><p><b>Wynik etapu:</b> ${s.wy}</p></div></div>`).join('')}</div>
+ <h2>Dokumenty do wydruku</h2><div class="nav" style="justify-content:flex-start;flex-wrap:wrap">
+ <button class="btn hon" onclick="drukKarta()">Karta stanowiska</button>
+ ${u.TEL?'<button class="btn hon" onclick="drukTel()">Rozmowa telefoniczna</button>':''}
+ ${u.RB||u.RS?'<button class="btn hon" onclick="drukRozmowa()">Scenariusz rozmowy</button>':''}
+ ${Object.keys(G).map(k=>`<button class="btn hon" onclick="drukProj('${k}')">${nazwaProj(k).split(':')[0]}</button>`).join('')}
+ ${u.REF?'<button class="btn hon" onclick="drukRef()">Rozmowa z poprzednim pracodawcą</button>':''}
+ ${u.DP?'<button class="btn hon" onclick="drukDP()">Dzień próbny</button>':''}</div>
+ <p class="hint">Scenariusze i karty obserwacji drukujesz osobno dla każdego kandydata.</p>`;
+ return h+nav(6,8,'Przejdź do kandydatów')}
+
+/* ---------- KROK 8: KANDYDACI ---------- */
+function nowyK(){S.kand.push({imie:'',form:'',oc:{},mile:{}});save();render()}
+function setKF(i,v){S.kand[i].form=v;save();render()}
+function togMile(i,k){const m=S.kand[i].mile=S.kand[i].mile||{};m[k]=!m[k];save();render()}
+function setOc(i,k,v){const o=S.kand[i].oc;o[k]=o[k]===v?undefined:v;save();render()}
+function mini(val,fn){return `<div class="mini">${[1,2,3].map(v=>`<button class="${val===v?'on':''}" onclick="${fn},${v})">${v}</button>`).join('')}</div>`}
+function ocenione(){const G=gotoweP(),ok=new Set();Object.values(G).forEach(l=>l.forEach(p=>ok.add(p.key)));
+ return pozycje().filter(p=>{const t=narz(p);return t&&(!T[t].proj||ok.has(p.key))})}
+function ocen(k){const ps=ocenione();let luka=0,roz=[],brak=0,kl=0;
+ ps.forEach(p=>{const s=k.oc[p.key];if(s==null){brak++;return}const c=p.c,wg=p.pri===1?2:1;
+  const d=c.t==='pol'?Math.abs(s-c.w):Math.max(0,c.w-s);
+  if(d>0){luka+=d*wg;roz.push(p.nm+' (ocena '+s+', '+(c.t==='pol'?'dopasowana '+c.w:'wymagana '+c.w)+')');if(p.pri===1&&c.t!=='pol')kl++}});
+ const fl=ps.some(p=>p.rodz==='kryt'&&J[p.key][2]==='N')&&k.oc['06']===1;
+ const ml=ogrMile().filter(x=>(k.mile||{})[x]).map(x=>OG(x)[2]);
+ return {luka,roz,brak,kl,fl,ml}}
+function k8(){const ps=ocenione(),nap=ps.some(p=>p.rodz==='kryt'&&J[p.key][2]==='N');
+ let h=`<h1>Kandydaci</h1><p class="lead">Wpisz oceny każdego kandydata zaraz po jego rozmowie i zadaniach, zanim zaczniesz porównywać kandydatów ze sobą. Kliknięcie tej samej oceny drugi raz ją usuwa.</p>`;
+ S.kand.forEach((k,i)=>{h+=`<div class="card"><div class="row"><input type="text" value="${esc(k.imie)}" placeholder="imię i nazwisko albo oznaczenie kandydata" oninput="S.kand[${i}].imie=this.value;save()"><button class="x" title="Usuń kandydata" onclick="S.kand.splice(${i},1);save();render()">×</button></div>
+  ${ogrWym().length?`<div class="q"><div class="t">Spełnia wszystkie warunki wymagane</div><div class="sc two">${['tak','nie'].map(v=>`<button class="${k.form===v?'on':''}" onclick="setKF(${i},'${v}')">${v}</button>`).join('')}</div></div>`:''}
+  ${ogrMile().length?`<div class="q"><div class="t">Warunki mile widziane, które kandydat spełnia</div><div>${ogrMile().map(x=>`<label class="chk"><input type="checkbox" ${(k.mile||{})[x]?'checked':''} onchange="togMile(${i},'${x}')">${OG(x)[2].split(',')[0]}</label>`).join('')}</div></div>`:''}
+  <div class="scwrap"><table class="cmp"><tr><th>Wymaganie</th><th>Narzędzie</th><th>Wymaganie</th><th style="width:120px">Ocena</th></tr>
+  ${ps.map(p=>`<tr><td>${esc(p.nm)}${p.pri===1?'<span class="pill p1">kluczowe</span>':''}</td><td style="font-size:13px">${T[narz(p)].nm}</td><td style="font-size:13px">${p.rodz==='kryt'?celTxt(p.c,p.key):'Wymagana ocena '+(p.c.w===3?'3.':'co najmniej 2.')}</td><td>${mini(k.oc[p.key],`setOc(${i},'${p.key}'`)}</td></tr>`).join('')}
+  ${nap?`<tr><td>Wyrazistość napędu</td><td style="font-size:13px">ocena po rozmowie</td><td style="font-size:13px">Sygnał; ocena 1 oznacza potrzebę dodatkowego sprawdzenia.</td><td>${mini(k.oc['06'],`setOc(${i},'06'`)}</td></tr>`:''}
+  </table></div></div>`});
+ h+=`<button class="btn sec" onclick="nowyK()">Dodaj kandydata</button>`;
+ if(S.kand.length){const L=S.kand.map(k=>Object.assign({k},ocen(k)));
+  const odp=L.filter(x=>x.k.form==='nie'),dal=L.filter(x=>x.k.form!=='nie').sort((a,b)=>a.kl-b.kl||a.luka-b.luka);
+  h+=`<h2>Porównanie</h2><p class="lead">Kandydaci są uporządkowani najpierw według liczby niespełnionych wymagań kluczowych, a potem według łącznej odległości ocen od wymagań. Wymagania kluczowe liczą się podwójnie. Przy kryteriach dopasowania liczy się odległość od położenia, którego wymaga stanowisko, a nie wysokość oceny.</p>`;
+  dal.forEach((x,n)=>{h+=`<div class="rank"><div class="pos">${n+1}</div><div><b>${esc(x.k.imie)||'Kandydat bez nazwy'}</b>
+   <p style="margin:4px 0 0;font-size:14.5px">${x.kl?`Niespełnione wymagania kluczowe: ${x.kl}. `:''}Odległość od wymagań: ${x.luka}.${x.roz.length?' Różnice: '+x.roz.join('; ')+'.':' Oceny spełniają wymagania stanowiska.'}</p>
+   ${ogrMile().length?`<p class="hint">Warunki mile widziane: ${x.ml.length?'spełnia '+x.ml.length+' z '+ogrMile().length:'nie spełnia żadnego'}.</p>`:''}
+   ${x.fl?'<p class="hint">Napęd rozmyty: sprawdź go w rozmowie z poprzednim pracodawcą albo w okresie próbnym.</p>':''}
+   ${x.brak?`<p class="hint">Brakuje ${x.brak} ocen, więc porównanie tego kandydata jest niepełne.</p>`:''}${x.k.form===''&&ogrWym().length?'<p class="hint">Nie zaznaczono, czy kandydat spełnia warunki wymagane.</p>':''}</div></div>`});
+  odp.forEach(x=>{h+=`<div class="rank out"><div class="pos">–</div><div><b>${esc(x.k.imie)||'Kandydat bez nazwy'}</b><p style="margin:4px 0 0;font-size:14.5px">Nie spełnia warunków wymaganych, dlatego nie bierze udziału w porównaniu.</p></div></div>`});
+  h+=`<div class="nav" style="justify-content:flex-start"><button class="btn hon" onclick="drukPor()">Drukuj porównanie</button></div>`}
+ return h+nav(7,0)}
+
+/* ---------- WYDRUKI ---------- */
+function druk(h){document.getElementById('druk').innerHTML=h+'<div class="ft">PROFILENS · ZMIANOLOGICA · dr Marcin Żółtak</div>';setTimeout(()=>window.print(),120)}
+function nag(t){return `<h1>${t}</h1><div class="sub">${esc(S.nazwa||'Stanowisko')}</div>`}
+const METRYKA=`<p>Kandydat: ______________________________ &nbsp; Data: ____________ &nbsp; Prowadzący: ______________________</p>`;
+const OCENA=`<p style="margin-top:4pt">Ocena: <span class="box">1</span><span class="box">2</span><span class="box">3</span></p>`;
+function drukKarta(){const R=roz(),st=etapy();
+ druk(nag('Karta stanowiska')+(S.cel?`<h2>Cel stanowiska</h2><p>${esc(S.cel)}</p>`:'')+
+ `<h2>Zadania stanowiska</h2><ol>${zadania().map(t=>`<li>${esc(t)}</li>`).join('')}</ol>
+ <h2>Typ stanowiska</h2><p><b>${typ().charAt(0).toUpperCase()+typ().slice(1)}.</b> ${TYP_OP[typ()]}</p>
+ <p>${['W','P','C'].filter(k=>R[k]>0).map(k=>'Rozliczanie '+ROZ_NM[k]+': '+PRZEDZ[R[k]]).join('. ')}.</p>
+ <h2>Warunki formalne</h2>${ogrWym().length||ogrMile().length?'<ul>'+ogrWym().concat(ogrMile()).map(k=>`<li>${OG(k)[2]} (${S.ogr[k]==='wym'?'wymagane':'mile widziane'})</li>`).join('')+'</ul>':'<p>Brak.</p>'}
+ <h2>Wymagania i narzędzia</h2><table><tr><th>Wymaganie</th><th>Poziom</th><th>Narzędzie</th></tr>${pozycje().map(p=>`<tr><td>${esc(p.nm)}${p.pri===1?' (kluczowe)':''}</td><td>${p.rodz==='kryt'?celTxt(p.c,p.key):'wymagana ocena '+(p.c.w===3?'3':'co najmniej 2')}</td><td>${narz(p)?T[narz(p)].nm:'—'}</td></tr>`).join('')}</table>
+ <h2>Przebieg postępowania</h2><ol>${st.map(s=>`<li><b>${s.n}</b> (${s.tm}). ${s.wy}</li>`).join('')}</ol>`)}
+function drukTel(){const l=uzyte().TEL||[];
+ druk(nag('Rozmowa telefoniczna wstępna')+METRYKA+`<h2>Przebieg</h2><p>Przedstaw się, powiedz, na jakie stanowisko prowadzisz rekrutację i że rozmowa potrwa około 15 minut.</p>
+ ${l.map(p=>`<div class="cr"><h3>${esc(p.nm)} (${S.ogr[p.key]==='wym'?'wymagane':'mile widziane'})</h3><p class="a">${OG(p.key)[3]}</p><p>Spełnia: <span class="box">tak</span> <span class="box">nie</span></p></div>`).join('')}
+ <div class="cr"><h3>Oczekiwania kandydata</h3><p>Co jest najważniejsze przy wyborze nowej pracy? Od kiedy możliwe jest rozpoczęcie pracy?</p><div class="notes"></div></div>
+ <p>Na koniec powiedz, kiedy i w jaki sposób kandydat otrzyma odpowiedź.</p>`)}
+function drukRozmowa(){const u=uzyte(),l=(u.RB||[]).map(p=>[p,'RB']).concat((u.RS||[]).map(p=>[p,'RS'])).sort((a,b)=>OBO[J[a[0].key][2]]-OBO[J[b[0].key][2]]),
+ obsz={N:'Czego kandydat chce od pracy',R:'Praca z ludźmi',M:'Sposób pracy'};let last='',h=nag('Scenariusz rozmowy')+METRYKA+
+ `<h2>Zasady</h2><p>Zadaj pytania w podanej kolejności. Gdy odpowiedź jest ogólna, poproś o jeden konkretny przykład i zadaj pytanie dodatkowe. W trakcie zapisuj to, co kandydat mówi. Oceny wystaw zaraz po rozmowie, porównując notatki z opisami ocen, zanim zaczniesz rozmowę z kolejnym kandydatem.</p>
+ <h2>Otwarcie (około 5 minut)</h2><p>Przedstaw firmę, stanowisko i przebieg spotkania.</p>`;
+ l.forEach(([p,t])=>{const b=B[p.key],a=J[p.key][2];if(a!==last){if(last==='N')h+=flaga();h+=`<h2>${obsz[a]}</h2>`;last=a}
+  const sit=t==='RS'||S.moz.c==='czesc';
+  h+=`<div class="cr"><h3>${b.nazwa}</h3><p class="a"><b>Wymaganie:</b> ${celTxt(p.c,p.key)}</p>
+  ${t==='RB'?`<p><b>1.</b> ${b.p1}</p><p><b>2.</b> ${b.p2}</p><p><b>Dodatkowe:</b> ${b.pd}</p>`:''}
+  ${sit?`<p><b>${t==='RB'?'Sytuacyjne, gdy kandydat nie ma doświadczenia:':'Pytanie:'}</b> ${b.ps}</p>`:''}
+  <div class="notes"></div><p class="a"><b>1</b> — ${b.o1}</p><p class="a"><b>2</b> — ${b.o2}</p><p class="a"><b>3</b> — ${b.o3}</p>${OCENA}</div>`});
+ if(last==='N')h+=flaga();
+ druk(h+`<h2>Zakończenie (około 5 minut)</h2><p>Zapytaj, czy kandydat ma pytania, i powiedz, kiedy i w jaki sposób otrzyma odpowiedź.</p>`)}
+function flaga(){const b=B['06'];return `<div class="cr"><h3>Wyrazistość napędu (bez osobnych pytań)</h3><p class="a">Ocenia się na podstawie odpowiedzi na pytania o to, czego kandydat chce od pracy.</p>
+ <p class="a"><b>1</b> — ${b.o1}</p><p class="a"><b>2</b> — ${b.o2}</p><p class="a"><b>3</b> — ${b.o3}</p>${OCENA}</div>`}
+function drukProj(k){const t=k.split('_')[0],p=pr(k),l=projekty()[k]||[];
+ const inst=POLA[t].filter(([f])=>!['obs','klucz'].includes(f)&&!(t==='Z2'&&f==='mat'));
+ druk(nag(nazwaProj(k))+`<h2>Instrukcja dla kandydata</h2>${inst.map(([f,lb])=>`<p><b>${lb}:</b> ${esc(p[f])}</p>`).join('')}<p><b>Czas:</b> ${esc(p.limit)} minut.</p>
+ <h2 class="pb">Karta oceny</h2>${METRYKA}
+ ${t==='Z2'?`<p><b>Instrukcja dla osoby odgrywającej rozmówcę:</b> ${esc(p.mat)}</p>`:''}${t==='TW'?`<p><b>Klucz odpowiedzi:</b> ${esc(p.klucz)}</p>`:''}
+ ${p.obs?`<p><b>Obserwuj i zapisuj:</b> ${esc(p.obs)}</p>`:''}<p>Czas rozpoczęcia: ________ &nbsp; Czas zakończenia: ________</p><div class="notes big"></div>
+ ${l.map(q=>{const a=kotwiceDomyslne(k,q);return `<div class="cr"><h3>${esc(q.nm)}</h3><p class="a">${q.rodz==='kryt'?celTxt(q.c,q.key):'Wymagana ocena '+((S.proj['wym'+q.key]||2)===3?'3.':'co najmniej 2.')}</p>
+ <p class="a"><b>1</b> — ${esc(a.o1)}</p><p class="a"><b>2</b> — ${esc(a.o2)}</p><p class="a"><b>3</b> — ${esc(a.o3)}</p>${OCENA}</div>`}).join('')}`)}
+function drukRef(){const l=uzyte().REF||[];
+ druk(nag('Rozmowa z poprzednim pracodawcą')+METRYKA.replace('Prowadzący','Rozmówca')+`<p>Przeprowadzasz ją tylko za zgodą kandydata. Pytaj o konkretne sytuacje, a nie o ogólną opinię, i zapisuj przykłady.</p>
+ ${l.map(p=>{const b=B[p.key];return `<div class="cr"><h3>${b.nazwa}</h3><p>Proszę opowiedzieć, jak ta osoba ${REFQ[p.key]}. Proszę podać przykład.</p><div class="notes"></div>
+ <p class="a"><b>1</b> — ${b.o1}</p><p class="a"><b>2</b> — ${b.o2}</p><p class="a"><b>3</b> — ${b.o3}</p>${OCENA}</div>`}).join('')}`)}
+function drukDP(){const l=uzyte().DP||[];
+ druk(nag('Płatny dzień próbny: karta obserwacji')+METRYKA+`<p>Dzień próbny odbywa się na podstawie umowy. W ciągu dnia zapisuj konkretne zachowania kandydata, a oceny wystaw na koniec dnia.</p>
+ ${l.map(p=>{const b=B[p.key];return `<div class="cr"><h3>${esc(p.nm)}</h3><div class="notes"></div>${b?`<p class="a"><b>1</b> — ${b.o1}</p><p class="a"><b>2</b> — ${b.o2}</p><p class="a"><b>3</b> — ${b.o3}</p>`:`<p class="a">Wymagana ocena ${p.c.w===3?'3':'co najmniej 2'}.</p>`}${OCENA}</div>`}).join('')}`)}
+function drukPor(){const L=S.kand.map(k=>Object.assign({k},ocen(k)));
+ const dal=L.filter(x=>x.k.form!=='nie').sort((a,b)=>a.kl-b.kl||a.luka-b.luka),odp=L.filter(x=>x.k.form==='nie');
+ druk(nag('Porównanie kandydatów')+`<table><tr><th>Lp.</th><th>Kandydat</th><th>Niespełnione kluczowe</th><th>Odległość</th><th>Różnice względem wymagań</th></tr>
+ ${dal.map((x,n)=>`<tr><td>${n+1}</td><td>${esc(x.k.imie)}</td><td>${x.kl}</td><td>${x.luka}</td><td>${x.roz.join('; ')||'brak'}${x.fl?'; napęd do sprawdzenia':''}${ogrMile().length?'; warunki mile widziane: '+(x.ml.length+' z '+ogrMile().length):''}</td></tr>`).join('')}
+ ${odp.map(x=>`<tr><td>–</td><td>${esc(x.k.imie)}</td><td colspan="3">Nie spełnia warunków wymaganych.</td></tr>`).join('')}</table>`)}
+
+/* ---------- ZAPIS DO PLIKU ---------- */
+function expJSON(){const b=new Blob([JSON.stringify(S,null,1)],{type:'application/json'}),a=document.createElement('a');
+ a.href=URL.createObjectURL(b);a.download='PROFILENS_'+((S.nazwa||'stanowisko').replace(/[^\wąćęłńóśźżĄĆĘŁŃÓŚŹŻ -]/g,'').trim().replace(/\s+/g,'_'))+'.json';a.click()}
+function impJSON(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();
+ r.onload=()=>{try{S=Object.assign(S0(),JSON.parse(r.result));save();render()}catch(err){alert('Tego pliku nie da się wczytać. Wybierz plik zapisany przyciskiem „Zapisz”.')}};r.readAsText(f);e.target.value=''}
+load();render();
+
+</script>
+</body>
+</html>
