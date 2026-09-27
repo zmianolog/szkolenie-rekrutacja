@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Six Blind Spots of Change · poll</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#293F59;--navy-h:#1E2F44;--teal:#00A1BC;--olive:#C5C06A;--amber:#FBAE40;--ink:#2E3749;--mut:#6E8A9C;--line:#D5DEE5;--bg:#F3F7FA;--ok:#2E7D4F;--red:#C8202E}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:Montserrat,'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.5}
+header{background:#fff;border-bottom:1px solid var(--line);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.mark{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--navy);font-size:15px}
+.mark svg{width:30px;height:22px}
+#kto{font-size:13px;color:var(--mut);font-weight:600}
+main{max-width:760px;margin:0 auto;padding:22px 18px 40px}
+h1{font-size:26px;line-height:1.2;color:var(--navy);margin:8px 0 6px}
+.lead{color:var(--ink);margin:0 0 18px}
+.q{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:14px}
+.q .t{font-weight:700;color:var(--navy);margin-bottom:12px}
+.q .t b{display:inline-block;width:28px;height:28px;line-height:28px;text-align:center;border-radius:50%;background:var(--navy);color:#fff;font-size:14px;margin-right:8px}
+.opt{display:block;width:100%;text-align:left;font:inherit;font-weight:500;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:8px;cursor:pointer}
+.opt:hover{border-color:var(--teal)}
+.opt.on{border-color:var(--navy);background:#EAF2F8;font-weight:700}
+button{font:inherit;font-weight:700;border:none;border-radius:10px;padding:12px 20px;cursor:pointer;background:var(--navy);color:#fff}
+button:hover{background:var(--navy-h)}
+button:disabled{opacity:.4;cursor:not-allowed}
+button.sec{background:#fff;color:var(--navy);border:1.5px solid var(--navy)}
+button.red{background:#fff;color:var(--red);border:1.5px solid var(--red)}
+button:focus-visible,.opt:focus-visible,input:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+input[type=text]{font:inherit;width:100%;border:1.5px solid var(--line);border-radius:9px;padding:10px 12px}
+.msg{padding:12px 14px;border-left:4px solid var(--teal);background:#fff;border-radius:0 10px 10px 0;margin:12px 0}
+.msg.err{border-color:var(--red)}
+.msg.ok{border-color:var(--ok)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:12px}
+.hint{font-size:13.5px;color:var(--mut)}
+.pl{font-size:12px;color:var(--mut);font-weight:500}
+/* presenter */
+body.pres main{max-width:1180px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:18px}
+.panel .stat{font-size:15px}
+.panel .stat strong{font-size:22px;color:var(--navy)}
+.link{font-size:14px;word-break:break-all;background:var(--bg);padding:8px 10px;border-radius:8px;margin-top:8px}
+.board{background:#fff;border:1px solid var(--line);border-radius:14px;padding:26px 30px}
+.board h2{font-size:30px;color:var(--navy);margin:0 0 4px}
+.board .n{font-size:17px;color:var(--mut);margin-bottom:20px}
+.board .n strong{color:var(--navy);font-size:22px}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.col h3{font-size:15.5px;color:var(--navy);margin:0 0 14px;min-height:66px}
+.bar{margin:0 0 12px}
+.bar .l{display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px;gap:8px}
+.bar .l span:last-child{font-weight:700;color:var(--navy);white-space:nowrap}
+.bar .tr{height:22px;background:var(--bg);border-radius:6px;overflow:hidden}
+.bar .f{height:100%;width:0;background:var(--teal);border-radius:6px;transition:width .9s cubic-bezier(.2,.8,.2,1)}
+.bar.top .f{background:var(--navy)}
+.com{font-size:14.5px;border-top:1px solid var(--line);margin-top:14px;padding-top:12px;color:var(--ink)}
+.cross{margin-top:22px;padding:14px 16px;background:#EAF2F8;border-radius:10px;font-size:15.5px}
+.hidden{display:none!important}
+.veil{height:260px;display:flex;align-items:center;justify-content:center;color:var(--mut);font-size:18px;border:2px dashed var(--line);border-radius:12px}
+body.show #ctrl{display:none}
+body.show header{display:none}
+body.show main{padding-top:30px}
+#wyjdz{position:fixed;right:14px;bottom:14px;opacity:.35}
+#wyjdz:hover{opacity:1}
+@media (max-width:900px){.cols{grid-template-columns:1fr}.col h3{min-height:0}}
+@media (prefers-reduced-motion:reduce){.bar .f{transition:none}}
+</style>
+</head>
+<body>
+<header>
+ <div class="mark"><svg viewBox="0 0 30 22" aria-hidden="true"><path d="M2 2h8l8 9-8 9H2l8-9z" fill="#C5C06A"/><path d="M13 2h8l8 9-8 9h-8l8-9z" fill="#C5C06A" opacity=".7"/></svg>Six Blind Spots of Change</div>
+ <div id="kto"></div>
+</header>
+<main id="app"><p class="hint">Loading…</p></main>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, signInAnonymously, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, onSnapshot, getDocs, serverTimestamp, writeBatch } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDUVBglR2h1r-MRoMQ6F-yi5be-NW9q7VA",
+  authDomain: "zmianologica-szkolenia.firebaseapp.com",
+  projectId: "zmianologica-szkolenia",
+  storageBucket: "zmianologica-szkolenia.firebasestorage.app",
+  messagingSenderId: "518737570063",
+  appId: "1:518737570063:web:454c1dd4f574fc5c5d767a"
+};
+const PROWADZACY = "marcin.zoltak@zmianologi.ca";
+const DOMYSLNY_KOD = "CMI29";
+const CW = "ankieta";
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+/* ================= QUESTIONS ================= */
+const PYT = [
+ {id:"q1", t:"How confident were you that the client’s employees agreed with the goals and the scope of that change?", krotko:"Confidence that the client’s employees agreed",
+  o:["Confident","Fairly confident","Not really","I did not know what they thought"]},
+ {id:"q2", t:"How far did the client have its own picture of that change and hold to it regardless of what the people running the rollout knew?", krotko:"How far the client held to its own picture",
+  o:["To a large extent","In part","Hardly at all","Hard to say"]},
+ {id:"q3", t:"During that change, did any of the assumptions the plan rested on have to be changed?", krotko:"Assumptions changed along the way",
+  o:["Yes, key ones","Yes, minor ones","No","I don’t know"]}
+];
+
+/* comments chosen from the distribution; conditional wording, no sweeping claims */
+function komentarz(id,c,n){
+  if(n<5) return "Too few answers yet to read a pattern.";
+  const s=i=>c[i]/n;
+  if(id==="q1"){
+    if(s(0)+s(1)>=.6) return "Most of you were confident about agreement. It is worth asking what observation that confidence rested on. Often it is the absence of objection in a meeting.";
+    if(s(3)>=.3) return "A large share did not know what employees thought. The visible signals may have said less than they seemed to.";
+    if(s(2)>=.4) return "Many of you had doubts about agreement. It is worth asking whether those doubts ever reached the people deciding.";
+    return "The answers are spread: confidence about agreement differed from one change to another.";
+  }
+  if(id==="q2"){
+    if(s(0)+s(1)>=.6) return "In most of your changes the client held, at least in part, to its own picture. Under that condition, confidence about agreement may have formed without measurement.";
+    if(s(2)>=.4) return "For many of you the client adjusted its picture to what the rollout team knew.";
+    return "The answers are spread: clients differed in how far they held to their own picture.";
+  }
+  if(id==="q3"){
+    if(s(0)>=.4) return "For many of you, key assumptions were tested only in practice. That is point one: untested assumptions.";
+    if(s(0)+s(1)>=.6) return "Most of you had to change assumptions along the way, so part of the plan was tested only by the rollout itself.";
+    if(s(2)>=.5) return "Most report no change of assumptions. It is worth asking whether they were tested, or simply not questioned.";
+    return "The answers are spread: assumptions held in some changes and not in others.";
+  }
+  return "";
+}
+function komentarzKrzyzowy(c1,c2,n){
+  if(n<5) return "";
+  const a=(c1[0]+c1[1])/n, b=(c2[0]+c2[1])/n;
+  if(a>=.5 && b>=.5) return "Where both answers are high, the first question may measure, to a large degree, what raising a doubt would have cost, rather than what the client’s employees thought.";
+  return "";
+}
+
+/* ================= HELPERS ================= */
+const $ = s => document.querySelector(s);
+const esc = t => String(t ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+const params = new URLSearchParams(location.search);
+const trybProwadzacego = params.has("prowadzacy");
+let odsluchy = [];
+function stop(){ odsluchy.forEach(f=>f()); odsluchy=[]; }
+function blad(e){
+  const k = e && e.code || "";
+  if(k.includes("permission-denied")) return "The server did not accept the answer. The poll may be closed.";
+  if(k.includes("unauthorized-domain")) return "This page address is not on the list of allowed domains in Firebase (adres strony nie jest dopisany w Firebase).";
+  if(k.includes("popup")) return "The sign-in window was closed or blocked. Allow pop-ups and try again (zezwól na wyskakujące okna).";
+  if(k.includes("network") || k.includes("operation-not-supported")) return "No connection to the server, or the page was opened directly from disk.";
+  return "Error: " + (e && e.message || e);
+}
+
+onAuthStateChanged(auth, async user => {
+  stop();
+  if(trybProwadzacego){
+    document.body.classList.add("pres");
+    if(user && !user.isAnonymous && user.email === PROWADZACY){ $("#kto").textContent = user.email; widokProwadzacy(); }
+    else widokLogowanie(user);
+  } else {
+    if(!user){ try{ await signInAnonymously(auth); }catch(e){ $("#app").innerHTML = `<div class="msg err">${esc(blad(e))}</div>`; } return; }
+    widokUczestnik();
+  }
+});
+
+/* ================= PARTICIPANT ================= */
+function widokUczestnik(komunikat){
+  const kod = (params.get("s") || "").trim().toUpperCase();
+  if(!kod){
+    $("#app").innerHTML = `<h1>Join the poll</h1>
+     <div class="q"><label class="hint" for="kod">Code from the chat</label><input type="text" id="kod" autocomplete="off">
+     ${komunikat?`<div class="msg err">${esc(komunikat)}</div>`:""}
+     <div class="row"><button id="go">Join</button></div></div>`;
+    $("#go").onclick = () => { const k=$("#kod").value.trim().toUpperCase(); if(k){ params.set("s",k); history.replaceState(null,"","?s="+encodeURIComponent(k)); widokUczestnik(); } };
+    return;
+  }
+  const uid = auth.currentUser.uid;
+  const ref = doc(db,"sesje",kod,"odpowiedzi",CW+"_"+uid);
+  let odp = {}, otwarta = null, wyslane = false, obecnosc = false;
+  const u = onSnapshot(doc(db,"sesje",kod), s=>{
+    const d=s.data();
+    if(!d){ $("#app").innerHTML = `<h1>No poll with this code</h1><div class="msg err">Check the link in the chat.</div>`; otwarta=null; return; }
+    const byla = otwarta; otwarta = !!d.otwarta;
+    if(otwarta && !obecnosc){ obecnosc=true; setDoc(doc(db,"sesje",kod,"odpowiedzi","obecnosc_"+uid),{uid,pseudonim:"participant",cw:"obecnosc",czas:serverTimestamp()}).catch(()=>{}); }
+    if(byla!==otwarta) rys();
+  }, e=>{ $("#app").innerHTML = `<div class="msg err">${esc(blad(e))}</div>`; });
+  odsluchy.push(u);
+  getDoc(ref).then(d=>{ if(d.exists()){ odp=d.data().odp||{}; wyslane=true; } rys(); }).catch(()=>{});
+
+  function rys(){
+    if(otwarta===null) return;
+    if(!otwarta && !wyslane){ $("#app").innerHTML = `<h1>The poll is closed</h1><p class="lead">Thank you. You can return to the webinar.</p>`; return; }
+    if(wyslane){
+      $("#app").innerHTML = `<h1>Thank you</h1><div class="msg ok">Your answers are saved. You can return to the webinar and leave this tab open or close it.</div>
+       ${otwarta?`<div class="row"><button class="sec" id="zmien">Change my answers</button></div>`:""}`;
+      const z=$("#zmien"); if(z) z.onclick=()=>{ wyslane=false; rys(); };
+      return;
+    }
+    $("#app").innerHTML = `<h1>Three questions before we start</h1>
+     <p class="lead">Think of the last change you led or supported. Answers are anonymous.</p>
+     ${PYT.map((p,qi)=>`<div class="q"><div class="t"><b>${qi+1}</b>${esc(p.t)}</div>
+       ${p.o.map((o,i)=>`<button class="opt ${odp[p.id]===i?"on":""}" data-p="${p.id}" data-v="${i}">${esc(o)}</button>`).join("")}</div>`).join("")}
+     <div id="e"></div>
+     <div class="row"><button id="wyslij" ${PYT.every(p=>odp[p.id]!==undefined)?"":"disabled"}>Send my answers</button>
+     <span class="hint" id="brak">${PYT.every(p=>odp[p.id]!==undefined)?"":"Answer all three questions to send."}</span></div>`;
+    document.querySelectorAll("[data-p]").forEach(b=>b.onclick=()=>{ odp[b.dataset.p]=+b.dataset.v; const y=window.scrollY; rys(); window.scrollTo(0,y); });
+    $("#wyslij").onclick = async () => {
+      $("#wyslij").disabled = true;
+      try{ await setDoc(ref,{uid,pseudonim:"participant",cw:CW,odp,czas:serverTimestamp()}); wyslane=true; rys(); window.scrollTo(0,0); }
+      catch(e){ $("#e").innerHTML = `<div class="msg err">${esc(blad(e))}</div>`; $("#wyslij").disabled=false; }
+    };
+  }
+}
+
+/* ================= PRESENTER ================= */
+function widokLogowanie(user){
+  const inny = user && !user.isAnonymous && user.email !== PROWADZACY;
+  $("#app").innerHTML = `<h1>Presenter view <span class="pl">(widok prowadzącego)</span></h1>
+   <div class="panel"><p>Sign in with the presenter’s Google account. <span class="pl">(Zaloguj się kontem Google prowadzącego.)</span></p>
+   ${inny?`<div class="msg err">Signed in as ${esc(user.email)}, which is not the presenter account.</div>`:""}
+   <div class="row"><button id="log">Sign in with Google</button>${inny?`<button class="sec" id="wyl">Sign out</button>`:""}</div><div id="e"></div></div>`;
+  $("#log").onclick = async () => { try{ await signInWithPopup(auth,new GoogleAuthProvider()); }catch(e){ $("#e").innerHTML=`<div class="msg err">${esc(blad(e))}</div>`; } };
+  if(inny) $("#wyl").onclick = () => signOut(auth);
+}
+
+function widokProwadzacy(){
+  let kod = (params.get("s") || localStorage.getItem("cmi_kod") || DOMYSLNY_KOD).toUpperCase();
+  let sesja = null, lista = [], pokaz = false;
+  const link = () => location.origin + location.pathname + "?s=" + kod;
+
+  $("#app").innerHTML = `
+   <div id="ctrl">
+    <div class="panel">
+     <div class="row" style="margin-top:0">
+      <label class="hint" for="kod">Code <span class="pl">(kod)</span></label>
+      <input type="text" id="kod" value="${esc(kod)}" style="width:130px">
+      <button class="sec" id="zmienKod">Use this code <span class="pl">(użyj)</span></button>
+      <span id="stan" class="hint"></span>
+     </div>
+     <div class="link" id="lnk"></div>
+     <div class="row">
+      <button id="kopiuj" class="sec">Copy link <span class="pl">(kopiuj link do czatu)</span></button>
+      <button id="otworz">Open poll <span class="pl">(otwórz ankietę)</span></button>
+      <button id="zamknij" class="sec">Close poll <span class="pl">(zamknij)</span></button>
+      <button id="czysc" class="red">Clear answers <span class="pl">(wyczyść odpowiedzi)</span></button>
+     </div>
+     <div class="row stat panel" style="border:none;padding:0;margin-top:14px">
+      <span class="stat">Joined <span class="pl">(dołączyło)</span>: <strong id="nObec">0</strong></span>
+      <span class="stat">Answered <span class="pl">(odpowiedziało)</span>: <strong id="nOdp">0</strong></span>
+     </div>
+     <div class="row">
+      <button id="pokaz">Show results <span class="pl">(pokaż wyniki)</span></button>
+      <button id="prez" class="sec">Presentation mode <span class="pl">(tryb prezentacji, wyjście: Esc)</span></button>
+      <button id="wyl" class="sec">Sign out <span class="pl">(wyloguj)</span></button>
+     </div>
+    </div>
+   </div>
+   <div class="board" id="board"></div>
+   <button id="wyjdz" class="sec hidden">Exit (Esc)</button>`;
+
+  function podlacz(){
+    stop();
+    $("#lnk").textContent = link();
+    localStorage.setItem("cmi_kod",kod);
+    odsluchy.push(onSnapshot(doc(db,"sesje",kod), s=>{ sesja = s.exists()?s.data():null; stan(); }));
+    odsluchy.push(onSnapshot(collection(db,"sesje",kod,"odpowiedzi"), s=>{ lista = s.docs.map(d=>d.data()); liczniki(); tablica(); }));
+  }
+  function stan(){
+    const el=$("#stan"); if(!el) return;
+    if(!sesja){ el.innerHTML = `Not created yet <span class="pl">(sesja jeszcze nie istnieje — kliknij „Open poll”)</span>`; return; }
+    el.innerHTML = sesja.otwarta ? `<b style="color:var(--ok)">Open</b> <span class="pl">(otwarta, przyjmuje odpowiedzi)</span>` : `<b style="color:var(--red)">Closed</b> <span class="pl">(zamknięta)</span>`;
+  }
+  function liczniki(){
+    $("#nObec").textContent = lista.filter(x=>x.cw==="obecnosc").length;
+    $("#nOdp").textContent = lista.filter(x=>x.cw===CW).length;
+  }
+  function tablica(animuj){
+    const odp = lista.filter(x=>x.cw===CW).map(x=>x.odp||{});
+    const n = odp.length;
+    const liczby = PYT.map(p=>p.o.map((_,i)=>odp.filter(a=>a[p.id]===i).length));
+    let html = `<h2>Your answers</h2><div class="n"><strong>${n}</strong> ${n===1?"response":"responses"}</div>`;
+    if(!pokaz){ $("#board").innerHTML = html + `<div class="veil">Results will appear here</div>`; return; }
+    html += `<div class="cols">` + PYT.map((p,qi)=>{
+      const c=liczby[qi], mx=Math.max(...c);
+      return `<div class="col"><h3>${qi+1}. ${esc(p.krotko)}</h3>` +
+        p.o.map((o,i)=>{ const pr=n?Math.round(c[i]/n*100):0;
+          return `<div class="bar ${c[i]===mx&&mx>0?"top":""}"><div class="l"><span>${esc(o)}</span><span>${c[i]} · ${pr}%</span></div><div class="tr"><div class="f" data-w="${pr}"></div></div></div>`; }).join("") +
+        `<div class="com">${esc(komentarz(p.id,c,n))}</div></div>`;
+    }).join("") + `</div>`;
+    const kr = komentarzKrzyzowy(liczby[0],liczby[1],n);
+    if(kr) html += `<div class="cross">${esc(kr)}</div>`;
+    $("#board").innerHTML = html;
+    const fs=[...document.querySelectorAll(".bar .f")];
+    if(animuj){ requestAnimationFrame(()=>requestAnimationFrame(()=>fs.forEach(f=>f.style.width=f.dataset.w+"%"))); }
+    else fs.forEach(f=>{ f.style.transition="none"; f.style.width=f.dataset.w+"%"; });
+  }
+
+  $("#zmienKod").onclick = () => { const k=$("#kod").value.trim().toUpperCase(); if(k){ kod=k; podlacz(); } };
+  $("#kopiuj").onclick = async () => { try{ await navigator.clipboard.writeText(link()); $("#kopiuj").textContent="Copied (skopiowano)"; setTimeout(()=>$("#kopiuj").innerHTML=`Copy link <span class="pl">(kopiuj link do czatu)</span>`,1500);}catch(e){} };
+  $("#otworz").onclick = async () => {
+    try{ await setDoc(doc(db,"sesje",kod),{nazwa:"CMI webinar · Six Blind Spots", otwarta:true, aktywne:CW, utworzona:serverTimestamp()},{merge:true}); }
+    catch(e){ alert(blad(e)); }
+  };
+  $("#zamknij").onclick = async () => { try{ await updateDoc(doc(db,"sesje",kod),{otwarta:false}); }catch(e){ alert(blad(e)); } };
+  $("#czysc").onclick = async () => {
+    if(!confirm("Delete all answers for code "+kod+"? (Usunąć wszystkie odpowiedzi dla tego kodu?)")) return;
+    try{ const s=await getDocs(collection(db,"sesje",kod,"odpowiedzi")); const b=writeBatch(db); s.forEach(d=>b.delete(d.ref)); await b.commit(); }
+    catch(e){ alert(blad(e)); }
+  };
+  $("#pokaz").onclick = () => { pokaz=!pokaz; $("#pokaz").innerHTML = pokaz?`Hide results <span class="pl">(ukryj wyniki)</span>`:`Show results <span class="pl">(pokaż wyniki)</span>`; tablica(true); };
+  const wejdz = () => { document.body.classList.add("show"); $("#wyjdz").classList.remove("hidden"); };
+  const wyjdz = () => { document.body.classList.remove("show"); $("#wyjdz").classList.add("hidden"); };
+  $("#prez").onclick = wejdz; $("#wyjdz").onclick = wyjdz;
+  document.addEventListener("keydown", e=>{ if(e.key==="Escape") wyjdz(); });
+  $("#wyl").onclick = () => signOut(auth);
+  podlacz();
+}
+</script>
+</body>
+</html>
